@@ -6,9 +6,9 @@ class Container {
         this.idGenerator = 1
     }
 
-    save(object) {
+     save(object) {
         // Try to read the file
-        this.fs.readFile(this.fileName, (error, content) => {
+         this.fs.readFile(this.fileName, async (error, content) => {
             if (error) {
                 // Means the file does not yet exist
                 // Create a new object that will be added to the file
@@ -38,7 +38,7 @@ class Container {
                     const nextID = parsedContent.length + 1;
                     const newObject = {object, id : nextID}
                     const objects = [...parsedContent, newObject]
-                    this.fs.writeFile(this.fileName, JSON.stringify(objects), (error) => {
+                     this.fs.writeFile(this.fileName, JSON.stringify(objects), (error) => {
                         if (error) {
                             console.log('There was an error writing the object', error);
                         } else {
@@ -50,7 +50,7 @@ class Container {
         })
     }
 
-    getById(id) {
+     getById(id) {
         this.fs.readFile(this.fileName, (error, content) => {
             if (error) {
                 // Means the file does not yet exist
@@ -70,9 +70,9 @@ class Container {
         })
     }
 
-    getAll() {
+     getAll() {
         console.log("Waiting");
-        this.fs.readFile(this.fileName, (error, content) => {
+         this.fs.readFile(this.fileName, (error, content) => {
             if (error) {
                 // Means the file does not yet exist
                 console.log('There is no file with any object.');
@@ -125,13 +125,13 @@ class Container {
                 console.log('There is no file with any object.');
             } else {
                 // Means the file exists
-                this.fs.unlink(this.fileName, (error, content) => {
-                    if (error) {
-
+                this.fs.writeFile(this.fileName, JSON.stringify([]), (error, content) => {
+                    if (error){
+                        console.log('There was an error deleting the files');
                     } else {
-                        console.log('Deleted');
+                        console.log('Everything was deleted from the file');
                     }
-                });
+                })
             }
         })
     }
@@ -149,9 +149,13 @@ const p2 = {
     price : 99,
     thumbnail : 'url'
 }
+// Here we use setTimeouts to show step by step how do all the functions properly work
+setTimeout(() => container.save(p1), 100)
+setTimeout(() => container.save(p2), 2000)
+setTimeout(() => container.getAll(), 4000)
+setTimeout(() => container.getById(2), 6000)
+setTimeout(() => container.getById(3), 8000)
+setTimeout(() => container.save(p1), 10000)
+setTimeout(() => container.deleteById(2), 12000)
+setTimeout(() => container.deleteAll(), 14000)
 
-container.save(p1)
-// container.getById(4)
-// container.getAll()
-// container.deleteById(1)
-container.deleteAll()
