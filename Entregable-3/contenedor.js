@@ -1,7 +1,4 @@
-// Copyright Santy Gegenschatz
-// Haha, just kidding
-
-class Container {
+export default class Container {
     constructor(fileName) {
         this.fileName = fileName;
         const fs = require('fs')
@@ -149,35 +146,12 @@ class Container {
         })
         return p
     }
-}
 
-const container = new Container('products.txt')
-const p1 = {
-    title : 'Product # 1',
-    price : 159,
-    thumbnail : 'url-product-1'
+    getRandomProduct() {
+        const p = new Promise( (resolve, reject) => {
+            resolve()
+            return p
+        })
+    }
 }
-
-const p2 = {
-    title : 'Product # 2',
-    price : 99,
-    thumbnail : 'url-product-2'
-}
-
-const p3 = {
-    title : 'Productt #3',
-    price : 150,
-    url : 'url-product-3' 
-}
-// Here we use setTimeouts to show step by step how do all the functions properly work
-setTimeout(() => container.save(p1).then(res => console.log(res)), 100)
-setTimeout(() => container.save(p2).then(res => console.log(res)), 2000)
-setTimeout(() => container.save(p3).then(res => console.log(res)), 3000)
-setTimeout(() => container.getAll().then(res => console.log(res)), 4000)
-setTimeout(() => container.getById(2).then(res => console.log(res)), 6000)
-setTimeout(() => container.getById(3).then(res => console.log(res)), 8000)
-setTimeout(() => container.save(p1).then(res => console.log(res)), 10000)
-setTimeout(() => container.deleteById(2).then(res => console.log(res)), 12000)
-setTimeout(() => container.deleteById(2).then(res => console.log(res)), 13000)
-setTimeout(() => container.deleteAll().then(res => console.log(res)), 14000)
 
