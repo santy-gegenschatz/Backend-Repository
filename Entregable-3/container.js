@@ -1,3 +1,8 @@
+// Imports
+import randomNumber from './utils'
+
+// Function to be exported
+// Exported as default since it is the only export in this particular js file
 export default class Container {
     constructor(fileName) {
         this.fileName = fileName;
@@ -148,8 +153,12 @@ export default class Container {
     }
 
     getRandomProduct() {
-        const p = new Promise( (resolve, reject) => {
-            resolve()
+        this.getAll()
+        .then ((res) => {
+            const randomProduct = res[randomNumber(0, res.length)] 
+            const p = new Promise( (resolve, reject) => {
+                resolve(randomProduct)
+            })
             return p
         })
     }

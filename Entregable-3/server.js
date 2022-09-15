@@ -1,5 +1,5 @@
 // Imports
-import Container from './contenedor';
+import Container from './container';
 
 // Server config
 const express = require('express');
