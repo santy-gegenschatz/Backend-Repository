@@ -1,1 +1,1 @@
-[{"object":{"title":"Product # 1","price":159,"thumbnail":"url-product-1"},"id":1},{"object":{"title":"Productt #3","price":150,"url":"url-product-3"},"id":2}]":2}]
+[{"object":{"title":"Product # 1","price":159,"thumbnail":"url-product-1"},"id":1},{"object":{"title":"Product # 2","price":99,"thumbnail":"url-product-2"},"id":2},{"object":{"title":"Productt #3","price":150,"url":"url-product-3"},"id":3}]

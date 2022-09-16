@@ -1,12 +1,11 @@
 // Imports
-import randomNumber from './utils'
-
+import randomNumber from '../Entregable-3/utils.js'
+import fs from 'fs'
 // Function to be exported
 // Exported as default since it is the only export in this particular js file
-export default class Container {
+export class Container {
     constructor(fileName) {
         this.fileName = fileName;
-        const fs = require('fs')
         this.fs = fs;
     }
 
@@ -153,14 +152,16 @@ export default class Container {
     }
 
     getRandomProduct() {
-        this.getAll()
-        .then ((res) => {
-            const randomProduct = res[randomNumber(0, res.length)] 
-            const p = new Promise( (resolve, reject) => {
+        const p = new Promise( (resolve, reject) => {
+            this.getAll()
+            .then ((res) => {
+                console.log(res);
+                console.log(randomNumber(0, res.length));
+                const randomProduct = res[Math.floor(randomNumber(0, res.length))] 
                 resolve(randomProduct)
             })
-            return p
         })
+        return p
     }
 }
 
