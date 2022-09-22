@@ -39,3 +39,4 @@ que el usuario mando por URL.
 
 Si quremos detectar un identificador que vien por url, podemos hacer lo siguiente:
 
+a
