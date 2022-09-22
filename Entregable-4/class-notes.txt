@@ -36,7 +36,7 @@ Für post requests: post()
 En el parámetro req que llega después de la petición http (que manejamos con express),
 podemos encontrar un objeto query que tiene un sistema de claves valor con los parámetros =>
 que el usuario mando por URL.
-
+v
 Si quremos detectar un identificador que vien por url, podemos hacer lo siguiente:
 
 a
