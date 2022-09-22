@@ -1,0 +1,41 @@
+The HTTP protocol is the set of rules used to transfer hypertext over the internet.
+This is a petition-response protocol.
+Hypertext in a way can be thought of as a file.
+There are 4 main petitions: GET, POST, PUT & DELETE. (which funnily correspond to CRUD)
+Reponses have codes: Famous ones are 200, 404, 500
+
+An API is a set of rules & specifications that describe how one system can communicate with other.
+They should be documented.
+They can have graphical itnerfaces or not. (most of them do not, I guess)
+
+What is Rest? => Representation State Transfer
+Rep: The structure of the Data
+State: The Data
+Transfer: sending them
+
+They most used solution is JSON. Also XML.
+
+On Rest API, every message is self contained.
+Also it is cacheable, so that if a petition is repeated less work needs to be done.
+All the API resources should be consumed with HTTP petitions. 
+Every response must also return a statusCode (200 for ok, zum beispiel)
+Uniform interface: Every action corresponds to a URL endpoint.
+
+Achtung! Bei ein API es ist wichtig Betonung auf dem Substantiv zu stellen.
+z.B: Lista Usuarios => service.api/users
+     Add users => service.api/users (POST request)
+     Obtain user mit #id => service.api/users/#id
+     Edit User 1: service.api/users/#id (PUT request)
+     Get Users with k characteristic: service.api/users?k=param1
+
+Practische Hinweise: Wir werden Methoden mit der Richtige Namen benutzen.
+Für post requests: post()
+    get requets: get('/route', callback[(req, res)=>{}])
+    undsoweitere
+
+En el parámetro req que llega después de la petición http (que manejamos con express),
+podemos encontrar un objeto query que tiene un sistema de claves valor con los parámetros =>
+que el usuario mando por URL.
+
+Si quremos detectar un identificador que vien por url, podemos hacer lo siguiente:
+
