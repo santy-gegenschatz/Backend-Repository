@@ -1,22 +1,26 @@
 const express = require('express');
-const { title } = require('process');
 const app = express();
+
+// Extract router from express
+const {Router} = express
+const router = Router()
 
 // Use json to receive post requests
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
+app.use(express.static('public'))
 
 const PORT = process.env.PORT || 8080
 
 const products = [{id : 1, title : 'prodcut #1', price : 10, thumbnail : 'url'}]
 
-// Get all products
-app.get('/api/products', (req, res) => {
+// Router url's
+router.get('/', (req, res) => {
     res.status(200).json({products: products})
 })
 
 // Get products by id
-app.get('/api/products/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     // We get the params with a destructuring, as follows:
     const { id } = req.params
     // We find the product in the array of products
@@ -33,7 +37,7 @@ app.get('/api/products/:id', (req, res) => {
 })
 
 // Add a product to the array
-app.post('/api/products', (req, res) => {
+router.post('/', (req, res) => {
     const {title, price, thumbnail} = req.body
     if (title && price && thumbnail) {
         const newProduct = {
@@ -54,7 +58,7 @@ app.post('/api/products', (req, res) => {
 })
 
 // Update a product that already exists in the db
-app.put('(api/products/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     // Get the id via req.params
     const {id} = req.params
     // Find the product in the array
@@ -89,6 +93,11 @@ app.put('(api/products/:id', (req, res) => {
     }
 })
 
+// Set up the app.use
+app.use('/api/products', router)
+
+
+
 // Delete an item
 app.delete('api/products/:id', (req, res) => {
     const {id} = req.params
@@ -106,7 +115,10 @@ app.delete('api/products/:id', (req, res) => {
     }
 })
 
-
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+app.listen(PORT, (error) => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log(`Server listening on port ${PORT}`);
+    }
 })
