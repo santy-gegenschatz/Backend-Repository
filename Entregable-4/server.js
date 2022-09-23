@@ -39,6 +39,8 @@ router.get('/:id', (req, res) => {
 // Add a product to the array
 router.post('/', (req, res) => {
     const {title, price, thumbnail} = req.body
+    console.log(req);
+    console.log(req.body);
     if (title && price && thumbnail) {
         const newProduct = {
             title : title,
@@ -50,6 +52,7 @@ router.post('/', (req, res) => {
         products.push(newProduct)
         // Return it through a JSON
         res.status(200).json({
+            message : 'Successfuly created product',
             product : newProduct
         })
     } else {
@@ -65,8 +68,10 @@ router.put('/:id', (req, res) => {
     const productToUpdate = products.find( (prod) => prod.id === Number(id))
     if (productToUpdate !== undefined) {
         // Find it in the array again, but this time mo
-        const modified = false;
-        const {title, price, thumbnail} = req.body
+        let modified = false;
+        let {title, price, thumbnail} = req.body
+        console.log(req.body);
+        //
         if (title && price && thumbnail) {
             products.forEach( (prod) => {
                 if (prod.id === Number(id)) {
@@ -93,16 +98,11 @@ router.put('/:id', (req, res) => {
     }
 })
 
-// Set up the app.use
-app.use('/api/products', router)
-
-
-
 // Delete an item
-app.delete('api/products/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const {id} = req.params
     // Find it in the array and delete it
-    const index = products.findIndex( (prod) => prod.id === id)
+    const index = products.findIndex( (prod) => prod.id === Number(id))
     if (index !== -1) {
         products.splice(index, 1)
         res.status(200).json({
@@ -114,6 +114,9 @@ app.delete('api/products/:id', (req, res) => {
         })
     }
 })
+
+// Set up the app.use
+app.use('/api/products', router)
 
 app.listen(PORT, (error) => {
     if (error) {
