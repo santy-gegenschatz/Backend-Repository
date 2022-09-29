@@ -1,0 +1,2 @@
+Después de haber utilizado los tres motores de plantillas, llegue a la conclusión de que el uso profesioanl de cualquiera de ellos requiere un alto nivel de dedicación al aprendizaje de su sintaxis. 
+Esta situación no es óptima para ciclos de desarrollo más cortos. Si tuviera que elegir uno creo que me quedaría con handlebars.
