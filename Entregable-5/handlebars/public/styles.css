@@ -30,3 +30,11 @@ input {
 input[type = 'text']::placeholder {
     text-align: center;
 }
+
+button {
+    margin: 20px;
+}
+
+a {
+    color: white;
+}

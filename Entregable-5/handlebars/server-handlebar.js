@@ -31,7 +31,7 @@ app.engine('hbs', hbs.engine({
     extname: '.hbs',
     partialsDir: __dirname + '/views/partials',
     layoutsDir: __dirname + '/views/layouts',
-    defaultLayout: 'layout1.hbs'
+    defaultLayout: 'products-form-layout.hbs'
 }))
 
 
@@ -41,11 +41,23 @@ app.get('/', (req, res) => {
 })
 
 app.get('/products', (req, res) => {
-    res.render('products', {layout : 'layout2'})
+    res.render('products', {layout : 'products-table-layout', products: products, noRender : products.length!==0?false:true})
 })
 
 app.post(('/products'), (req, res) => {
-
+    const {title, price, thumbnail} = req.body
+    console.log(req.body);
+    if (title && price && thumbnail) {
+        const newProduct = {
+            title : title,
+            price : price,
+            thumbnail : thumbnail,
+            id : products.length + 1
+        }
+        // Add the product to the array
+        products.push(newProduct)
+        res.redirect('/products')
+    }
 })
 
 // Router url's
