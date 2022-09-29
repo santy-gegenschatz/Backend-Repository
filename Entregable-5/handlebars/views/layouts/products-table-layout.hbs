@@ -17,15 +17,15 @@
     <div id = 'main-div'>
         <table> 
             <tr>
-                <th> Nombre </th>
-                <th> Precio </th>
-                <th> Url </th>
+                <th> Name </th>
+                <th> Price </th>
+                <th> Visual </th>
             </tr>
             {{#each products}}
             <tr>
                 <td> {{this.title}} </td>
                 <td> {{this.price}} </td>
-                <td> {{this.thumbnail}} </td>
+                <td> <img src={{this.thumbnail}} alt="image_not_found"> </td>
             </tr>
             {{/each}}
         </table>

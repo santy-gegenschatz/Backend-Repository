@@ -25,6 +25,7 @@ input {
     margin: 20px;
     width: 200px;
     height: 50px;
+    text-align: center;
 }
 
 input[type = 'text']::placeholder {
@@ -37,4 +38,26 @@ button {
 
 a {
     color: white;
+}
+
+img {
+    height: 70px;
+    width: 70px;
+}
+
+table {
+    width: 50%;
+    background-color: red;
+    margin: 20px;
+    border-radius: 25px;
+}
+
+th {
+    text-align: center;
+    background-color: blue;
+    color: white;
+}
+
+tr {
+    text-align: center;
 }
