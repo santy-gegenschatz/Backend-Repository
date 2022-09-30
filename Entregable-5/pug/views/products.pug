@@ -1,0 +1,27 @@
+html
+    head
+        link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous")
+        link(rel="stylesheet", href="styles.css")
+        title Pug Version
+    body 
+        h1 This is the PUG version 
+        h3 This is a table with all the products
+        if render 
+            div(id = 'main-div')
+                table 
+                    tr 
+                        th Name
+                        th Price
+                        th Visual
+                    each prod in products
+                        tr 
+                            - var imgsrc = prod.thumbnail
+                            td #{prod.title}
+                            td #{prod.price}
+                            td
+                                img(src = imgsrc)
+            div(id = 'main-div')
+                button(class = 'btn btn-info')
+                    a(href="/") Go to form
+        else 
+            h3 Sorry... There are no products to browse

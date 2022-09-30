@@ -1,0 +1,19 @@
+html    
+    head
+        title Pug version 
+        link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous")
+        link(rel="stylesheet", href="styles.css")
+    body 
+        h1 This is the PUG version 
+        h3 This is a form handler load new products
+        div(id = 'main-div')
+            form(action="/products" method = 'post') 
+                div(id = 'secondary-div')
+                    input(type="text" placeholder = 'Name' name = 'title')
+                    input(type="text" placeholder = 'Price' name = 'price')
+                    input(type="text" placeholder = 'Url' name = 'thumbnail')
+                    input(type="submit")
+            
+            div 
+                button(class = 'btn btn-info')
+                    a(href="/products") Go to products
