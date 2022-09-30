@@ -1,2 +1,8 @@
-Después de haber utilizado los tres motores de plantillas, llegue a la conclusión de que el uso profesioanl de cualquiera de ellos requiere un alto nivel de dedicación al aprendizaje de su sintaxis. 
-Esta situación no es óptima para ciclos de desarrollo más cortos. Si tuviera que elegir uno creo que me quedaría con handlebars.
+Después de haber usado los tres, es obvio que lo ideal para minimizar tiempos de desarrollo es 
+un motor de plantillas que siga la sintaxis ya conocida por los devs.
+En mi caso, conozco HTML, CSS, JS y React. 
+Aprender la sintaxis especial de Pug me resulto tedioso.
+Handlebars tiene la sintaxis de html pero el setup es más complejo.
+Ejs es la solución más barata digamos, sigue la sintaxis de HTML y el setup es más simple.
+
+Busqué un gráfico en pm de las instalaciones de cada paquete, y resulta que eje es el más utilizado.
