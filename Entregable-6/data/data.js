@@ -1,7 +1,7 @@
 const messages = [
-    {text: 'Hola', autor: 'Fede'},
-    {text: 'Chau', autor: 'Santy'},
-    {text: 'Chau', autor: 'Fede'}
+    {text: 'Hola', author: 'Fede'},
+    {text: 'Chau', author: 'Santy'},
+    {text: 'Chau', author: 'Fede'}
 ]
 
 exports.messages = messages

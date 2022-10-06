@@ -9,13 +9,14 @@
 </head>
 <body>
     <h1> Sockets.io Webchat </h1>
-    <!-- Formulario dee chat -->
-    <form action="/chat" methtod = 'post'>
-        <input type="text" name = 'author' placeholder = 'Enter your name'>
-        <input type="text" name = 'message' placeholder = 'Enter your message'>
-        <input type="submit">
+    <!-- Chat Fornmulaire -->
+    <!-- We do not use the post method because-->
+    <form onsubmit = 'return addMessage(this)'>
+        <input type="text" name = 'author' id = 'author' placeholder = 'Enter your name'>
+        <input type="text" name = 'text' id = 'text' placeholder = 'Enter your message'>
+        <button> Send </button>
     </form>
-    <div id = 'messages'>
+    <div id = 'divDisplay'>
 
     </div>
     <script src="/main.js"></script>

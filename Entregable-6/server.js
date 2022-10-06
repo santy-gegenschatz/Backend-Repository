@@ -17,8 +17,15 @@ app.get('/', (req, res) => {
 ioServer.on('connection', (client) => {
     console.log('Broadcasting message');
     client.emit('messages', messages)
+
+    client.on('new-message', (msg) => {
+        console.log(msg);
+        messages.push(msg)
+        ioServer.sockets.emit('messages', messages)
+    })
+
 })
 
-httpServer.listen(4000, () => {
-    console.log('Listening on port 4000');
+httpServer.listen(8082, () => {
+    console.log('Listening on port 3030');
 })
