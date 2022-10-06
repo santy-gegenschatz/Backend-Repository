@@ -1,29 +1,40 @@
-// Get the data
-const products = require('./data/index.js')
-console.log(products);
 // Plain vanilla server with express
 const express = require('express');
+
+//Plain vanilla server with sockets.io
+const { Server: HttpServer } = require('http')
+const { Server: IOServer } = require('socket.io')
+
+// Instantiate everything
 const app = express();
+const httpServer = new HttpServer(app)
+const ioServer = new IOServer(httpServer)
+
+// Middlewares
+app.use(express.json())
+app.use(express.urlencoded({extended : true}))
+app.use(express.static('../public'))
 
 // Extract router from express
 const {Router} = express
 const router = Router()//
-
-// Use json to receive post requests
-app.use(express.json())
-app.use(express.urlencoded({extended : true}))
-app.use(express.static('public'))
-
-// Set up the app.use
 app.use('/api/products', router)
 
-// Pug Config
-app.set('views', './views')
+// Ejs Config
+app.set('views', '../views')
 app.set('view engine', 'ejs')
 
-// Common url's
+// Data
+const { products, messages } = require('../data/index')
+
+// Websocket connections
+ioServer.on('connection', (client) => {
+    console.log('Client connected');
+})
+
+// Router routes
 app.get('/', (req, res) => {
-    res.render('form.ejs')
+    res.render('form.ejs', {products: products, noRender : products.length===0})
 })
 
 app.get('/products', (req, res) => {
@@ -150,6 +161,6 @@ router.delete('/:id', (req, res) => {
 
 // Make the server listen on a given port
 const PORT = process.env.PORT || 8080
-app.listen(PORT, (error) => {
+httpServer.listen(PORT, (error) => {
     error ? console.log(error) : console.log(`Server running on port ${PORT}`);
 })

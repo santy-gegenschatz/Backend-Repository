@@ -1,12 +1,13 @@
 const express = require('express')
 const { Server: HttpServer} = require('http')
 const { Server: IOServer} = require('socket.io')
-const { messages, products } = require('./data/index')
-console.log(messages, products);
 
 const app = express()
 const httpServer = new HttpServer(app)
 const ioServer = new IOServer(httpServer)
+
+const { messages, products } = require('../data/index')
+console.log(messages, products);
 
 app.use(express.static('public'))
 
@@ -27,6 +28,7 @@ ioServer.on('connection', (client) => {
 
 })
 
-httpServer.listen(8082, () => {
-    console.log('Listening on port 3030');
+const PORT = process.env.PORT || 8000
+httpServer.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
 })
