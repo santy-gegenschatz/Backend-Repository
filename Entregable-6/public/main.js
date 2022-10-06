@@ -36,7 +36,11 @@ const render = (array) => {
 const renderProduct = (prod) => {
     const table = document.getElementById('table')
     const tableHtml = table.innerHTML
-    const newHtml = `<tr> <td> ${}</td> </tr>`
+    console.log(tableHtml);
+    const newHtml = `<tr> <td> ${prod.title} </td> <td> ${prod.price} </td> <td> <img src = '${prod.thumbnail}'> </td> </tr> </tbody>`
+    const replaced = tableHtml.replace('</tbody>', newHtml)
+    console.log(replaced);
+    table.innerHTML = replaced
 }
 
 socket.on('messages', (data) => {
