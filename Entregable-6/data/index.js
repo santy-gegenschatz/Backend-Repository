@@ -5,9 +5,9 @@ const p4 = {id : 4, title : 'Shoes', price : 30, thumbnail : 'https://cdn4.iconf
 const products = [p1, p2, p3, p4]
 
 const messages = [
-    {text: 'Hola', author: 'Fede'},
-    {text: 'Chau', author: 'Santy'},
-    {text: 'Chau', author: 'Fede'}
+    {text: 'Hello', author: 'John', date: new Date()},
+    {text: 'Good', author: 'Susan', date: new Date()},
+    {text: 'Goodbye', author: 'John', date: new Date()}
 ]
 
 exports.products = products

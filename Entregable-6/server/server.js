@@ -23,6 +23,7 @@ app.use('/api/products', router)
 // Ejs Config
 app.set('views', '../views')
 app.set('view engine', 'ejs')
+const { render } = require('ejs')
 
 // Data
 const { products, messages } = require('../data/index')
@@ -30,6 +31,17 @@ const { products, messages } = require('../data/index')
 // Websocket connections
 ioServer.on('connection', (client) => {
     console.log('Client connected');
+    client.emit('messages', messages)
+
+    client.on('new-message', (msg) => {
+        messages.push(msg)
+        ioServer.sockets.emit('messages', messages)
+    })
+
+    client.on('add-product', (product) => {
+        products.push(product)
+        ioServer.sockets.emit('products', product)
+    })
 })
 
 // Router routes

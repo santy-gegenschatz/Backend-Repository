@@ -47,7 +47,7 @@ img {
 }
 
 table {
-    width: 50%;
+    width: 400px;
     background-color: red;
     margin: 20px;
     border-radius: 25px;
@@ -61,4 +61,19 @@ th {
 
 tr {
     text-align: center;
+}
+
+/* Classes */
+
+.form-table-div {
+    display: flex;
+    justify-content: center;
+}
+
+.blue {
+    color: blue;
+}
+
+.green {
+    color: green
 }
