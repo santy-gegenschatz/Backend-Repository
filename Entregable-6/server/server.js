@@ -33,11 +33,13 @@ ioServer.on('connection', (client) => {
     console.log('Client connected');
     client.emit('messages', messages)
 
+    // Operation when a message is added
     client.on('new-message', (msg) => {
         messages.push(msg)
         ioServer.sockets.emit('messages', messages)
     })
 
+    // Operation when a product is added
     client.on('add-product', (product) => {
         products.push(product)
         ioServer.sockets.emit('products', product)
