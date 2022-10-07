@@ -32,3 +32,19 @@ const PORT = process.env.PORT || 8000
 httpServer.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 })
+
+app.post(('/products'), (req, res) => {
+    const {title, price, thumbnail} = req.body
+    console.log(req.body);
+    if (title && price && thumbnail) {
+        const newProduct = {
+            title : title,
+            price : price,
+            thumbnail : thumbnail,
+            id : products.length + 1
+        }
+        // Add the product to the array
+        products.push(newProduct)
+        res.redirect('/products')
+    }
+})

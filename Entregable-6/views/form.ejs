@@ -13,6 +13,7 @@
     <h1> This is the Ejs version </h1>
     <h3> This is a form handler to load new products into the database</h3>
     <div id = 'main-div'>
+        <h4> Form </h4>
         <form onsubmit = 'return addProduct(this)'>
             <div id = 'secondary-div'>
                 <input type="text" placeholder = "Name" name = 'title' id = 'title'>
@@ -25,6 +26,7 @@
             <h3> Sorry... There are no products to browse. </h3>
             <% } else { %>
             <div id = 'main-div'>
+                <h4> Products table </h4>
                 <table id = 'table'> 
                     <tr>
                         <th> Name </th>
@@ -43,7 +45,7 @@
             <br>
             <% } %>
         <div id = 'messages-div'>
-            <h3> Centro de mensajes </h1>
+            <h4 style = 'text-align: center;'> Centro de mensajes </h4>
             <form onsubmit = 'return addMessage(this)'>
                 <input type="text" name = 'author' id = 'author' placeholder = 'Enter your name'>
                 <input type="text" name = 'text' id = 'text' placeholder = 'Enter your message'>
