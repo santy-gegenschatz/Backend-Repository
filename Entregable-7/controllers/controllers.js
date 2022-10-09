@@ -1,4 +1,5 @@
 const Products = require('../classes/products')
+const { validateFullFields } = require('../validation/validation')
 
 const getProducts = async (req, res) => {
     console.log('1');
@@ -13,7 +14,11 @@ const getProduct = async (req, res) => {
 const addProduct = async (req, res) => {
     const attributes = req.body
     console.log(attributes);
-    return res.json(Products.add(attributes))   
+    if (validateFullFields(attributes).validated) {
+        return res.json(Products.add(attributes))   
+    } else {
+        return (validateFullFields(attributes))
+    }
 }
 
 module.exports = { getProducts, getProduct, addProduct}
