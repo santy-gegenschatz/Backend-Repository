@@ -1,20 +1,15 @@
-const Product = require('./product')
-
 class Products {
     constructor() {
         this.items = []
     }
 
     add(item) {
-        console.log(item.id);
-        const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
-        console.log('ProdExists: ', prodExists);
+        const prodExists = this.items.findIndex((prod) => prod.id === item.id)
         if (prodExists !== -1) {
             this.items[prodExists].stock += item.stock
             return this.throwSuccess('Item already in the databse. Stock augmented')
         } else {
-            const newProduct = new Product(this.assignId(), item)
-            this.items.push(newProduct)
+            this.items.push({id: this.assignId(), ...item})
             return this.throwSuccess('New item added to the database')
         }
     }
@@ -57,30 +52,20 @@ class Products {
         }
     }
 
-    find(id) {
-        const product = this.items.find( (prod) => prod.id === id)
-        if (product) {
-            return product
-        } else {
-            return this.throwError('Product not found')
-        }
-    }
-
     getProduct(id) {
         // Figure out if the product exists
-        console.log(id);
         const prodExists = this.items.findIndex((prod) => prod.id === id)
         if (prodExists !== -1) {
             // If the product exists
-            return this.throwSuccess('Returning requested product', this.items[prodExists])
+            this.throwSuccess('Returning requested product', this.items[prodExists])
         } else {
             // If it does not exist
-            return this.throwError('Sorry, no product in our db matches the given id')
+            this.throwError('Sorry, no product in our db matches the given id')
         }
     }
 
     getProducts() {
-        return this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
+        this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
     }
 
     throwSuccess(message, payload) {
@@ -90,6 +75,26 @@ class Products {
     throwError(message) {
         return {code: 500, message}
     }
+
+    find(id) {
+        const product = this.items.find( (prod) => prod.id === id)
+        if (product) {
+            return product
+        } else {
+            return this.throwError('Product not found')
+        }
+    }
 }
 
-module.exports = new Products()
+const item1 = {a : 'alpha', b: 'beta'}
+const item2 = {name : 'charlie', description: 'delta'}
+
+const products = new Products()
+console.log(products.add(item1))
+console.log(products.add(item2))
+console.log(products.find(1));
+console.log(products.find(3));
+console.log(products.editProduct(1, {name: 'beta'}))
+console.log(products);
+console.log(products.deleteProduct(4));
+console.log(products.deleteProduct(2));

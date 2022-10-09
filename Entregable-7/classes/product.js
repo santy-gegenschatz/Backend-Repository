@@ -1,11 +1,13 @@
 class Product {
-    constructor(id, name, description, price, stock, thumbnail) {
+    constructor(id, attributes) {
         this.id = id
         this.creationDate = new Date()
-        this.name = name
-        this.description = description
-        this.price = price
-        this.stock = stock
-        this.thumbnail = thumbnail
+        this.name = attributes.name
+        this.description = attributes.description
+        this.price = attributes.price
+        this.stock = attributes.stock
+        this.thumbnail = attributes.thumbnail
     }
 }
+
+module.exports = Product
