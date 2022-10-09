@@ -13,7 +13,6 @@ const getProduct = async (req, res) => {
 
 const addProduct = async (req, res) => {
     const attributes = req.body
-    console.log(attributes);
     if (validateFullFields(attributes).validated) {
         return res.json(Products.add(attributes))   
     } else {
