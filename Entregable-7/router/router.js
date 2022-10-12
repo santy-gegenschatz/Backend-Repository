@@ -1,4 +1,4 @@
-const {getProducts, getProduct, addProduct, updateProduct} = require('../controllers/controllers')
+const {getProducts, getProduct, addProduct, updateProduct, deleteProduct} = require('../controllers/controllers')
 const { Router } = require('express')
 const router = Router()
 
@@ -15,6 +15,8 @@ router.post('/', addProduct)
 // Update a product
 router.put('/:id', updateProduct)
 
+// Delete a product
+router.delete('/:id', deleteProduct)
 // Update a product that already exists in the db
 // router.put('/:id', (req, res) => {
     
@@ -58,20 +60,20 @@ router.put('/:id', updateProduct)
 // })
 
 // Delete an item
-router.delete('/:id', (req, res) => {
-    const {id} = req.params
-    // Find it in the array and delete it
-    const index = products.findIndex( (prod) => prod.id === Number(id))
-    if (index !== -1) {
-        products.splice(index, 1)
-        res.status(200).json({
-            response : 'Product successfully deleted'
-        })
-    } else {
-        res.status(400).json({
-            error : 'No product matches that id'
-        })
-    }
-})
+// router.delete('/:id', (req, res) => {
+//     // const {id} = req.params
+//     // // Find it in the array and delete it
+//     // const index = products.findIndex( (prod) => prod.id === Number(id))
+//     // if (index !== -1) {
+//     //     products.splice(index, 1)
+//     //     res.status(200).json({
+//     //         response : 'Product successfully deleted'
+//     //     })
+//     // } else {
+//     //     res.status(400).json({
+//     //         error : 'No product matches that id'
+//     //     })
+//     // }
+// })
 
 exports.router = router

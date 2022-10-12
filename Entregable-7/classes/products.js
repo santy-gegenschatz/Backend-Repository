@@ -6,7 +6,6 @@ class Products {
     }
 
     add(item) {
-        console.log(item.id);
         const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
         if (prodExists !== -1) {
             this.items[prodExists].stock += item.stock
@@ -28,10 +27,11 @@ class Products {
 
     deleteProduct(id) {
         // First, figure out if the product effectively exists
-        const productIndex = this.items.findIndex((prod) => prod.id === id)
+        const convertedId = Number(id)
+        const productIndex = this.items.findIndex((prod) => prod.id === convertedId)
         if (productIndex !== -1) {
             const removed = this.items.splice(productIndex)
-            return this.throwSuccess('Product deleted', {deleted: removed.toString(), currentArray: this.items.toString()})
+            return this.throwSuccess('Product deleted', {deleted: removed[0].toString(), currentArray: this.items.toString()})
         } else {
             return this.throwError(' There is no item with that id in the database')
         }
@@ -71,7 +71,6 @@ class Products {
         // In case some douchebag passes the id as a string we will turn it into a number
         const convertedId = Number(id)
         const prodExists = this.items.findIndex((prod) => prod.id === convertedId)
-        console.log('ProdExists :', prodExists);
         if (prodExists !== -1) {
             // If the product exists
             return this.throwSuccess('Returning requested product', this.items[prodExists])

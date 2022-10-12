@@ -7,7 +7,6 @@ const getProducts = async (req, res) => {
 
 const getProduct = async (req, res) => {
     const { id } = req.params
-    console.log('ID: ', id, typeof(id));
     return res.json(Products.getProduct(id))
 }
 
@@ -23,11 +22,14 @@ const addProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
     const { id } = req.params
     const attributes = req.body
-    console.log('Type of id: ', typeof(id));
-    console.log('Attributes: ', attributes);
     res.json(Products.editProduct(id, attributes))
+}
+
+const deleteProduct = async (req, res) => {
+    const { id } = req.params
+    res.json(Products.deleteProduct(id))
 }
 
 
 
-module.exports = { getProducts, getProduct, addProduct, updateProduct}
+module.exports = { getProducts, getProduct, addProduct, updateProduct, deleteProduct}
