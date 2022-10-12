@@ -8,7 +8,6 @@ class Products {
     add(item) {
         console.log(item.id);
         const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
-        console.log('ProdExists: ', prodExists);
         if (prodExists !== -1) {
             this.items[prodExists].stock += item.stock
             return this.throwSuccess('Item already in the databse. Stock augmented')
@@ -68,8 +67,10 @@ class Products {
 
     getProduct(id) {
         // Figure out if the product exists
-        console.log(id);
-        const prodExists = this.items.findIndex((prod) => prod.id === id)
+        // In case some douchebag passes the id as a string we will turn it into a number
+        const convertedId = Number(id)
+        const prodExists = this.items.findIndex((prod) => prod.id === convertedId)
+        console.log('ProdExists :', prodExists);
         if (prodExists !== -1) {
             // If the product exists
             return this.throwSuccess('Returning requested product', this.items[prodExists])
