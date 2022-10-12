@@ -40,7 +40,8 @@ class Products {
 
     editProduct(id, attributes) {
         // Figure out if the product exists
-        const prodIndex = this.items.findIndex((prod) => prod.id === id)
+        const convertedId = Number(id)
+        const prodIndex = this.items.findIndex((prod) => prod.id === convertedId)
         if (prodIndex !== -1) {
             // If the product exists
             try {

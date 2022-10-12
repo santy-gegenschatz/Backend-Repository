@@ -21,9 +21,13 @@ const addProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-    
+    const { id } = req.params
+    const attributes = req.body
+    console.log('Type of id: ', typeof(id));
+    console.log('Attributes: ', attributes);
+    res.json(Products.editProduct(id, attributes))
 }
 
 
 
-module.exports = { getProducts, getProduct, addProduct}
+module.exports = { getProducts, getProduct, addProduct, updateProduct}
