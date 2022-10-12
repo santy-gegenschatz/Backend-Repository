@@ -6,4 +6,16 @@ const validateFullFields = (attributes) => {
     }
 }
 
-module.exports = { validateFullFields }
+const validateCredentials = (authCredential) => {
+    try {
+        if (Number(authCredential.password) === 1) {
+            return {validated: true}
+        } else {
+            return {validated: false, error : 'Route denied. Check you credentials and come again soon'}
+        }
+    } catch (e) {
+        return {validated: false, error: 'Route denied. Check your credentials and come again soon'}
+    }
+}
+
+module.exports = { validateFullFields, validateCredentials}

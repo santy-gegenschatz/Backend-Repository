@@ -7,9 +7,10 @@ class Products {
 
     add(item) {
         const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
+        console.log(prodExists);
         if (prodExists !== -1) {
-            this.items[prodExists].stock += item.stock
-            return this.throwSuccess('Item already in the databse. Stock augmented')
+            Number(this.items[prodExists].stock) += Number(item.stock)
+            return this.throwSuccess('Item already in the database. Stock augmented')
         } else {
             const newProduct = new Product(this.assignId(), item)
             this.items.push(newProduct)
@@ -94,3 +95,15 @@ class Products {
 }
 
 module.exports = new Products()
+
+
+
+
+
+
+
+
+
+
+
+
