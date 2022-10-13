@@ -5,7 +5,8 @@ const express = require('express');
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
 
-const { router } = require('../router/router')
+const { productsRouter } = require('../routers/productsRouter')
+const { cartRouter } = require('../routers/cartRouter')
 
 // Data
 const { products, messages } = require('../data/index')
@@ -29,7 +30,8 @@ class Server {
     }
 
     routes() {
-      this.app.use('/api/products', router)
+      this.app.use('/api/products', productsRouter)
+      this.app.use('/api/cart', cartRouter)
       // App routes
         this.app.get('/', (req, res) => {
             res.render('form.ejs', {products: products, noRender : products.length===0})
