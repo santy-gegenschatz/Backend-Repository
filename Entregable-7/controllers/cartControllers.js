@@ -1,9 +1,12 @@
+const Carts = require('../classes/carts')
+
 const getCart = async (req, res) => {
-    res.json('Getting Cart')
+    const { id } = req.params
+    res.json(Carts.getCart(id))
 }
 
 const createCart = async (req, res) => {
-    res.json('Creating cart')
+    res.json(Carts.createCart())
 }
 
 const addItemsToCart = async (req, res) => {
