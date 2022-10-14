@@ -58,7 +58,7 @@ class Carts {
         if (cartIndex !== -1) {
             const removed = this.items.splice(cartIndex)
             this.saveToPersistentMemory(this.items)
-            return this.throwSuccess('The cart has been successfully deleted', {deleted: removed[0].toString()})
+            return this.throwSuccess('The cart has been successfully deleted', {deleted: removed[0]})
         } else {
             return this.throwError('The id does not match with any cart')
         }
