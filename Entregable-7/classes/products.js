@@ -1,20 +1,23 @@
 const Product = require('./product')
+const Container = require('../data/container') 
 
 class Products {
     constructor() {
         this.items = []
+        this.container = new Container('data', 'products.txt')
     }
 
     add(item) {
         const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
-        console.log(prodExists);
         if (prodExists !== -1) {
             this.items[prodExists].stock = Number(this.items[prodExists].stock)
             this.items[prodExists].stock += Number(item.stock)
+            this.saveToPersistentMemory(this.items)
             return this.throwSuccess('Item already in the database. Stock augmented')
         } else {
             const newProduct = new Product(this.assignId(), item)
             this.items.push(newProduct)
+            this.saveToPersistentMemory(this.items)
             return this.throwSuccess('New item added to the database')
         }
     }
@@ -39,6 +42,7 @@ class Products {
         const productIndex = this.items.findIndex((prod) => prod.id === convertedId)
         if (productIndex !== -1) {
             const removed = this.items.splice(productIndex)
+            this.saveToPersistentMemory(this.items)
             return this.throwSuccess('Product deleted', {deleted: removed[0].toString(), currentArray: this.items.toString()})
         } else {
             return this.throwError(' There is no item with that id in the database')
@@ -55,6 +59,7 @@ class Products {
             try {
                 const product = this.items[prodIndex]
                 this.items[prodIndex] = {...product, ...attributes}
+                this.saveToPersistentMemory(this.items)
                 return this.throwSuccess('Succesfully modified product. Here is the new one', this.items[prodIndex])
             } catch (error) {
                 throw new Error(error)
@@ -95,6 +100,10 @@ class Products {
     hasStock(id) {
         const product = this.find(id)
         return this.find(id).stock >= 1 
+    }
+
+    saveToPersistentMemory(object) {
+        this.container.save(object)
     }
 
     throwSuccess(message, payload) {
