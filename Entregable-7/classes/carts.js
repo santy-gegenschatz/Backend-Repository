@@ -1,9 +1,12 @@
 const Products = require('./products')
 const Cart = require('./cart')
+const Container = require('../data/container')
 
 class Carts {
     constructor() {
+        this.container = new Container('data', 'carts.txt')
         this.items = []
+        this.readCarts()
     }
 
     assignId() {
@@ -28,6 +31,7 @@ class Carts {
                     // Then, add the product to the cart and then decrease the stock
                     cart.add(product)
                     Products.decreaseStock(product)
+                    this.saveToPersistentMemory(this.items)
                     return this.throwSuccess(`Successfully added ${product.name} to cart ${cart.id}`, {cart, product})
                 } else {
                     return this.throwError('There is not enough stock of the product')
@@ -44,6 +48,7 @@ class Carts {
     createCart() {
         const cart = new Cart(this.assignId())
         this.items.push(cart)
+        this.saveToPersistentMemory(this.items)
         return this.throwSuccess('Cart succesfully created', cart)
     }
 
@@ -52,6 +57,7 @@ class Carts {
         const cartIndex = this.items.findIndex((cart) => cart.id === convertedCartId)
         if (cartIndex !== -1) {
             const removed = this.items.splice(cartIndex)
+            this.saveToPersistentMemory(this.items)
             return this.throwSuccess('The cart has been successfully deleted', {deleted: removed[0].toString()})
         } else {
             return this.throwError('The id does not match with any cart')
@@ -61,10 +67,10 @@ class Carts {
     deleteCartItem(idCart, idProduct) {
         const convertedCartId = Number(idCart)
         const convertedProductId = Number(idProduct)
-
         const cart = this.find(convertedCartId)
         if (cart) {
             if (cart.removeItem(convertedProductId)) {
+                this.saveToPersistentMemory(this.items)
                 return this.throwSuccess('Product removed from the cart', cart)
             } else {
                 return this.throwError('The if of the product does not match a product in the cart')
@@ -94,6 +100,14 @@ class Carts {
         } else {
             return this.throwError('No cart in our database matches the given id')
         }
+    }
+
+    async readCarts() {
+        this.items = await this.container.read()
+    }
+
+    saveToPersistentMemory(object) {
+        this.container.save(object)
     }
 
     throwSuccess(message, payload) {

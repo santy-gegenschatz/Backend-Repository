@@ -41,7 +41,7 @@ const deleteProduct = async (req, res) => {
     if (validateCredentials(credential).validated) {
         return res.json(Products.deleteProduct(id))
     } else {
-        return res.json(validateCredentials(credential).validated)
+        return res.json(validateCredentials(credential))
     }
 }
 

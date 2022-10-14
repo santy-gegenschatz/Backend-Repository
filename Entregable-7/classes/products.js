@@ -3,8 +3,9 @@ const Container = require('../data/container')
 
 class Products {
     constructor() {
-        this.items = []
         this.container = new Container('data', 'products.txt')
+        this.items = []
+        this.readItems()
     }
 
     add(item) {
@@ -34,6 +35,7 @@ class Products {
         let stock = Number(prod.stock)
         stock -= 1
         prod.stock = stock
+        this.saveToPersistentMemory(this.items)
     }
 
     deleteProduct(id) {
@@ -100,6 +102,10 @@ class Products {
     hasStock(id) {
         const product = this.find(id)
         return this.find(id).stock >= 1 
+    }
+
+    async readItems() {
+        this.items = await this.container.read()
     }
 
     saveToPersistentMemory(object) {

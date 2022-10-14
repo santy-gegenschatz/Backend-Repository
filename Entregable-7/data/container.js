@@ -12,11 +12,18 @@ class Container {
         this.fs.writeFileSync(this.route, JSON.stringify(object))
     }
 
-    read() {
-        this.fs.readFileSync(this.fileName, (error, content) => {
-            const parsedContent = JSON.parse(content)
-            return parsedContent
+    async read() {
+        const p = new Promise( (resolve, reject) => {
+            this.fs.readFile(this.route, (error, content) => {
+                try {
+                    const parsedContent = JSON.parse(content)
+                    resolve(parsedContent)
+                } catch (e) {
+                    console.log(e);
+                }                
+            })
         })
+        return p   
     }
 
     deleteAllData() {
