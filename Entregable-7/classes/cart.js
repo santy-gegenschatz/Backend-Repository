@@ -10,7 +10,9 @@ class Cart {
     }
 
     removeItem(id) {
-        const itemIndex = this.items.find( (i) => i.id ===id)
+        console.log(id);
+        const itemIndex = this.items.findIndex( (i) => i.id === id)
+        console.log(itemIndex);
         if (itemIndex !== -1) {
             this.items.splice(itemIndex)
             return true

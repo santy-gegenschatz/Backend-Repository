@@ -15,11 +15,13 @@ const addItemToCart = async (req, res) => {
 }
 
 const deleteCartItem = async (req, res) => {
-    res.json('Deleting item from cart')
+    const { id, id_prod} = req.params
+    res.json(Carts.deleteCartItem(id, id_prod))
 }
 
 const deleteCart = async (req, res) => {
-    res.json('Deleting cart')
+    const { id } = req.params
+    res.json(Carts.deleteCart(id))
 }
 
 module.exports = {getCart, createCart, addItemToCart, deleteCartItem, deleteCart}

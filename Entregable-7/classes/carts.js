@@ -49,10 +49,10 @@ class Carts {
 
     deleteCart(id) {
         const convertedCartId = Number(id)
-        const cartIndex = this.findIndex((cart) => cart.id === convertedCartId)
+        const cartIndex = this.items.findIndex((cart) => cart.id === convertedCartId)
         if (cartIndex !== -1) {
             const removed = this.items.splice(cartIndex)
-            return this.throwSuccess('The cart has been successfully deleted', {deleted: removed[0].toString(), currentArray: this.items.toString()})
+            return this.throwSuccess('The cart has been successfully deleted', {deleted: removed[0].toString()})
         } else {
             return this.throwError('The id does not match with any cart')
         }
@@ -65,12 +65,12 @@ class Carts {
         const cart = this.find(convertedCartId)
         if (cart) {
             if (cart.removeItem(convertedProductId)) {
-                this.throwSuccess('Product removed from the cart', cart)
+                return this.throwSuccess('Product removed from the cart', cart)
             } else {
-                this.throwError('The if of the product does not match a product in the cart')
+                return this.throwError('The if of the product does not match a product in the cart')
             }
         } else {
-            this.throwError('The id of the cart is incorrect')
+            return this.throwError('The id of the cart does not match any cart')
         }
 
     }

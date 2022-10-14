@@ -13,7 +13,7 @@ cartRouter.post('/', createCart)
 cartRouter.post('/:id/:id_prod', addItemToCart)
 
 // Delete a product from a cart
-cartRouter.delete('/:id/a/:id_prod', deleteCartItem)
+cartRouter.delete('/:id/:id_prod', deleteCartItem)
 
 // Delete a cart
 cartRouter.delete('/:id', deleteCart)
