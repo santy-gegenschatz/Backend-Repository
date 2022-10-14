@@ -9,8 +9,9 @@ const createCart = async (req, res) => {
     res.json(Carts.createCart())
 }
 
-const addItemsToCart = async (req, res) => {
-    res.json('Adding items to cart')
+const addItemToCart = async (req, res) => {
+    const { id, id_prod} = req.params
+    res.json(Carts.addItemsToCart(id, id_prod))
 }
 
 const deleteCartItem = async (req, res) => {
@@ -21,4 +22,4 @@ const deleteCart = async (req, res) => {
     res.json('Deleting cart')
 }
 
-module.exports = {getCart, createCart, addItemsToCart, deleteCartItem, deleteCart}
+module.exports = {getCart, createCart, addItemToCart, deleteCartItem, deleteCart}

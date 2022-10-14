@@ -1,4 +1,4 @@
-const {getCart, createCart, addItemsToCart, deleteCartItem, deleteCart} = require('../controllers/cartControllers')
+const {getCart, createCart, addItemToCart, deleteCartItem, deleteCart} = require('../controllers/cartControllers')
 const { Router } = require('express')
 const cartRouter = Router()
 
@@ -10,10 +10,10 @@ cartRouter.get('/:id', getCart)
 cartRouter.post('/', createCart)
 
 // Add a product to a cart
-cartRouter.post('/:id', addItemsToCart)
+cartRouter.post('/:id/:id_prod', addItemToCart)
 
 // Delete a product from a cart
-cartRouter.delete('/:id/:id_prod', deleteCartItem)
+cartRouter.delete('/:id/a/:id_prod', deleteCartItem)
 
 // Delete a cart
 cartRouter.delete('/:id', deleteCart)

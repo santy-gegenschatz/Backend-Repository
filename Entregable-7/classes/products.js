@@ -9,7 +9,8 @@ class Products {
         const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
         console.log(prodExists);
         if (prodExists !== -1) {
-            Number(this.items[prodExists].stock) += Number(item.stock)
+            this.items[prodExists].stock = Number(this.items[prodExists].stock)
+            this.items[prodExists].stock += Number(item.stock)
             return this.throwSuccess('Item already in the database. Stock augmented')
         } else {
             const newProduct = new Product(this.assignId(), item)
@@ -24,6 +25,12 @@ class Products {
         } else {
             return this.items.length + 1
         }
+    }
+
+    decreaseStock(prod) {
+        let stock = Number(prod.stock)
+        stock -= 1
+        prod.stock = stock
     }
 
     deleteProduct(id) {
@@ -63,7 +70,7 @@ class Products {
         if (product) {
             return product
         } else {
-            return this.throwError('Product not found')
+            return false
         }
     }
 
@@ -83,6 +90,11 @@ class Products {
 
     getProducts() {
         return this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
+    }
+
+    hasStock(id) {
+        const product = this.find(id)
+        return this.find(id).stock >= 1 
     }
 
     throwSuccess(message, payload) {
