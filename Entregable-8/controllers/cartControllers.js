@@ -1,4 +1,4 @@
-const Carts = require('../classes/carts')
+const Carts = require('../containers/cartsContainer')
 
 const getCart = async (req, res) => {
     const { id } = req.params
