@@ -10,6 +10,9 @@ const { cartRouter } = require('../routers/cartRouter')
 
 // Data
 const { products, messages } = require('../data/index')
+// const dbMessages = require('../containers/messagesContainer')
+// const sqlite3Config = require('../database/sqlite3.config')
+// const Messages = new dbMessages(sqlite3Config, 'messages')
 
 class Server {
     constructor() {
@@ -58,12 +61,12 @@ class Server {
     startSockets() {
         this.ioServer.on('connection', (client) => {
             console.log('Client connected');
-            client.emit('messages', messages)
+            client.emit('messages', Messages.getMessages())
         
             // Operation when a message is added
             client.on('new-message', (msg) => {
-                messages.push(msg)
-                this.ioServer.sockets.emit('messages', messages)
+                Messages.addMessage(msg)
+                this.ioServer.sockets.emit('messages', Messages.getMessages())
             })
         
             // Operation when a product is added
