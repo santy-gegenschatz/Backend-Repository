@@ -9,7 +9,7 @@ class Database {
         const response = await this.knex.insert(product)
         return this.throwSuccess('Product added', response)
     }
-
+    
     async getProduct(id) {
         console.log(a);
         const response = await this.knex.from(this.table).select('*').where('id', '=', id)

@@ -2,12 +2,11 @@
 const options = {
     client: 'mysql',
     connection: {
-        host: '192.168.64.2',
+        host: '127.0.0.1',
         user: 'root',
-        password: '',
-        database: 'ecommerce',
-        port: 3306,
-        verbose: true
+        password: 'P2hnDTkzJ0miZgDH',
+        database: 'ecommerce'
+        //
     }
 }
 
