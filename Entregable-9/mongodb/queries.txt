@@ -1,0 +1,13 @@
+# Show dbs
+show dbs
+# Create a db called ecommerce
+use ecommerce
+# Create a products and a messages collection
+db.createCollection('products')
+db.createCollection('messages')
+# Create 10 documents in the products collection
+db.products.insertOne({name : 'Shirt', description: 'A black shirt', price: 100, stock: 5, thumbnail: 'url'})
+
+# List the documents in each collection
+db.products.find()
+db.messages.find()
