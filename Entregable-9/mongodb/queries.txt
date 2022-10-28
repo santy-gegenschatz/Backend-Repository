@@ -38,8 +38,22 @@ db.messages.estimatedDocumentCount()
     db.products.find({price: {$lt: 1000}})
     db.products.find({$and: [ {price : {$gte: 1000}}, {price : {$lte: 3000}} ]})
     db.products.find({price: {$gt: 3000}})
+    db.products.find().sort({price: 1}).skip(2).limit(1)
 
     # Add another key to all products in a collection
-    
+    db.products.updateMany({}, {$set : {extraStock: 100}})
+
+    # Update the stock of certain products
+    db.products.updateMany({price : {$gt : 4000}}, {$set: {stock : 0}})
+
+    # Delete certain products (price <1000)
+    db.products.deleteMany({price : {$lt : 1000}})
+
+# Create a user with only read access to the ecommerce databse
+db.createUser({user: 'pepe', pwd: 'asd456', roles : [{role: 'read', db: 'ecommerce'}]})
+    # Check that it cannot modify data
+    dd.products.insertOne({name : 'Wallet'}) => not authorized
+
+
 
 
