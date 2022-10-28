@@ -51,6 +51,7 @@ db.messages.estimatedDocumentCount()
 
 # Create a user with only read access to the ecommerce databse
 db.createUser({user: 'pepe', pwd: 'asd456', roles : [{role: 'read', db: 'ecommerce'}]})
+mongo -u pepe - p asd456
     # Check that it cannot modify data
     dd.products.insertOne({name : 'Wallet'}) => not authorized
 
