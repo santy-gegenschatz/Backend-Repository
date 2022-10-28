@@ -1,0 +1,79 @@
+/* This file updates the styles, somehow rudimentary, for the layouts */
+h1 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+#main-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: beige;
+}
+
+#secondary-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: red;
+    margin: 20px;
+    padding: 10px;
+}
+
+input {
+    margin: 20px;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+}
+
+input[type = 'text']::placeholder {
+    text-align: center;
+}
+
+button {
+    margin: 20px;
+}
+
+a {
+    color: white;
+}
+
+img {
+    height: 70px;
+    width: 70px;
+}
+
+table {
+    width: 400px;
+    background-color: red;
+    margin: 20px;
+    border-radius: 25px;
+}
+
+th {
+    text-align: center;
+    background-color: blue;
+    color: white;
+}
+
+tr {
+    text-align: center;
+}
+
+/* Classes */
+
+.form-table-div {
+    display: flex;
+    justify-content: center;
+}
+
+.blue {
+    color: blue;
+}
+
+.green {
+    color: green
+}
