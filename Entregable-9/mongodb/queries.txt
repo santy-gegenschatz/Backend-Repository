@@ -54,7 +54,3 @@ db.createUser({user: 'pepe', pwd: 'asd456', roles : [{role: 'read', db: 'ecommer
 mongo -u pepe - p asd456
     # Check that it cannot modify data
     dd.products.insertOne({name : 'Wallet'}) => not authorized
-
-
-
-
