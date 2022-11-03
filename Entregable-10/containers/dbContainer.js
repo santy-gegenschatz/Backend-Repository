@@ -11,9 +11,7 @@ class Database {
     }
     
     async getProduct(id) {
-        console.log(a);
         const response = await this.knex.from(this.table).select('*').where('id', '=', id)
-        console.log(reponse);
         return this.throwSuccess('Product added', response)
     }
 
@@ -23,9 +21,7 @@ class Database {
     }
 
      async getProducts() {
-        console.log('a');
         const response = await this.knex.from(this.tableName).select('*')
-        console.log('Response:', response);
         return this.throwSuccess('Here are the products', response)
     }
 

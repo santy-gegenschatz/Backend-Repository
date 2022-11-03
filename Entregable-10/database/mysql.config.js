@@ -4,7 +4,7 @@ const options = {
     connection: {
         host: '127.0.0.1',
         user: 'root',
-        password: 'P2hnDTkzJ0miZgDH',
+        password: 'P2hanDTkzJ0miZgDH',
         database: 'ecommerce'
         //
     }

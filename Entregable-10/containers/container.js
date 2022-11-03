@@ -7,7 +7,6 @@ class Container {
     }
 
     save(object) {
-        console.log('Saving');
         console.log(this.route);
         this.fs.writeFileSync(this.route, JSON.stringify(object))
     }

@@ -1,13 +1,8 @@
 const Products = require('../containers/productsContainer')
-const DatabaseContainer = require('../containers/dbContainer')
-const configObject = require('../database/mysql.config')
-console.log(configObject);
-const Database = new DatabaseContainer(configObject, 'products')
 const { validateFullFields, validateCredentials } = require('../validation/validation')
 
 const getProducts = async (req, res) => {
-       return res.status(200).json(Database.getProducts())
-    // return res.status(200).json(Products.getProducts())
+       return res.status(200).json(Products.getProducts())
 }
 
 const getProduct = async (req, res) => {
