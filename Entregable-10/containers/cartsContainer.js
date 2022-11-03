@@ -1,6 +1,6 @@
 const Products = require('../model/product')
 const Cart = require('../model/cart')
-const Container = require('../data/container')
+const Container = require('./container')
 
 class Carts {
     constructor() {

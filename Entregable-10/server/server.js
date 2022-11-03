@@ -5,6 +5,7 @@ const express = require('express');
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
 
+const { defaultRouter } = require('../routers/defaultRouter')
 const { productsRouter } = require('../routers/productsRouter')
 const { cartRouter } = require('../routers/cartRouter')
 
@@ -33,30 +34,11 @@ class Server {
     }
 
     routes() {
+      this.app.use('/', defaultRouter)
       this.app.use('/api/products', productsRouter)
       this.app.use('/api/cart', cartRouter)
-      // App routes
-        this.app.get('/', (req, res) => {
-            res.render('form.ejs', {products: products, noRender : products.length===0})
-        })
-
-        this.app.get('/products', (req, res) => {
-            res.render('products.ejs', {products: products, noRender : products.length===0})
-        })
-
     }
 
-    templatingEngines() {
-      this.app.set('views', 'views')
-      this.app.set('view engine', 'ejs')
-    }
-
-    listen() {
-      this.httpServer.listen(this.PORT, (error) => {
-          error ? console.log(error) : console.log(`Server running on port ${this.PORT}`);
-      })
-    }
-    
     // Websocket connections
     startSockets() {
         this.ioServer.on('connection', (client) => {
@@ -76,6 +58,19 @@ class Server {
             })
         })
     }
+
+    templatingEngines() {
+        this.app.set('views', 'views')
+        this.app.set('view engine', 'ejs')
+    }
+
+    listen() {
+      this.httpServer.listen(this.PORT, (error) => {
+          error ? console.log(error) : console.log(`Server running on port ${this.PORT}`);
+      })
+    }
+    
+
 }
 
 module.exports = Server                                

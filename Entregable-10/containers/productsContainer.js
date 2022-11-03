@@ -1,5 +1,5 @@
 const Product = require('../model/product')
-const Container = require('../data/container') 
+const Container = require('./container') 
 
 class Products {
     constructor() {
