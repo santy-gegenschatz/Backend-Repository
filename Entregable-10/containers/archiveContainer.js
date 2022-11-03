@@ -1,5 +1,5 @@
 const fs = require('fs')
-class Container {
+class ArchiveContainer {
     constructor(folderName, fileName) {
         this.fileName = fileName
         this.fs = fs
@@ -30,5 +30,5 @@ class Container {
     }
 }
 
-module.exports = Container
+module.exports = ArchiveContainer
 
