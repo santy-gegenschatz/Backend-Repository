@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregble #6</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1> This is the Ejs version </h1>
+    <h3> This is a form handler to load new products into the database</h3>
+    <div id = 'main-div'>
+        <h4> Form </h4>
+        <form onsubmit = 'return addProduct(this)'>
+            <div id = 'secondary-div'>
+                <input type="text" placeholder = "Name" name = 'title' id = 'title'>
+                <input type="text" placeholder = "Price" name = 'price' id = 'price'>
+                <input type="text" placeholder = "Url" name = 'thumbnail' id = 'thumbnail'>
+                <input type="submit" placeholder = "Send">
+            </div>
+        </form>
+        <% if (noRender) { %>
+            <h3> Sorry... There are no products to browse. </h3>
+            <% } else { %>
+            <div id = 'main-div'>
+                <h4> Products table </h4>
+                <table id = 'table'> 
+                    <tr>
+                        <th> Name </th>
+                        <th> Price </th>
+                        <th> Visual </th>
+                    </tr>
+                    <% products.forEach( prod => { %>
+                        <tr>
+                            <td> <%= prod.title%> </td>
+                            <td> <%= prod.price%> </td>
+                            <td> <img src = <%= prod.thumbnail%> alt="image_not_found"> </td>
+                        </tr>
+                     <% }) %>
+                </table>
+            </div>
+            <br>
+            <% } %>
+        <div id = 'messages-div'>
+            <h4 style = 'text-align: center;'> Centro de mensajes </h4>
+            <form onsubmit = 'return addMessage(this)'>
+                <input type="text" name = 'author' id = 'author' placeholder = 'Enter your name'>
+                <input type="text" name = 'text' id = 'text' placeholder = 'Enter your message'>
+                <button> Send </button>
+            </form>
+            <div id = 'divDisplay'> </div>
+        </div>
+        <div>
+            <button class = "btn btn-primary"> <a href="/products"> Go to products </a> </button>
+        </div>
+    </div>
+    <script src="/main.js"></script>
+</body>
+</html>
