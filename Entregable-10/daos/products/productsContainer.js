@@ -1,5 +1,5 @@
-const Product = require('../model/product')
-const Container = require('./container') 
+const Product = require('../../model/product')
+const Container = require('../../containers/archiveContainer') 
 
 class Products {
     constructor() {
