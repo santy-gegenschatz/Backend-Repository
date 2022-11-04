@@ -1,4 +1,3 @@
-// connection object goes here
 const options = {
     client: 'mysql',
     connection: {
@@ -6,7 +5,6 @@ const options = {
         user: 'root',
         password: 'P2hanDTkzJ0miZgDH',
         database: 'ecommerce'
-        //
     }
 }
 

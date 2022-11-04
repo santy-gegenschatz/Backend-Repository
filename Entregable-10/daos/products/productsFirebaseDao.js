@@ -3,7 +3,7 @@ const Container = require('../../containers/firebaseContainer')
 
 class Products {
     constructor() {
-        this.container = new Container('carts')
+        this.container = new Container('products')
         this.items = []
         this.readItems()
     }

@@ -1,6 +1,6 @@
 const admin = require('firebase-admin')
 const { firestore, database } = require('firebase-admin')
-const { serviceAccount, databaseURL } = require('../firebase/firebaseConfig')
+const { serviceAccount, databaseURL } = require('../data/firebaseData/firebaseConfig')
 
 class FirebaseContainer {
     constructor(collectionName) {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { route } = require('../mongodb/mongoDbConfig')
+const route = require('../data/mongoDBData/mongoDbConfig')
 
 class MongoDbContainer {
     constructor(collectionName) {
