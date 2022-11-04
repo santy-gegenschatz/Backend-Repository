@@ -4,7 +4,7 @@ const Container = require('../../containers/firebaseContainer')
 
 class Carts {
     constructor() {
-        this.container = new Container('data', 'carts.txt')
+        this.container = new Container('products')
         this.items = []
         this.readCarts()
     }

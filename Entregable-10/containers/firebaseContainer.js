@@ -1,27 +1,51 @@
-const { query } = require('express')
+const admin = require('firebase-admin')
+const { firestore, database } = require('firebase-admin')
+const { serviceAccount, databaseURL } = require('../firebase/firebaseConfig')
 
 class FirebaseContainer {
-    constructor() {
-           this.admin = require('firebase-admin')
-           this.config = require('../firebase/firebaseConfig')
-           this.serviceAccount = this.config.serviceAccount
-           this.url = this.config.url
-        //    this.admin.initializeApp({
-        //     credential: this.admin.credential.cert(serviceAccount),
-        //     databaseURL: this.url
-        //    })
+    constructor(collectionName) {
+        this.connectDB()
+        this.collectionName = collectionName
     }
 
-    async save(object) {
-        const db = this.admin.firestore()
-        const query = db.collection('datapoints')
-        const doc = query.doc()
-        return await doc.create({data: object})
+    async connectDB() {
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount),
+            databaseURL: databaseURL
+        })
     }
 
     async read() {
-        
+        try {
+            const db = admin.firestore()
+            const query = db.collection(this.collectionName)
+            const querySnapshot = await query.get()
+            let docs = querySnapshot.docs
+            const response = docs.map( (doc) => {
+                return {
+                    ...doc
+                }
+            })
+            console.log(response);
+        } catch (e) {
+            console.log(e);
+        }
     }
+
+    async save(array) {
+        const db = admin.firestore()
+        const query = db.collection(this.collectionName)
+        // Create
+        try {
+            const doc = query.doc()
+            await doc.create({saved : array})
+            console.log('Inserted data into the Firebase DB');
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
 }
 
 module.exports = FirebaseContainer

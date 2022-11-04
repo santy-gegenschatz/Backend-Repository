@@ -1,8 +1,6 @@
 const serviceAccount = {
-    "type": "service_account",
-    "project_id": "backend-e3152",
-}
+  }
+  
+const databaseURL = 'https://backend-e3152.firebaseio.com'
 
-const url = 'https://backend-e3152.firebaseio.com'
-
-module.exports = {serviceAccount, url}
+module.exports = {serviceAccount, databaseURL}
