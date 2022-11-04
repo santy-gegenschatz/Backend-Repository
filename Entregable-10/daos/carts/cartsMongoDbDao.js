@@ -4,7 +4,7 @@ const Container = require('../../containers/mongoDbContainer')
 
 class Carts {
     constructor() {
-        this.container = new Container('data', 'carts.txt')
+        this.container = new Container('carts')
         this.items = []
         this.readCarts()
     }

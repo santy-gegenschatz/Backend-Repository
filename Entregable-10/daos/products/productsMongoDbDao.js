@@ -3,7 +3,7 @@ const Container = require('../../containers/mongoDbContainer')
 
 class Products {
     constructor() {
-        this.container = new Container('data', 'products.txt')
+        this.container = new Container('products')
         this.items = []
         this.readItems()
     }

@@ -6,10 +6,10 @@ class FirebaseContainer {
            this.config = require('../firebase/firebaseConfig')
            this.serviceAccount = this.config.serviceAccount
            this.url = this.config.url
-           this.admin.initializeApp({
-            credential: this.admin.credential.cert(serviceAccount),
-            databaseURL: this.url
-           })
+        //    this.admin.initializeApp({
+        //     credential: this.admin.credential.cert(serviceAccount),
+        //     databaseURL: this.url
+        //    })
     }
 
     async save(object) {
@@ -20,7 +20,7 @@ class FirebaseContainer {
     }
 
     async read() {
-        const querySnapshit = await quer
+        
     }
 }
 

@@ -1,4 +1,4 @@
-const Carts = require('../daos/carts/cartsArchiveDao')
+const Carts = require('../daos/carts/index')
 
 const getCart = async (req, res) => {
     const { id } = req.params

@@ -32,8 +32,8 @@ class Server {
 
     routes() {
       this.app.use('/', defaultRouter)
-      this.app.use('/api/products', productsRouter)
       this.app.use('/api/cart', cartRouter)
+      this.app.use('/api/products', productsRouter)
     }
 
     // Websocket connections

@@ -1,11 +1,11 @@
-const { route } = require('./mongodb/mongoDbConfig')
+const { route } = require('../mongodb/mongoDbConfig')
 
 class MongoDbContainer {
-    constructor() {
+    constructor(collectionName) {
         this.mongoose = require('mongoose')
         this.route = route
         this.connectToMongdoDb()
-        this.dataCollection = 'collections'
+        this.dataCollection = collectionName
         this.dataSchema = new this.mongoose.Schema({
             data: []
         })

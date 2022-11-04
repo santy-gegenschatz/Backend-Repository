@@ -1,4 +1,4 @@
-const Products = require('../daos/products/productsArchiveDao')
+const Products = require('../daos/products/index')
 const { validateFullFields, validateCredentials } = require('../validation/validation')
 
 const getProducts = async (req, res) => {
