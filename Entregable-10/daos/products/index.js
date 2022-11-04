@@ -1,9 +1,6 @@
 const archiveDao = require('./productsArchiveDao')
-console.log('2');
 const mongoDbDao = require('./productsMongoDbDao')
-console.log('3');
 const firebaseDao = require('./productsFirebaseDao')
-console.log('4');
 const sqlDbDao = require('./productsSqlDbDao')
 
 let environmentVariable;

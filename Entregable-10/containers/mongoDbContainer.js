@@ -1,38 +1,35 @@
+const mongoose = require('mongoose')
 const { route } = require('../mongodb/mongoDbConfig')
 
 class MongoDbContainer {
     constructor(collectionName) {
-        this.mongoose = require('mongoose')
         this.route = route
         this.connectToMongdoDb()
         this.dataCollection = collectionName
-        this.dataSchema = new this.mongoose.Schema({
-            data: []
+        this.dataSchema = new mongoose.Schema({
+            saved: []
         })
-        this.datapoints = this.mongoose.model(this.dataCollection, this.dataSchema)
+        this.dataModel = mongoose.model(this.dataCollection, this.dataSchema)
     }
 
     connectToMongdoDb = async () => {
-        const response = await this.mongoose.connect(route, {
+        await mongoose.connect(route, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
     }
 
-    async save(object) {
-        const e = await this.deleteAll()
-        const d = new this.datapoints(object)
-        const res = await d.save()
-        return res
+    async save(array) {
+        await this.deleteAll()
+        return await this.dataModel({saved: array}).save()
     }
 
     async read() {
-        const res = await this.datapoints.find()
-        return res
+        return await this.dataModel.find()
     }
 
     async deleteAll() {
-        await this.datapoints.deleteMany()
+        await this.datModel.deleteMany()
     }
 }
 
