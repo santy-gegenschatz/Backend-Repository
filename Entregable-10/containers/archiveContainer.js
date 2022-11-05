@@ -3,7 +3,9 @@ class ArchiveContainer {
     constructor(folderName, fileName) {
         this.fileName = fileName
         this.fs = fs
-        this.route = './' + folderName + '/' + fileName
+        this.route = folderName + './' + fileName
+        console.log(this.route);
+        console.log(__dirname);
     }
 
     save(object) {

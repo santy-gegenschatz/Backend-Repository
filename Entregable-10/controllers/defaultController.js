@@ -1,4 +1,4 @@
-const { products } = require('../data/index')
+const { products } = require('../data/archiveData/index')
 const renderHome = async (req, res) => {
     res.render('form.ejs', {products: products, noRender : products.length===0})
 }

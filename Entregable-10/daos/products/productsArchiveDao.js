@@ -3,7 +3,7 @@ const Container = require('../../containers/archiveContainer')
 
 class Products {
     constructor() {
-        this.container = new Container('data', 'products.txt')
+        this.container = new Container('', 'products.txt')
         this.items = []
         this.readItems()
     }

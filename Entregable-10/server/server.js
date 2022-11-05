@@ -10,7 +10,7 @@ const { productsRouter } = require('../routers/productsRouter')
 const { cartRouter } = require('../routers/cartRouter')
 
 // Data
-const { products, messages } = require('../data/index')
+const { products, messages } = require('../data/archiveData/index')
 
 class Server {
     constructor() {
