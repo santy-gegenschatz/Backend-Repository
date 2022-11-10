@@ -19,6 +19,7 @@
     "knex": "^2.3.0",
     "mongoose": "^6.7.1",
     "mysql": "^2.18.1",
+    "normalizr": "^3.6.2",
     "socket.io": "^4.5.2"
   }
 }
