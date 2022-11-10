@@ -6,21 +6,6 @@ h1 {
 h3 {
     text-align: center;
 }
-#main-div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: beige;
-}
-
-#secondary-div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: red;
-    margin: 20px;
-    padding: 10px;
-}
 
 input {
     margin: 20px;
@@ -64,21 +49,46 @@ tr {
 }
 
 /* Classes */
+.blue {
+    color: blue;
+}
 
 .form-table-div {
     display: flex;
     justify-content: center;
 }
 
-.blue {
-    color: blue;
-}
-
 .green {
     color: green
 }
 
+.messages-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: lightgray;
+    border-radius: 25px;
+}
+
+/* Id's */
 #fake-product-image {
     height: 50;
     width: 50;
+}
+
+#main-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: beige;
+}
+
+#secondary-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: red;
+    margin: 20px;
+    padding: 10px;
 }

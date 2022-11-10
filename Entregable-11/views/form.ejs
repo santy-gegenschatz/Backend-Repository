@@ -46,12 +46,18 @@
             <% } %>
         <div id = 'messages-div'>
             <h4 style = 'text-align: center;'> Centro de mensajes </h4>
-            <form onsubmit = 'return addMessage(this)'>
-                <input type="text" name = 'author' id = 'author' placeholder = 'Enter your name'>
+            <form onsubmit = 'return addMessage(this)' class = 'messages-form'>
+                <input type="text" name = 'name' id = 'name' placeholder = 'Enter your name'>
+                <input type="text" name = 'surname' id = 'surname' placeholder = 'Enter your surname'>
+                <input type="text" name = 'text' id = 'email' placeholder = 'Enter your email'>
+                <input type="text" name = 'age' id = 'age' placeholder = 'Enter your age'>
+                <input type="text" name = 'alias' id = 'alias' placeholder = 'Enter your alias'>
                 <input type="text" name = 'text' id = 'text' placeholder = 'Enter your message'>
                 <button> Send </button>
             </form>
-            <div id = 'divDisplay'> </div>
+            <div id = 'divDisplay'> 
+                <!-- Here it is that the messages are rendered -->
+            </div>
         </div>
         <div>
             <button class = "btn btn-primary"> <a href="/products"> Go to products </a> </button>

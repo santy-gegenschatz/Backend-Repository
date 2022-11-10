@@ -11,6 +11,7 @@ const { cartRouter } = require('../routers/cartRouter')
 
 // Data
 const { products, messages } = require('../data/archiveData/index')
+const messagesContainer = require('../containers/messagesContainer')
 
 class Server {
     constructor() {
@@ -40,12 +41,13 @@ class Server {
     startSockets() {
         this.ioServer.on('connection', (client) => {
             console.log('Client connected');
-            client.emit('messages', messages)
+            client.emit('messages', messagesContainer.getMessages())
         
             // Operation when a message is added
-            client.on('new-message', (msg) => {
-                messages.push(msg)
-                this.ioServer.sockets.emit('messages', messages)
+            client.on('new-message', async (msg) => {
+                console.log('Receiving');
+                messagesContainer.add(msg)
+                this.ioServer.sockets.emit('messages', messagesContainer.getMessages())
             })
         
             // Operation when a product is added

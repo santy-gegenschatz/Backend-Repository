@@ -10,5 +10,4 @@ const messages = [
     {text: 'Goodbye', author: 'John', date: new Date()}
 ]
 
-exports.products = products
-exports.messages = messages
+module.exports = { products, messages }

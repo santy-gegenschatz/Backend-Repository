@@ -2,10 +2,21 @@ const socket = io.connect()
 
 const addMessage = (m) => {
     const text = document.getElementById('text').value
-    const author = document.getElementById('author').value
+    const name = document.getElementById('name').value
+    const surname = document.getElementById('surname').value
+    const email = document.getElementById('email').value
+    const age = document.getElementById('age').value
+    const alias = document.getElementById('alias').value
+
     const message = {
-        text: text,
-        author: author,
+        author: {
+            name,
+            surname,
+            email,
+            age,
+            alias
+        },
+        text,
         date: new Date()
     }
     console.log(message);
@@ -26,7 +37,7 @@ const addProduct = (p) => {
 const render = (array) => {
     const html = array.map( (m) => {
         return (`<div class = 'main-div'> 
-                <strong class = 'blue'> ${m.author} </strong> <span class = 'brown'> [${m.date}] </span> :  <em class = 'green' > ${m.text} </em>
+                <strong class = 'blue'> ${m.author.name}, ${m.author.surname} [${m.author.age}] </strong> <span class = 'brown'> [${m.date.toString().slice(0, 11)}] </span> :  <em class = 'green' > ${m.text} </em>
                 </div>`)
     }).join(' ')
     const divDisplay = document.getElementById('divDisplay')

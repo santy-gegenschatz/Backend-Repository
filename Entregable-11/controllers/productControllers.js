@@ -1,5 +1,5 @@
 const Products = require('../daos/products/index')
-const { validateFullFields, validateCredentials } = require('../validation/validation')
+const { validateFullFields, validateCredentials } = require('../utils/validation/validation')
 
 const getProducts = async (req, res) => {
        return res.status(200).json(Products.getProducts())
