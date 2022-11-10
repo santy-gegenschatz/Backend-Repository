@@ -3,9 +3,6 @@ class ArchiveContainer {
     constructor(folderName, fileName) {
         this.fileName = fileName
         this.fs = fs
-        this.route = folderName + './' + fileName
-        console.log(this.route);
-        console.log(__dirname);
     }
 
     save(object) {
@@ -15,7 +12,7 @@ class ArchiveContainer {
 
     async read() {
         const p = new Promise( (resolve, reject) => {
-            this.fs.readFile(this.route, (error, content) => {
+            this.fs.readFile(__dirname + '/' + this.fileName, (error, content) => {
                 try {
                     const parsedContent = JSON.parse(content)
                     resolve(parsedContent)
@@ -25,10 +22,6 @@ class ArchiveContainer {
             })
         })
         return p   
-    }
-
-    deleteAllData() {
-
     }
 }
 
