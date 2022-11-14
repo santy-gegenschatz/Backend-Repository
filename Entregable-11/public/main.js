@@ -34,14 +34,18 @@ const addProduct = (p) => {
     return false
 }
 
-const render = (array) => {
+const renderMessage = (data) => {
+    const { normalizedData, compression } = data
+    const array = normalizedData
     const html = array.map( (m) => {
         return (`<div class = 'main-div'> 
                 <strong class = 'blue'> ${m.author.name}, ${m.author.surname} [${m.author.age}] </strong> <span class = 'brown'> [${m.date.toString().slice(0, 11)}] </span> :  <em class = 'green' > ${m.text} </em>
                 </div>`)
     }).join(' ')
     const divDisplay = document.getElementById('divDisplay')
+    const compressionIndicator = document.getElementById('compression-indicator')
     divDisplay.innerHTML = html
+    compressionIndicator.innerHTML = `Compression: ${(compression*100).toString().slice(0, 4)}%`
 }
 
 const renderProduct = (prod) => {
@@ -55,7 +59,7 @@ const renderProduct = (prod) => {
 }
 
 socket.on('messages', (data) => {
-    render(data)
+    renderMessage(data)
 })
 
 socket.on('products', (data) => {

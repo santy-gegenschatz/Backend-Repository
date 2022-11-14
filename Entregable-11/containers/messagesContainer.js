@@ -1,14 +1,15 @@
 const fs = require('fs')
 const util = require('util')
+const normalizr = require('normalizr')
+const { schema, normalize, denormalize } = normalizr
 
 class MessagesContainer {
     constructor(filename) {
         this.filename = filename
         this.fs = fs
         this.messages = []
-        console.log(this.messages);
+        console.log(JSON.stringify(this.messages).length);
         this.loadMessages()
-        console.log(this.messages);
     }
     
     add(message) {
@@ -16,8 +17,9 @@ class MessagesContainer {
         this.save(this.messages)
     }
 
-    getMessages() {
-        return {payload: this.messages, compression: this.normalizeMessages()}
+    async getMessages() {
+        const response = await this.normalizeMessages() // We use await just in case we make it asynchronous in the future
+        return response
     }
 
     save(object) {
@@ -40,33 +42,28 @@ class MessagesContainer {
 
     async loadMessages() {
         const response = await this.read()
-        console.log(response);
         this.messages = response
+        console.log(JSON.stringify(this.messages).length);
         this.normalizeMessages()
     }
 
-    normalizeMessages() {
-        const normalizr = require('normalizr')
-        const normalize = normalizr.normalize
-        const schema = normalizr.schema
+    async normalizeMessages() {
         const author = new schema.Entity('authors', {}, {idAttribute: 'email'})
         const message = new schema.Entity('messages', {
             author: author
         })
-        const messages = new schema.Entity('array', {
+        const messageArray = new schema.Entity('messageArrays', {
             messages: [message]
         })
-        const normalizedData = normalize({id: 1, messages: this.messages}, messages)
-        const print = (obj) => {
-            console.log(util.inspect(obj, false, 12, true));
-        }
-
-        console.log('NormalizedData: ', normalizedData);
-        console.log(normalizedData.entities.messages);
-        console.log('------');
+        const normalizedData = normalize({id: 1, messages: this.messages}, messageArray)
         const a = JSON.stringify(this.messages).length;
         const b = JSON.stringify(normalizedData).length;
-        return b/a
+        console.log('Compression: ', b/a);
+        return {normalizedData, compression: b/a}
+    }
+
+    print = (obj) => {
+        console.log(util.inspect(obj, false, 12, true));
     }
 
 }

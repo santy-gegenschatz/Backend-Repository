@@ -72,6 +72,10 @@ tr {
 }
 
 /* Id's */
+#compression-indicator {
+    text-align: center;
+}
+
 #fake-product-image {
     height: 50;
     width: 50;

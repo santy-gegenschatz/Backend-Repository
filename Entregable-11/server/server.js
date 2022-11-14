@@ -10,7 +10,7 @@ const { productsRouter } = require('../routers/productsRouter')
 const { cartRouter } = require('../routers/cartRouter')
 
 // Data
-const { products, messages } = require('../data/archiveData/index')
+const { products } = require('../data/archiveData/index')
 const messagesContainer = require('../containers/messagesContainer')
 
 class Server {
@@ -38,10 +38,11 @@ class Server {
     }
 
     // Websocket connections
-    startSockets() {
+    async startSockets() {
+        const messages = await messagesContainer.getMessages()
         this.ioServer.on('connection', (client) => {
             console.log('Client connected');
-            client.emit('messages', messagesContainer.getMessages())
+            client.emit('messages', messages)
         
             // Operation when a message is added
             client.on('new-message', async (msg) => {
