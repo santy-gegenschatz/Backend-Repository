@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entregble #6</title>
+    <title> Backend Project </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles.css">
     <script src="/socket.io/socket.io.js"></script>
@@ -46,7 +46,7 @@
             <% } %>
         <div id = 'messages-div'>
             <h4 style = 'text-align: center;'> Message Center </h4>
-            <h5 id = 'compression-indicator'></h5>
+            <h5 id = 'h5'> a </h5>
             <form onsubmit = 'return addMessage(this)' class = 'messages-form'>
                 <input type="text" name = 'name' id = 'name' placeholder = 'Enter your name'>
                 <input type="text" name = 'surname' id = 'surname' placeholder = 'Enter your surname'>
@@ -64,6 +64,7 @@
             <button class = "btn btn-primary"> <a href="/products"> Go to products </a> </button>
         </div>
     </div>
-    <script src="/main.js"></script>
+    <script defer src = 'https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js'></script>
+    <script defer src="/main.js"></script>
 </body>
 </html>

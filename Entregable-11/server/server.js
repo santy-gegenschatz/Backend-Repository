@@ -38,7 +38,7 @@ class Server {
     }
 
     // Websocket connections
-    async startSockets() {
+     async startSockets() {
         const messages = await messagesContainer.getMessages()
         this.ioServer.on('connection', (client) => {
             console.log('Client connected');

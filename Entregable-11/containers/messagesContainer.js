@@ -8,22 +8,21 @@ class MessagesContainer {
         this.filename = filename
         this.fs = fs
         this.messages = []
-        console.log(JSON.stringify(this.messages).length);
-        this.loadMessages()
     }
     
-    add(message) {
+    async add(message) {
         this.messages.push(message)
-        this.save(this.messages)
+        await this.save(this.messages)
     }
 
     async getMessages() {
+        await this.loadMessages()
         const response = await this.normalizeMessages() // We use await just in case we make it asynchronous in the future
         return response
     }
 
-    save(object) {
-        this.fs.writeFileSync(__dirname + '/' + this.filename, JSON.stringify(object))
+    async save(object) {
+        await this.fs.writeFileSync(__dirname + '/' + this.filename, JSON.stringify(object))
     }
 
     async read() {
@@ -43,22 +42,26 @@ class MessagesContainer {
     async loadMessages() {
         const response = await this.read()
         this.messages = response
-        console.log(JSON.stringify(this.messages).length);
-        this.normalizeMessages()
     }
 
     async normalizeMessages() {
         const author = new schema.Entity('authors', {}, {idAttribute: 'email'})
         const message = new schema.Entity('messages', {
             author: author
-        })
+        }, {idAttribute: 'date'})
         const messageArray = new schema.Entity('messageArrays', {
             messages: [message]
         })
         const normalizedData = normalize({id: 1, messages: this.messages}, messageArray)
         const a = JSON.stringify(this.messages).length;
         const b = JSON.stringify(normalizedData).length;
-        console.log('Compression: ', b/a);
+        console.log('Compression: ', a, b, b/a);
+        console.log('--- Data ---');
+        console.log(this.messages);
+        console.log('--- Normalized ---');
+        console.log(normalizedData);
+        console.log('--- Denormalized Data---');
+        console.log(denormalize(normalizedData, messageArray))
         return {normalizedData, compression: b/a}
     }
 
