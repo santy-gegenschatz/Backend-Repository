@@ -44,21 +44,25 @@
             </div>
             <br>
             <% } %>
+        <h4 style = 'text-align: center;'> Message Center </h4>
         <div id = 'messages-div'>
-            <h4 style = 'text-align: center;'> Message Center </h4>
-            <h5 id = 'h5'> a </h5>
-            <form onsubmit = 'return addMessage(this)' class = 'messages-form'>
-                <input type="text" name = 'name' id = 'name' placeholder = 'Enter your name'>
-                <input type="text" name = 'surname' id = 'surname' placeholder = 'Enter your surname'>
-                <input type="text" name = 'text' id = 'email' placeholder = 'Enter your email'>
-                <input type="text" name = 'age' id = 'age' placeholder = 'Enter your age'>
-                <input type="text" name = 'alias' id = 'alias' placeholder = 'Enter your alias'>
-                <input type="text" name = 'text' id = 'text' placeholder = 'Enter your message'>
-                <button> Send </button>
-            </form>
-            <h5 id = 'h5'> Online Chat </h5>
-            <div id = 'chat-div'> 
-                <!-- Here it is that the messages are rendered -->
+            <div>
+                <h5 id = 'h5'> a </h5>
+                <form onsubmit = 'return addMessage(this)' class = 'messages-form'>
+                    <input type="text" name = 'name' id = 'name' placeholder = 'Enter your name'>
+                    <input type="text" name = 'surname' id = 'surname' placeholder = 'Enter your surname'>
+                    <input type="text" name = 'text' id = 'email' placeholder = 'Enter your email'>
+                    <input type="text" name = 'age' id = 'age' placeholder = 'Enter your age'>
+                    <input type="text" name = 'alias' id = 'alias' placeholder = 'Enter your alias'>
+                    <input type="text" name = 'text' id = 'text' placeholder = 'Enter your message'>
+                    <button> Send </button>
+                </form>
+            </div>
+            <div>
+                <h5 id = 'h5'> Online Chat </h5>
+                <div id = 'chat-div'> 
+                    <!-- Here it is that the messages are rendered -->
+                </div>
             </div>
         </div>
         <div>

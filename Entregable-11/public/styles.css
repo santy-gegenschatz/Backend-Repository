@@ -8,7 +8,7 @@ h3 {
 }
 
 input {
-    margin: 20px;
+    margin: 12px;
     width: 200px;
     height: 50px;
     text-align: center;
@@ -69,6 +69,7 @@ tr {
     align-items: center;
     background-color: lightgray;
     border-radius: 25px;
+    margin: 5px;
 }
 
 /* Id's */
@@ -80,14 +81,14 @@ tr {
     padding: 10px;
 }
 
-#h5 {
-    text-align: center;
-    margin: 7px;
-}
-
 #fake-product-image {
     height: 50;
     width: 50;
+}
+
+#h5 {
+    text-align: center;
+    margin: 7px;
 }
 
 #main-div {
@@ -95,6 +96,13 @@ tr {
     flex-direction: column;
     align-items: center;
     background-color: beige;
+}
+
+#messages-div {
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 #secondary-div {

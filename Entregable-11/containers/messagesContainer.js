@@ -51,8 +51,8 @@ class MessagesContainer {
         console.log('Compression: ', a, b, b/a);
         // console.log('--- Data ---');
         // console.log(this.messages);
-        console.log('--- Normalized ---');
-        console.log(normalizedData);
+        // console.log('--- Normalized ---');
+        // console.log(normalizedData);
         // console.log('--- Denormalized Data---');
         // console.log(denormalize(normalizedData, messageArray))
         return {normalizedData, compression: b/a}
