@@ -32,7 +32,23 @@ const renderCompression = (data) => {
 const renderMessages = (data) => {
     const { normalizedData } = data
     const denormalizedData = normalizr.denormalize(normalizedData, messageArray)
-    console.log(denormalizedData.entities.messages);
+    const messagesObject = denormalizedData.entities.messages;
+    console.log(messagesObject);
+    console.log(Object.entries(messagesObject));
+    const messagesArray = Object.entries(messagesObject).map ( (key) => {
+        const m = key[1]
+        return (`
+        <div>
+        <strong> ${m.author} </strong>
+        <span> [${m.date.toString().slice(0,10)}] </span>:
+        <em> ${m.text} </em>
+        </div>
+        `)
+    })
+
+    const chatDiv = document.getElementById('chat-div')
+    chatDiv.innerHTML = messagesArray.join(' ')
+
     
 }
 

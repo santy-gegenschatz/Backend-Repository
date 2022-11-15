@@ -22,7 +22,7 @@ class MessagesContainer {
     }
 
     async save(object) {
-        await this.fs.writeFileSync(__dirname + '/' + this.filename, JSON.stringify(object))
+        this.fs.writeFileSync(__dirname + '/' + this.filename, JSON.stringify(object))
     }
 
     async read() {

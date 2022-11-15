@@ -72,8 +72,17 @@ tr {
 }
 
 /* Id's */
+#chat-div {
+    background-color: lightgray;
+    min-height: 40px;
+    margin: 10px;
+    border-radius: 25px;
+    padding: 10px;
+}
+
 #h5 {
     text-align: center;
+    margin: 7px;
 }
 
 #fake-product-image {
