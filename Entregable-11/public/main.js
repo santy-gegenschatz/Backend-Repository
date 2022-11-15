@@ -31,11 +31,8 @@ const renderCompression = (data) => {
 
 const renderMessages = (data) => {
     const { normalizedData } = data
-    console.log(normalizedData);
     const denormalizedData = normalizr.denormalize(normalizedData, messageArray)
-    const array = denormalizedData.entities.messages
-    console.log('Array: ', array);
-    console.log('¡B');
+    console.log(denormalizedData.entities.messages);
     
 }
 

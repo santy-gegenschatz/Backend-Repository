@@ -48,7 +48,7 @@ class MessagesContainer {
         const author = new schema.Entity('authors', {}, {idAttribute: 'email'})
         const message = new schema.Entity('messages', {
             author: author
-        }, {idAttribute: 'date'})
+        }, {idAttribute: 'id'})
         const messageArray = new schema.Entity('messageArrays', {
             messages: [message]
         })
