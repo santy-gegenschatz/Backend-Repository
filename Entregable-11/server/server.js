@@ -47,8 +47,11 @@ class Server {
             // Operation when a message is added
             client.on('new-message', async (msg) => {
                 console.log('Receiving');
-                messagesContainer.add(msg)
-                this.ioServer.sockets.emit('messages', messagesContainer.getMessages())
+                const response = await messagesContainer.add(msg)
+                console.log('Server - Saved');
+                console.log(response);
+                console.log('Sending');
+                this.ioServer.sockets.emit('messages', await messagesContainer.getMessages())
             })
         
             // Operation when a product is added

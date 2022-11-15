@@ -12,9 +12,9 @@ const socket = io()
 
 // Define actions for each case
 socket.on('messages', (data) => {
-    console.log('rendering');
+    console.log('rendering compression');
     renderCompression(data)
-    console.log('ok');
+    console.log('compresion rendering ok');
     renderMessages(data)
 })
 
@@ -30,6 +30,7 @@ const renderCompression = (data) => {
 }
 
 const renderMessages = (data) => {
+    console.log(data);
     const { normalizedData } = data
     const denormalizedData = normalizr.denormalize(normalizedData, messageArray)
     const messagesObject = denormalizedData.entities.messages;
