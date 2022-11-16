@@ -33,4 +33,14 @@ defaultRouter.get('/delete-cookie', (req, res) => {
     res.clearCookie('loggedIn').send('Cookie Deleted')
 })
 
+defaultRouter.get('/session', (req, res) => { 
+    if (req.session.contador) {
+        req.session.contador++
+        res.send(`<h2> You have visited the site ${req.session.contador} times </h2>`)
+    } else {
+        req.session.contador = 1
+        res.send('Welcome!')
+    }
+})
+
 exports.defaultRouter = defaultRouter

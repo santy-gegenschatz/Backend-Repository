@@ -1,3 +1,6 @@
+// Requiring dotenv as early as possible in the application
+require('dotenv').config()
+
 // Plain vanilla server with express
 const express = require('express');
 
@@ -12,6 +15,7 @@ const { cartRouter } = require('../routers/cartRouter')
 
 // Cookies and sessions
 const cookieParser = require('cookie-parser') // This is a middleware, so you need to use app.use later on
+const session = require('express-session') // Another middleware, but in this case for sessions
 
 // Data
 const { products } = require('../data/archiveData/index')
@@ -34,6 +38,11 @@ class Server {
       this.app.use(express.urlencoded({extended : true}))
       this.app.use(express.static('public'))
       this.app.use(cookieParser())
+      this.app.use(session({ 
+        secret: process.env.SESSION_SECRET,
+        resave: true,
+        saveUninitialized: true
+    }))
     }
 
     routes() {
