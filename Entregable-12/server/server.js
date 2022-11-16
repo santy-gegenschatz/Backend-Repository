@@ -5,9 +5,13 @@ const express = require('express');
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
 
+// Routers
 const { defaultRouter } = require('../routers/defaultRouter')
 const { productsRouter } = require('../routers/productsRouter')
 const { cartRouter } = require('../routers/cartRouter')
+
+// Cookies and sessions
+const cookieParser = require('cookie-parser') // This is a middleware, so you need to use app.use later on
 
 // Data
 const { products } = require('../data/archiveData/index')
@@ -29,6 +33,7 @@ class Server {
       this.app.use(express.json())
       this.app.use(express.urlencoded({extended : true}))
       this.app.use(express.static('public'))
+      this.app.use(cookieParser())
     }
 
     routes() {
