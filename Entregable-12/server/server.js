@@ -16,7 +16,9 @@ const { cartRouter } = require('../routers/cartRouter')
 // Cookies and sessions
 const cookieParser = require('cookie-parser') // This is a middleware, so you need to use app.use later on
 const session = require('express-session') // Another middleware, but in this case for sessions
-const FileStore = require('session-file-store')(session)
+const FileStore = require('session-file-store')(session) // Store session data persistently in JSON files
+const MongoStore = require('connect-mongo') // idem but store it in MongoDB
+const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true}
 
 // Data
 const { products } = require('../data/archiveData/index')
@@ -43,7 +45,10 @@ class Server {
         secret: process.env.SESSION_SECRET,
         resave: true,
         saveUninitialized: true,
-        store: new FileStore ({path: './sessions', ttl: 300, retries: 0})
+        store: MongoStore.create({
+            mongoUrl : 'mongodb+srv://admin-santy:Mongodb2@cluster0.nsmqg9h.mongodb.net/Ecommerce?retryWrites=true&w=majority', 
+            mongoOptions: advancedOptions
+        })
     }))
     }
 
