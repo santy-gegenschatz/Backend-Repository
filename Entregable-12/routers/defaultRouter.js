@@ -1,5 +1,6 @@
 const { renderHome, renderProducts, renderFakeProducts } = require('../controllers/defaultController')
 const { Router } = require('express')
+const { auth } = require('../middlewares/auth')
 const defaultRouter = Router()
 
 // ROUTER URL'S
@@ -43,4 +44,28 @@ defaultRouter.get('/session', (req, res) => {
     }
 })
 
+defaultRouter.get('/logout', (req, res) => {
+    req.session.destroy( (err) => {
+        if (!err) {
+            res.send('Successfully logged out')
+        } else {
+            res.send({status: 'Logout ERROR', body: err})
+        }
+    })
+})
+
+defaultRouter.get('/login', (req, res) => {
+    const { username, password } = req.query
+    if (username !== 'john' || password !== 'admin') {
+        return res.send('Login failed')
+    } else {
+        req.session.user = username
+        req.session.admin = true
+        res.send('Login success!')
+    }
+})
+
+defaultRouter.get('/private', auth, (req, res) => {
+    res.send('If you are watching this you have already logged in')
+})
 exports.defaultRouter = defaultRouter
