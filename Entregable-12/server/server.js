@@ -16,6 +16,7 @@ const { cartRouter } = require('../routers/cartRouter')
 // Cookies and sessions
 const cookieParser = require('cookie-parser') // This is a middleware, so you need to use app.use later on
 const session = require('express-session') // Another middleware, but in this case for sessions
+const FileStore = require('session-file-store')(session)
 
 // Data
 const { products } = require('../data/archiveData/index')
@@ -41,7 +42,8 @@ class Server {
       this.app.use(session({ 
         secret: process.env.SESSION_SECRET,
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+        store: new FileStore ({path: './sessions', ttl: 300, retries: 0})
     }))
     }
 

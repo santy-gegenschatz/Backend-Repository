@@ -35,9 +35,10 @@ defaultRouter.get('/delete-cookie', (req, res) => {
 })
 
 defaultRouter.get('/session', (req, res) => { 
+    const session = req.session
     if (req.session.contador) {
         req.session.contador++
-        res.send(`<h2> You have visited the site ${req.session.contador} times </h2>`)
+        res.send(`<h2> You have visited the site ${JSON.stringify(session)} times </h2>`)
     } else {
         req.session.contador = 1
         res.send('Welcome!')
