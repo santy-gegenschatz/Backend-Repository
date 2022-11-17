@@ -29,8 +29,8 @@ const renderSignUpScreen = async (req, res) => {
 }
 
 const signUpUser = async (req, res) => {
-    const { username, password } = req.body
-
+    console.log(req.body);
+    res.redirect('/')
 }
 
 module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser}

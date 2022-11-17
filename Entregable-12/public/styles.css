@@ -7,6 +7,10 @@ h3 {
     text-align: center;
 }
 
+h5 {
+    color: red;
+}
+
 input {
     margin: 12px;
     width: 200px;
@@ -49,16 +53,19 @@ tr {
 }
 
 /* Classes */
+.black-background {
+    background-color: black;
+}
+
 .blue {
     color: blue;
 }
 
 .column-centered-div {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: red;
 }
 
 .form-table-div {
@@ -66,8 +73,22 @@ tr {
     justify-content: center;
 }
 
+.general-card {
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    border-radius: 25px;
+    padding: 20px;
+}
+
 .green {
     color: green
+}
+
+.header {
+    background-color: black;
+    width: 100%;
 }
 
 .messages-form {
