@@ -147,6 +147,11 @@ tr {
     padding: 10px;
 }
 
+#unauthorized-jumbofont {
+    font-size: 100px;
+    color: white;
+}
+
 #user-greeting-header {
     background-color: black;
     display: flex;

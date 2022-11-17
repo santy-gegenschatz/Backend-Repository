@@ -3,7 +3,7 @@ const auth = (req, res, next) => {
         return next()
     }
 
-    return res.redirect('/auth/login')
+    return res.redirect('/auth/unauthorized')
 }
 
 module.exports = { auth }

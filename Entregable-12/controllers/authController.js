@@ -7,12 +7,12 @@ const loginUser = async (req, res) => {
 }
 
 const logoutUser = async (req, res) => {
-    console.log(req.body);
+    const stringUsername = req.session.user
     req.session.destroy( (err) => {
         if (err) {
             return res.json(err)
         }
-        res.redirect('/auth/logout')
+        res.redirect(`/auth/logout?name=${stringUsername}`)
     })
 }
 
@@ -21,11 +21,15 @@ const renderLoginScreen = async (req, res) => {
 }
 
 const renderLogoutScreen = async (req, res) => {
-    res.status(200).render('logout.ejs')
+    res.status(200).render('logout.ejs', {username : req.query.name})
 }
 
 const renderSignUpScreen = async (req, res) => {
     res.status(200).render('signup.ejs')
+}
+
+const renderUnauthorizedScreen = async (req, res) => {
+    res.render('unauthorized.ejs')
 }
 
 const signUpUser = async (req, res) => {
@@ -33,4 +37,4 @@ const signUpUser = async (req, res) => {
     res.redirect('/')
 }
 
-module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser}
+module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen}

@@ -46,7 +46,7 @@ class Server {
         secret: process.env.SESSION_SECRET,
         resave: true,
         saveUninitialized: true,
-        cookie: {maxAge: 100*1000},
+        cookie: {maxAge: 10*60*1000},
         store: MongoStore.create({
             mongoUrl : `mongodb+srv://admin-santy:${process.env.MONGODB_PASSWORD}@cluster0.nsmqg9h.mongodb.net/Ecommerce?retryWrites=true&w=majority`, 
             mongoOptions: advancedOptions
