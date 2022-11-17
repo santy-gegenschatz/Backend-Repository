@@ -46,7 +46,7 @@ class Server {
         resave: true,
         saveUninitialized: true,
         store: MongoStore.create({
-            mongoUrl : 'mongodb+srv://admin-santy:Mongodb2@cluster0.nsmqg9h.mongodb.net/Ecommerce?retryWrites=true&w=majority', 
+            mongoUrl : `mongodb+srv://admin-santy:${process.env.MONGODB_PASSWORD}@cluster0.nsmqg9h.mongodb.net/Ecommerce?retryWrites=true&w=majority`, 
             mongoOptions: advancedOptions
         })
     }))

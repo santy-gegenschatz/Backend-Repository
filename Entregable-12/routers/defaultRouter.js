@@ -5,10 +5,10 @@ const defaultRouter = Router()
 
 // ROUTER URL'S
 // Show the home screen
-defaultRouter.get('/', renderHome)
+defaultRouter.get('/', auth, renderHome)
 
 // Show the products screen
-defaultRouter.get('/products', renderProducts)
+defaultRouter.get('/products', auth, renderProducts)
 
 // Show faker data (Entregable 11)
 defaultRouter.get('/api/products-test', renderFakeProducts)
