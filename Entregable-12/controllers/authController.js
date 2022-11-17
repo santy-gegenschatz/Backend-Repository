@@ -6,6 +6,16 @@ const loginUser = async (req, res) => {
     res.redirect('/')
 }
 
+const logoutUser = async (req, res) => {
+    console.log(req.body);
+    req.session.destroy( (err) => {
+        if (err) {
+            return res.json(err)
+        }
+        res.redirect('/auth/logout')
+    })
+}
+
 const renderLoginScreen = async (req, res) => {
     res.render('login.ejs')
 }
@@ -23,6 +33,4 @@ const signUpUser = async (req, res) => {
 
 }
 
-
-
-module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser}
+module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser}

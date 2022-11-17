@@ -14,6 +14,9 @@
     <h3> This is a form handler to load new products into the database</h3>
     <div id = 'user-greeting-header'>
         <h4 class = "white"> Welcome <%= username %> </h4>
+        <form action="/auth/logout" method="post">
+            <button class = 'btn btn-info' name = 'logoutButton'> Log out </button>
+        </form>
     </div>
     <div id = 'main-div'>
         <h4> Form </h4>

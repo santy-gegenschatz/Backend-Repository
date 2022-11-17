@@ -3,7 +3,7 @@ const auth = (req, res, next) => {
         return next()
     }
 
-    return res.status(401).send('Authorization error')
+    return res.redirect('/auth/login')
 }
 
 module.exports = { auth }

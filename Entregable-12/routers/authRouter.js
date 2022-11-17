@@ -1,4 +1,4 @@
-const { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser} = require('../controllers/authController')
+const { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser} = require('../controllers/authController')
 const { Router } = require('express')
 
 const authRouter = Router()
@@ -12,5 +12,7 @@ authRouter.get('/signup', renderSignUpScreen)
 authRouter.post('/login', loginUser)
 
 authRouter.post('/signup', signUpUser)
+
+authRouter.post('/logout', logoutUser)
 
 module.exports = { authRouter }
