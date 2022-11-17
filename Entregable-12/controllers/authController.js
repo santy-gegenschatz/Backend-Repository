@@ -1,12 +1,13 @@
 const loginUser = async (req, res) => {
     const { username, password } = req.body
     req.session.user = username
+    req.session.password = password
     req.session.admin = true
     res.redirect('/')
 }
 
 const renderLoginScreen = async (req, res) => {
-    res.status(200).render('login.ejs')
+    res.render('login.ejs')
 }
 
 const renderLogoutScreen = async (req, res) => {
@@ -24,4 +25,4 @@ const signUpUser = async (req, res) => {
 
 
 
-module.exports = { renderLoginScreen, renderLogoutScreen, loginUser}
+module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser}

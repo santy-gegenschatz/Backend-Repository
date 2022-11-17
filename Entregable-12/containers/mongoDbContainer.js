@@ -4,7 +4,7 @@ const route = require('../data/mongoDBData/mongoDbConfig')
 class MongoDbContainer {
     constructor(collectionName) {
         this.route = route
-        this.connectToMongdoDb()
+        // this.connectToMongdoDb()
         this.dataCollection = collectionName
         this.dataSchema = new mongoose.Schema({
             saved: []

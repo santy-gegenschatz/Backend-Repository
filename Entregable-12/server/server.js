@@ -12,6 +12,7 @@ const { Server: IOServer } = require('socket.io')
 const { defaultRouter } = require('../routers/defaultRouter')
 const { productsRouter } = require('../routers/productsRouter')
 const { cartRouter } = require('../routers/cartRouter')
+const { authRouter } = require('../routers/authRouter')
 
 // Cookies and sessions
 const cookieParser = require('cookie-parser') // This is a middleware, so you need to use app.use later on
@@ -37,9 +38,9 @@ class Server {
     }
 
     middlewares() {
+      this.app.use(express.static('public'))
       this.app.use(express.json())
       this.app.use(express.urlencoded({extended : true}))
-      this.app.use(express.static('public'))
       this.app.use(cookieParser())
       this.app.use(session({ 
         secret: process.env.SESSION_SECRET,
@@ -56,6 +57,7 @@ class Server {
       this.app.use('/', defaultRouter)
       this.app.use('/api/cart', cartRouter)
       this.app.use('/api/products', productsRouter)
+      this.app.use('/auth', authRouter)
     }
 
     // Websocket connections
