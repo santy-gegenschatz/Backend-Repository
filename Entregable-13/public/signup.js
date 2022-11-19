@@ -22,6 +22,8 @@ const sendData = async (password) => {
         })
     })
 
+    console.log('Response: ', response);
     const data = await response.json()
-    console.log(data);
+    console.log('Data: ', data);
+    window.location.href = data.url
 }

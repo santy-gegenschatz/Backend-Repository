@@ -50,7 +50,6 @@ const renderUnauthorizedScreen = async (req, res) => {
 }
 
 const signUpUser = async (req, res) => {
-    console.log(req);
     const { username, password} = req.body
     console.log(username, password);
     const user = users.find ((user) => user.username === username)
@@ -69,7 +68,7 @@ const signUpUser = async (req, res) => {
         }
         
         users.push(newUser)
-        res.send('/auth/signup')
+        res.send({url : '/auth/login'})
     })
 
 }
