@@ -119,6 +119,24 @@ tr {
     width: 50;
 }
 
+#header-div__middle {
+    grid-area: middle;
+    background-color: reblackd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#header-div__right {
+    grid-area: right;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 30px;
+}
+
 #h5 {
     text-align: center;
     margin: 7px;
@@ -154,7 +172,11 @@ tr {
 
 #user-greeting-header {
     background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border-style: solid;
+    border-color: white;
+    border-width: 5px 0px 0px 0px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 100%;
+    grid-template-areas: '. middle right';
 }

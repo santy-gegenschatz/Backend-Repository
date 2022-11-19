@@ -10,14 +10,24 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <h1> This is the Ejs version </h1>
-    <h3> This is a form handler to load new products into the database</h3>
-    <div id = 'user-greeting-header'>
-        <h4 class = "white"> Welcome <%= username %> </h4>
-        <form action="/auth/logout" method="post">
-            <button class = 'btn btn-info' name = 'logoutButton'> Log out </button>
-        </form>
+    <div class = 'header'>
+        <div class = "column-centered-div">
+            <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
+            <h2 class = 'white'> This is the Products Screen </h2>
+        </div>
     </div>
+
+    <div id = 'user-greeting-header'>
+        <div id = 'header-div__middle'>
+            <h4 class = "white"> Welcome, <%= username %> </h4>
+        </div>
+        <div id = 'header-div__right'>
+            <form action="/auth/logout" method="post">
+                <button class = 'btn btn-info' name = 'logoutButton'> Log out </button>
+            </form>
+        </div>
+    </div>
+
     <div id = 'main-div'>
         <h4> Form </h4>
         <form onsubmit = 'return addProduct(this)'>
