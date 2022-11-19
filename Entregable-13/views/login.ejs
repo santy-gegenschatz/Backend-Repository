@@ -16,13 +16,15 @@
                 <h2 class = 'white'> This is the Login Screen </h2>
             </div>
         </div>
-        <div class = 'general-card'>
+        <div class = 'general-card column-centered-div'>
             <form action="/auth/login" method="post" class = "column-centered-div">
                 <input type="text" name = 'username' id = 'usernameInput' placeholder = "Username">
                 <input type="password" name="password" id = "passwordInput" placeholder = "Password">
-                <input type="submit" class = 'btn btn-info'>
+                <input type="submit" class = 'btn btn-primary'>
             </form>
+            <button class = 'btn btn-info' onclick = "return goToSignup()"> Go to signup </button>
         </div>
     </div>
 </body>
+    <script src="../../login.js"></script>
 </html>

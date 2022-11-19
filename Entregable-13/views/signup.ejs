@@ -17,13 +17,16 @@
             </div>
         </div>
     </div>
-    <div class = 'general-card'>
-        <form action="/auth/signup" method="post" class = "column-centered-div">
-            <input type="text" name = 'username' placeholder = "Select your username" >
-            <input type="password" name = 'password1' placeholder = "Enter your password" id = 'passwordInput1'>
-            <input type="password" name = 'password2' placeholder = "Confirm your password" id = 'passworInput2'>
-            <input type="submit" class = 'btn btn-info'>
+    <div class = 'general-card column-centered-div'>
+        <input type="text" name = 'username' placeholder = "Select your username" id = 'usernameField'>
+        <input type="password" name = 'password1' placeholder = "Enter your password" id = 'passwordField1'>
+        <input type="password" name = 'password2' placeholder = "Confirm your password" id = 'passwordField2'>
+        <input type="submit" class = 'btn btn-primary' onclick = "return verifyPasswordsMatch()">
+        
+        <form action="/auth/login" method="get">
+            <input type="submit" class = 'btn btn-info' value = 'Go to Login'>
         </form>
     </div>
 </body>
+<script src="../../signup.js"></script>
 </html>
