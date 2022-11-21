@@ -1,3 +1,4 @@
+const usersDao = require('../daos/users/index')
 let users = []
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
@@ -66,7 +67,7 @@ const signUpUser = async (req, res) => {
             username,
             password: hash
         }
-        
+        usersDao.add(newUser)
         users.push(newUser)
         res.send({url : '/auth/login'})
     })

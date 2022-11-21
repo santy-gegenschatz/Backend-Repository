@@ -1,4 +1,4 @@
-const Product = require('../../model/product')
+const Product = require('../../models/product')
 const Container = require('../../containers/mongoDbContainer') 
 
 class Products {

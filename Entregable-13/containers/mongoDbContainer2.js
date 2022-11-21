@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { route, advancedOptions} = require('../data/mongoDBData/mongoDbConfig')
+const { users } = require('../models/mongoDbSchemas/users')
 
 class MongoDbContainer2 {
     constructor(collectionName) {
@@ -12,14 +13,16 @@ class MongoDbContainer2 {
 
 
     // Which methods do I need ? => A simple answer is the CRUD methods (6)
-    // A more complex answer is that I also need an async method that connectos to the local instance of the MongoDB server
+    // A more complex answer is that I also need an async method that connects to the local instance of the MongoDB server
     async connect() {
         mongoose.connect(route, advancedOptions)
         console.log('Connected to MongoDB');
     }
 
-    add(sth) {
-
+    async add(sth) {
+        console.log('Saving');
+        let sth = await sth.save()
+        console.log(sthSaved);
     }
 
     getById(id) {
