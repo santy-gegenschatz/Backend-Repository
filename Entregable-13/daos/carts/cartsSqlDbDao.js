@@ -1,5 +1,5 @@
 const Products = require('../products/productsArchiveDao')
-const Cart = require('../../model/cart')
+const Cart = require('../../models/cart')
 const Container = require('../../containers/sqlDbContainer')
 
 class Carts {

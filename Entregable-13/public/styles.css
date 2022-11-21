@@ -68,6 +68,19 @@ tr {
     align-items: center;
 }
 
+.error-card {
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    margin: 20px;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.error-image {
+    width: 300px;
+    height: 300px;
+}
+
 .form-table-div {
     display: flex;
     justify-content: center;

@@ -34,6 +34,17 @@ const logoutUser = async (req, res) => {
     })
 }
 
+const renderErrorScreen = async (req, res) => {
+    let errorMessage;
+    const error = req.query.error;
+    console.log(error);
+    switch(error) {
+        case('usernametaken'):
+            errorMessage = 'Username Taken'
+    }
+    res.render('error.ejs', {error: errorMessage})
+}
+
 const renderLoginScreen = async (req, res) => {
     res.render('login.ejs')
 }
@@ -51,27 +62,28 @@ const renderUnauthorizedScreen = async (req, res) => {
 }
 
 const signUpUser = async (req, res) => {
+    // Get the parameters from the post http call
     const { username, password} = req.body
     console.log(username, password);
-    const user = users.find ((user) => user.username === username)
-
+    
     // Check that username is available
-    if (user) {
-        return res.json({error: 'The username is already taken. Please select a different one'})
+    const available = await usersDao.checkUserNameAvailable(username)
+    console.log('Available: ', available)
+    if (!available) {
+            console.log('entering');
+            return res.send({url : '/auth/error?error=usernametaken'})
     }
 
     // Create a new user, given that the username is free
     bcrypt.hash(password, saltRounds, (err, hash) => {
-        console.log('Hash:', hash);
         const newUser = {
             username,
             password: hash
         }
         usersDao.add(newUser)
-        users.push(newUser)
         res.send({url : '/auth/login'})
     })
 
 }
 
-module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen}
+module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen}

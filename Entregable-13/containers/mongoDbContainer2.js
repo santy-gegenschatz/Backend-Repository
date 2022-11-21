@@ -21,7 +21,7 @@ class MongoDbContainer2 {
 
     async add(sth) {
         console.log('Saving');
-        let sth = await sth.save()
+        let sthSaved = await sth.save()
         console.log(sthSaved);
     }
 
@@ -29,8 +29,9 @@ class MongoDbContainer2 {
 
     }
 
-    getAll() {
-
+    async getAll(model) {
+        console.log('Container - Finding All');
+        return await model.find()
     }
 
     update(id) {
