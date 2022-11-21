@@ -7,10 +7,12 @@ const loginUser = async (req, res) => {
     const { username, password } = req.body
     console.log('Trying to log in: ', username, password);
     // First, find the user among the userDB, in this case a simple array in memory
-    const user = users.find( (user) => user.username === username)
-    if (!user) {
-        return res.json({error: 'username does not mach any register in the database'})
+    const userExists = await usersDao.checkUserExists(username)
+    if (!userExists) {
+        console.log('Redirecting');
+        return res.redirect('/auth/error?error=userdoesnotexist')
     }
+    const user = await usersDao.getUser(username)
     console.log('User found:', user);
     bcrypt.compare(password, user.password, function(err, result) {
         // returns result
@@ -19,7 +21,8 @@ const loginUser = async (req, res) => {
             req.session.admin = true
             res.redirect('/')
         } else {
-            res.redirect('/auth/unauthorized')
+            console.log('Password fail: redirecting');
+            res.redirect('/auth/error?error=wrongpassword')
         }
       });
 }
@@ -37,11 +40,22 @@ const logoutUser = async (req, res) => {
 const renderErrorScreen = async (req, res) => {
     let errorMessage;
     const error = req.query.error;
-    console.log(error);
     switch(error) {
         case('usernametaken'):
             errorMessage = 'Username Taken'
+            break;
+        case('wrongpassword'):
+            errorMessage = 'Wrong password'
+            break;
+        case('userdoesnotexist'):
+            errorMessage = 'User does not exist'
+            break;
+        default:
+            errorMessage = 'Unknown error'
+            break;
     }
+
+    console.log('After the switch, the error message is: ', errorMessage);
     res.render('error.ejs', {error: errorMessage})
 }
 

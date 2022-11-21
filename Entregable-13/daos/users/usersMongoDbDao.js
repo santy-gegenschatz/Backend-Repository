@@ -13,23 +13,37 @@ class usersMongoDbDao {
         console.log('Dao finished saving user');
     }
 
+    async checkUserExists(username) {
+        const users = await this.getAllUsers()
+        const userExists = users.find( (user) => {return user.username === username})
+        if (userExists) {
+            console.log('Dao: User exists');
+            return true
+        } else {
+            console.log('Dao: User does not exist');
+            return false
+        }
+    }
+
     async checkUserNameAvailable(username) {
         const users = await this.getAllUsers()
-        const userExists = users.find( (user) => { 
-            console.log(user.username);
-            return user.username === username 
-        })
+        const userExists = users.find( (user) => { return user.username === username  })
         if (userExists) {
-            console.log('User exists');
+            console.log('Dao: User exists');
             return false
         } else {
-            console.log('User does not exist');
+            console.log('Dao: User does not exist');
             return true
         }
     }
 
     async getAllUsers() {
         return await this.container.getAll(users)
+    }
+
+    async getUser(username) {
+        console.log('Dao: getting specific user', username);
+        return await this.container.getByKey(users, 'username', username)
     }
 }
 
