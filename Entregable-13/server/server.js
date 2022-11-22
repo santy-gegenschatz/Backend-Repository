@@ -21,6 +21,10 @@ const FileStore = require('session-file-store')(session) // Store session data p
 const MongoStore = require('connect-mongo') // idem but store it in MongoDB
 const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true} // To connect to MongoDB Atlas
 
+// Login - Logout
+const passport = require('passport')
+const { initPassport } = require('../middlewares/passport') 
+
 // Data
 const { products } = require('../data/archiveData/index')
 const messagesContainer = require('../containers/messagesContainer')
@@ -50,8 +54,12 @@ class Server {
         store: MongoStore.create({
             mongoUrl : `mongodb+srv://admin-santy:${process.env.MONGODB_PASSWORD}@cluster0.nsmqg9h.mongodb.net/Ecommerce?retryWrites=true&w=majority`, 
             mongoOptions: advancedOptions
-        })
-    }))
+            })
+        }))
+      initPassport()
+      this.app.use(passport.initialize())
+      this.app.use(passport.session())
+    
     }
 
     routes() {
