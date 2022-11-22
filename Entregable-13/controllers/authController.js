@@ -1,30 +1,11 @@
 const usersDao = require('../daos/users/index')
-let users = []
-const bcrypt = require('bcrypt')
-const saltRounds = 10;
+const passport = require('passport')
 
 const loginUser = async (req, res) => {
-    const { username, password } = req.body
-    console.log('Trying to log in: ', username, password);
-    // First, find the user among the userDB, in this case a simple array in memory
-    const userExists = await usersDao.checkUserExists(username)
-    if (!userExists) {
-        console.log('Redirecting');
-        return res.redirect('/auth/error?error=userdoesnotexist')
-    }
-    const user = await usersDao.getUser(username)
-    console.log('User found:', user);
-    bcrypt.compare(password, user.password, function(err, result) {
-        // returns result
-        if (result) {
-            req.session.user = username
-            req.session.admin = true
-            res.redirect('/')
-        } else {
-            console.log('Password fail: redirecting');
-            res.redirect('/auth/error?error=wrongpassword')
-        }
-      });
+    return passport.authenticate('login', {
+        successRedirect: '/api/products',
+        failureRedirect: '/auth/error/?error=wrongpassword'
+    })
 }
 
 const logoutUser = async (req, res) => {
@@ -76,28 +57,10 @@ const renderUnauthorizedScreen = async (req, res) => {
 }
 
 const signUpUser = async (req, res) => {
-    // Get the parameters from the post http call
-    const { username, password} = req.body
-    console.log(username, password);
-    
-    // Check that username is available
-    const available = await usersDao.checkUserNameAvailable(username)
-    console.log('Available: ', available)
-    if (!available) {
-            console.log('entering');
-            return res.send({url : '/auth/error?error=usernametaken'})
-    }
-
-    // Create a new user, given that the username is free
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-        const newUser = {
-            username,
-            password: hash
-        }
-        usersDao.add(newUser)
-        res.send({url : '/auth/login'})
+    return passport.authenticate('signup', {
+        successRedirect: '/api/products',
+        failureRedirect: '/auth/error/?error=usernametaken'
     })
-
 }
 
 module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen}
