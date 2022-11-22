@@ -27,8 +27,9 @@ class MongoDbContainer2 {
 
     async getByKey(model, key, value) {
         console.log('Getting by key');
-        return await model.findOne( { username : value} )
-
+        const user = await model.findOne( { key : value} )
+        console.log('Found by key: ', user);
+        return user
     }
 
     async getAll(model) {

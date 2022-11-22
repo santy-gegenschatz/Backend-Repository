@@ -1,14 +1,15 @@
 const { renderHome, renderProducts, renderFakeProducts } = require('../controllers/defaultController')
 const { Router } = require('express')
 const { auth } = require('../middlewares/auth')
+const { checkAuthentication } = require('../middlewares/passportAuth')
 const defaultRouter = Router()
 
 // ROUTER URL'S
 // Show the home screen
-defaultRouter.get('/', auth, renderHome)
+defaultRouter.get('/', checkAuthentication, renderHome)
 
 // Show the products screen
-defaultRouter.get('/products', auth, renderProducts)
+defaultRouter.get('/products', checkAuthentication, renderProducts)
 
 // Show faker data (Entregable 11)
 defaultRouter.get('/api/products-test', renderFakeProducts)

@@ -1,3 +1,4 @@
+const passport = require('passport')
 const { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen} = require('../controllers/authController')
 const { Router, application } = require('express')
 
@@ -15,7 +16,10 @@ authRouter.get('/error', renderErrorScreen)
 
 authRouter.get('*', renderSignUpScreen)
 
-authRouter.post('/login', loginUser)
+authRouter.post('/login', passport.authenticate('login', { failureRedirect: '/auth/error/?error=wrongpassword'}), (req, res) => {
+    console.log(req.user);
+    res.redirect('/')
+})
 
 authRouter.post('/signup', signUpUser)
 

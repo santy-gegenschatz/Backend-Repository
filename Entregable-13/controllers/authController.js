@@ -1,17 +1,16 @@
 const passport = require('passport')
 
-const loginUser = passport.authenticate('login', {
-        successRedirect: '/products',
-        failureRedirect: '/auth/error/?error=wrongpassword'
-    })
+const loginUser = (passport.authenticate('login', { failureRedirect: '/auth/error/?error=wrongpassword'}), (req, res) => {
+})
 
 const logoutUser = async (req, res) => {
-    const stringUsername = req.session.user
+    const stringUsername = req.user.username
+    console.log(req.user);
     req.session.destroy( (err) => {
         if (err) {
             return res.json(err)
         }
-        res.redirect(`/auth/logout?name=${stringUsername}`)
+        res.redirect(`/auth/logout?username=${stringUsername}`)
     })
 }
 
@@ -42,7 +41,7 @@ const renderLoginScreen = async (req, res) => {
 }
 
 const renderLogoutScreen = async (req, res) => {
-    res.status(200).render('logout.ejs', {username : req.query.name})
+    res.status(200).render('logout.ejs', {username : req.query.username})
 }
 
 const renderSignUpScreen = async (req, res) => {
