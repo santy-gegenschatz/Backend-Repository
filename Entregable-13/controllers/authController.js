@@ -1,12 +1,9 @@
-const usersDao = require('../daos/users/index')
 const passport = require('passport')
 
-const loginUser = async (req, res) => {
-    return passport.authenticate('login', {
-        successRedirect: '/api/products',
+const loginUser = passport.authenticate('login', {
+        successRedirect: '/products',
         failureRedirect: '/auth/error/?error=wrongpassword'
     })
-}
 
 const logoutUser = async (req, res) => {
     const stringUsername = req.session.user

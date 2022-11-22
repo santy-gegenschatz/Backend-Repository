@@ -12,6 +12,7 @@ const createHash = (password) => {
 }
 
 const isValidPassword = (user, password) => {
+    console.log(password, user.password);
     return bCrypt.compareSync(password, user.password)
 }
 
@@ -19,18 +20,20 @@ const initPassport = () => {
     passport.use('login', new LocalStrategy( async (username, password, done) => {
         // First, check if user exists
         const userExists = await usersDao.checkUserExists(username)
+        console.log(userExists);
         if (!userExists) {
             return done(null, false)
         }
         
         // User does exist, retreive it from MongoDB
         const user = await usersDao.getUser(username)
+        console.log('User returned: ', user);
         if (!isValidPassword(user, password)) {
             return done(null, false)
         }
-
+        console.log('All valid');
         // If the user exists && the password is valid
-        return done(null, user)
+        return done(null, user) // This will get passed to the serialize user method defined below
     }))
 
     passport.use('signup', new LocalStrategy({passReqToCallback: true}, 
@@ -51,6 +54,16 @@ const initPassport = () => {
         await usersDao.add(newUser)
         return done(null, await usersDao.getUser(username))
     }))
+
+    passport.serializeUser((user, done) => {
+        done(null, user._id)
+    })
+
+    passport.deserializeUser( async (id, done) => {
+        const user = await usersDao.getUserById(id) 
+        done(null, user)
+    })
+
 }
 
 module.exports = { initPassport }

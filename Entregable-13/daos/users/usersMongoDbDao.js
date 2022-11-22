@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const Container = require('../../containers/mongoDbContainer2')
 const { users } = require('../../models/mongoDbSchemas/users')
 
@@ -44,6 +43,10 @@ class usersMongoDbDao {
     async getUser(username) {
         console.log('Dao: getting specific user', username);
         return await this.container.getByKey(users, 'username', username)
+    }
+
+    async getUserById(id) {
+        return await this.container.getByKey(users, '_id', id)
     }
 }
 
