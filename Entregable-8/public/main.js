@@ -4,8 +4,8 @@ const addMessage = (m) => {
     const text = document.getElementById('text').value
     const author = document.getElementById('author').value
     const message = {
-        text: text,
-        author: author,
+        message: text,
+        author,
         date: new Date()
     }
     console.log(message);
@@ -26,7 +26,7 @@ const addProduct = (p) => {
 const render = (array) => {
     const html = array.map( (m) => {
         return (`<div class = 'main-div'> 
-                <strong class = 'blue'> ${m.author} </strong> <span class = 'brown'> [${m.date}] </span> :  <em class = 'green' > ${m.text} </em>
+                <strong class = 'blue'> ${m.author} </strong> <span class = 'brown'> [${(new Date(m.date))}] </span> :  <em class = 'green' > ${m.message} </em>
                 </div>`)
     }).join(' ')
     const divDisplay = document.getElementById('divDisplay')

@@ -6,12 +6,4 @@ const options = {
     useNullAsDefault: true
 }
 
-const containerOptions = {
-    client : 'sqlite3',
-    connection: {
-        filename: '../data/db.sqlite'
-    },
-    useNullAsDefault: true
-}
-
-module.exports = { options, containerOptions }
+module.exports = { options }

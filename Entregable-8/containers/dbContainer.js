@@ -19,7 +19,7 @@ class SqlContainer {
         console.log('Getting, ', this.tableName);
         console.log('Driname:' , __dirname, this.configObject.connection);
         const response = await this.knex.from(this.tableName).select('*')
-        return this.throwSuccess('Retrieved all from DB', response)
+        return response
     }
 
     async deleteById(id) {

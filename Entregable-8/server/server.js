@@ -14,8 +14,8 @@ const { TableCreator } = require('../database/knexscripts')
 const tableCreator = new TableCreator('products', 'messages')
 tableCreator.createTables()
 const { SqlContainer } = require('../containers/dbContainer')
-const { containerOptions } = require('../database/sqlite3.config.js')
-const Messages = new SqlContainer(containerOptions, 'messages')
+const { options } = require('../database/sqlite3.config.js')
+const Messages = new SqlContainer(options, 'messages')
 
 class Server {
     constructor() {
