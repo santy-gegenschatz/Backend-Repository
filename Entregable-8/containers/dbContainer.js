@@ -1,38 +1,59 @@
-class Database {
+const { products } = require('../utils/dataGenerator')
+class SqlContainer {
     constructor(configObject, tableName) {
         this.configObject = configObject
         this.tableName = tableName
         this.knex = require('knex')(configObject)
+        this.createTable()
     }
-    
-    async addProduct(product) {
-        const response = await this.knex.insert(product)
-        return this.throwSuccess('Product added', response)
-    }
-    
-    async getProduct(id) {
-        console.log(a);
-        const response = await this.knex.from(this.table).select('*').where('id', '=', id)
-        console.log(reponse);
-        return this.throwSuccess('Product added', response)
+    async createTable() {
+        try {
+            await this.knex.schema.dropTable('products')
+            console.log('Products table deleted');
+            await this.knex.schema.createTable('products', table => {
+                table.increments('id')
+                table.string('name')
+                table.string('description')
+                table.integer('price')
+                table.integer('stock')
+                table.string('thumbnail')
+            })
+            console.log('Table successfully created');
+            await this.knex(this.tableName).insert(products)
+        } catch (e) {
+            console.log(e);
+        }
     }
 
-    async deleteProduct(id) {
-        const response = await this.knex.from(this.table).where('id', '=', id).del()
-        return this.throwSuccess('Product deleted', response)
+    async add(sth) {
+        const response = await this.knex(this.tableName).insert(sth)
+        return this.throwSuccess('Added', response)
+    }
+    
+    async getById(id) {
+        const response = await this.knex.from(this.tableName).select('*').where('id', '=', id)
+        return this.throwSuccess('Obtained', response)
     }
 
-     async getProducts() {
-        console.log('a');
+    async getAll() {
+        console.log('Getting');
         const response = await this.knex.from(this.tableName).select('*')
-        console.log('Response:', response);
-        return this.throwSuccess('Here are the products', response)
+        console.log('Response: ', response);
+        return this.throwSuccess('Retrieved all from DB', response)
     }
 
-    async updateProduct(id, attributes) {
-        const response1 = await this.knex.from(this.table).where('id', '=', id).del()
-        const response2 = await this.knex.from(this.table).insert(attributes)
-        return this.throwSuccess('Product updated', response2)
+    async deleteById(id) {
+        const response = await this.knex.from(this.tableName).where('id', '=', id).del()
+        return this.throwSuccess('Deleted', response)
+    }
+
+    async updateById(id, newObject) {
+        try {
+            const response = await this.knex(this.tableName).where({id: id}).update(newObject)
+            return this.throwSuccess('Updated', response)
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     throwSuccess(message, payload) {
@@ -44,4 +65,4 @@ class Database {
     }
 }
 
-module.exports = Database
+module.exports = { SqlContainer }

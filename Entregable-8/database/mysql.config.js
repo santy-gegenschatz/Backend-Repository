@@ -6,8 +6,7 @@ const options = {
         user: 'root',
         password: '',
         database: 'ecommerce'
-        //
     }
 }
 
-module.exports = options
+module.exports = { options }
