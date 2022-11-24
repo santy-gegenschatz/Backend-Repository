@@ -6,6 +6,7 @@ const urls = [
     'https://cdn4.iconfinder.com/data/icons/fashion-industry-set/88/Di-128.png'
 ]
 const products = []
+const messages = []
 let i = 0;
 
 while (i < 10) {
@@ -16,8 +17,14 @@ while (i < 10) {
         stock: faker.datatype.number(100),
         thumbnail: urls[Math.floor(Math.random() * 4)]
     }
+    const message = {
+        author: faker.name.firstName(),
+        message: faker.lorem.sentence(),
+        date: faker.date.recent()
+    }
     products.push(product)
+    messages.push(message)
     i++;
 }
 
-module.exports = { products }
+module.exports = { products, messages }

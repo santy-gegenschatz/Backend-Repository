@@ -1,9 +1,17 @@
 const options = {
     client : 'sqlite3',
     connection: {
-        filename: './db.sqlite'
+        filename: './data/db.sqlite'
     },
     useNullAsDefault: true
 }
 
-module.exports = { options }
+const containerOptions = {
+    client : 'sqlite3',
+    connection: {
+        filename: '../data/db.sqlite'
+    },
+    useNullAsDefault: true
+}
+
+module.exports = { options, containerOptions }

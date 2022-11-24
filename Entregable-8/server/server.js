@@ -9,10 +9,13 @@ const { productsRouter } = require('../routers/productsRouter')
 const { cartRouter } = require('../routers/cartRouter')
 
 // Data
-const { products, messages } = require('../data/index')
-// const dbMessages = require('../containers/messagesContainer')
-// const sqlite3Config = require('../database/sqlite3.config')
-// const Messages = new dbMessages(sqlite3Config, 'messages')
+const { products } = require('../data/index')
+const { TableCreator } = require('../database/knexscripts')
+const tableCreator = new TableCreator('products', 'messages')
+tableCreator.createTables()
+const { SqlContainer } = require('../containers/dbContainer')
+const { containerOptions } = require('../database/sqlite3.config.js')
+const Messages = new SqlContainer(containerOptions, 'messages')
 
 class Server {
     constructor() {
@@ -59,14 +62,14 @@ class Server {
     
     // Websocket connections
     startSockets() {
-        this.ioServer.on('connection', (client) => {
+        this.ioServer.on('connection', async (client) => {
             console.log('Client connected');
-            client.emit('messages', Messages.getMessages())
+            client.emit('messages', await Messages.getAll())
         
             // Operation when a message is added
             client.on('new-message', (msg) => {
-                Messages.addMessage(msg)
-                this.ioServer.sockets.emit('messages', Messages.getMessages())
+                Messages.add(msg)
+                this.ioServer.sockets.emit('messages', Messages.getAll())
             })
         
             // Operation when a product is added

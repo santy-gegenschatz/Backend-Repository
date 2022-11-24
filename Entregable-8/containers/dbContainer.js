@@ -1,28 +1,8 @@
-const { products } = require('../utils/dataGenerator')
 class SqlContainer {
     constructor(configObject, tableName) {
         this.configObject = configObject
         this.tableName = tableName
         this.knex = require('knex')(configObject)
-        this.createTable()
-    }
-    async createTable() {
-        try {
-            await this.knex.schema.dropTable('products')
-            console.log('Products table deleted');
-            await this.knex.schema.createTable('products', table => {
-                table.increments('id')
-                table.string('name')
-                table.string('description')
-                table.integer('price')
-                table.integer('stock')
-                table.string('thumbnail')
-            })
-            console.log('Table successfully created');
-            await this.knex(this.tableName).insert(products)
-        } catch (e) {
-            console.log(e);
-        }
     }
 
     async add(sth) {
@@ -36,9 +16,9 @@ class SqlContainer {
     }
 
     async getAll() {
-        console.log('Getting');
+        console.log('Getting, ', this.tableName);
+        console.log('Driname:' , __dirname, this.configObject.connection);
         const response = await this.knex.from(this.tableName).select('*')
-        console.log('Response: ', response);
         return this.throwSuccess('Retrieved all from DB', response)
     }
 
