@@ -1,7 +1,6 @@
 const passport = require('passport')
 
-const loginUser = (passport.authenticate('login', { failureRedirect: '/auth/error/?error=wrongpassword'}), (req, res) => {
-})
+const loginUser = 0;
 
 const logoutUser = async (req, res) => {
     const stringUsername = req.user.username

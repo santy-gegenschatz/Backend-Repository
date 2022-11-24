@@ -39,6 +39,7 @@ const initPassport = () => {
     passport.use('signup', new LocalStrategy({passReqToCallback: true}, 
         async (req, username, password, done) => {
         // First check if the username is available
+        console.log(username, password);
         const usernameAvailable = await usersDao.checkUserNameAvailable(username)
         if (!usernameAvailable) {
             return done(null, false)
@@ -60,6 +61,7 @@ const initPassport = () => {
     })
 
     passport.deserializeUser( async (id, done) => {
+        console.log('Deserializing');
         const user = await usersDao.getUserById(id) 
         done(null, user)
     })

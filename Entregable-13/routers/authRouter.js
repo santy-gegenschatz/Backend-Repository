@@ -21,7 +21,10 @@ authRouter.post('/login', passport.authenticate('login', { failureRedirect: '/au
     res.redirect('/')
 })
 
-authRouter.post('/signup', signUpUser)
+authRouter.post('/signup', passport.authenticate('signup'), (req, res) => {
+    console.log(req.user),
+    res.send({url: '/'})
+})
 
 authRouter.post('/logout', logoutUser)
 

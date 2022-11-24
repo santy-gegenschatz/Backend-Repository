@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const { route, advancedOptions} = require('../data/mongoDBData/mongoDbConfig')
-const { users } = require('../models/mongoDbSchemas/users')
 
 class MongoDbContainer2 {
     constructor(collectionName) {
@@ -27,6 +26,7 @@ class MongoDbContainer2 {
 
     async getByKey(model, key, value) {
         console.log('Getting by key');
+        console.log(model, key, value);
         const user = await model.findOne( { key : value} )
         console.log('Found by key: ', user);
         return user
