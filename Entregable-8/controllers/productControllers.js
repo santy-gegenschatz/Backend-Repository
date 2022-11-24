@@ -1,5 +1,5 @@
 const { validateFullFields, validateCredentials } = require('../validation/validation')
-const { SqlContainer } = require('../containers/dbContainer')
+const { SqlContainer } = require('../containers/sqlDbContainer')
 const { options } = require('../database/mysql.config')
 const Database = new SqlContainer(options, 'products')
 

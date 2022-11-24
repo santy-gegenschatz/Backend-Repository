@@ -16,8 +16,6 @@ class SqlContainer {
     }
 
     async getAll() {
-        console.log('Getting, ', this.tableName);
-        console.log('Driname:' , __dirname, this.configObject.connection);
         const response = await this.knex.from(this.tableName).select('*')
         return response
     }

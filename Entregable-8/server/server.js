@@ -13,7 +13,7 @@ const { products } = require('../data/index')
 const { TableCreator } = require('../database/knexscripts')
 const tableCreator = new TableCreator('products', 'messages')
 tableCreator.createTables()
-const { SqlContainer } = require('../containers/dbContainer')
+const { SqlContainer } = require('../containers/sqlDbContainer')
 const { options } = require('../database/sqlite3.config.js')
 const Messages = new SqlContainer(options, 'messages')
 
