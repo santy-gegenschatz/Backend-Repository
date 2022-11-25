@@ -1,4 +1,3 @@
-const { serializeUser } = require('passport');
 const passport = require('passport')
 
 const loginUser = async (req, res, next) => {

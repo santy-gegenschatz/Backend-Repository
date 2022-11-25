@@ -1,5 +1,5 @@
 // Requiring dotenv as early as possible in the application
-require('dotenv').config()
+require('dotenv').config() // => Then we can use it anywhere in our Node project.
 
 // Plain vanilla server with express
 const express = require('express');

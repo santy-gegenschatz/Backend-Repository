@@ -1,23 +1,23 @@
 const archiveDao = require('./productsArchiveDao')
-const mongoDbDao = require('./productsMongoDbDao')
+const mongoDao = require('./productsMongoDao')
 const firebaseDao = require('./productsFirebaseDao')
-const sqlDbDao = require('./productsSqlDbDao')
+const sqlDao = require('./productsSqlDao')
 
-let environmentVariable;
+const productsApiContainerType = process.env.PRODUCTS_API_CONTAINER
 let moduleToExport;
 
-switch(environmentVariable) {
-    case 1:
+switch(productsApiContainerType) {
+    case 'archive':
         moduleToExport = archiveDao
         break
-    case 2:
-        moduleToExport = mongoDbDao
+    case 'mongo':
+        moduleToExport = mongoDao
         break
-    case 3:
+    case 'firebase':
         moduleToExport = firebaseDao
         break
-    case 4:
-        moduleToExport = sqlDbDao
+    case 'sql':
+        moduleToExport = sqlDao
         break
     default:
         moduleToExport = archiveDao

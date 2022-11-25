@@ -1,9 +1,9 @@
-const Container = require('../../containers/mongoDbContainer2')
+const Container = require('../../containers/mongoDbContainer')
 const { users } = require('../../models/mongoDbSchemas/users')
 
 class usersMongoDbDao {
     constructor() {
-        this.container = new Container('users')
+        this.container = new Container('users', true)
     }
 
     async add(newUser) {
