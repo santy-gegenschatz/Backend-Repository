@@ -19,16 +19,22 @@ class MongoDbContainer2 {
     }
 
     async add(sth) {
-        console.log('Saving');
+        console.log('Container: Saving');
         let sthSaved = await sth.save()
-        console.log(sthSaved);
+        return sthSaved
     }
 
-    async getByKey(model, key, value) {
-        console.log('Getting by key');
-        console.log(model, key, value);
-        const user = await model.findOne( { key : value} )
-        console.log('Found by key: ', user);
+    async getById(model, id) {
+        console.log('Container: Getting by id');
+        const user = await model.findOne( {_id : id} )
+        console.log('Container - Found by id: ', user, 'end');
+        return user
+    }
+
+    async getByUsername(model, username) {
+        console.log('Container: Getting by username');
+        const user = await model.findOne( {username : username} )
+        console.log('Container: Found by username: ', user);
         return user
     }
 
@@ -37,17 +43,6 @@ class MongoDbContainer2 {
         return await model.find()
     }
 
-    update(id) {
-
-    }
-
-    deleteAll() {
-
-    }
-
-    deleteById(id) {
-
-    }
 }
 
 module.exports = MongoDbContainer2

@@ -22,14 +22,14 @@ const initPassport = () => {
         const userExists = await usersDao.checkUserExists(username)
         console.log(userExists);
         if (!userExists) {
-            return done(null, false)
+            return done('userdoesnotexist', false)
         }
         
         // User does exist, retreive it from MongoDB
         const user = await usersDao.getUser(username)
         console.log('User returned: ', user);
         if (!isValidPassword(user, password)) {
-            return done(null, false)
+            return done('wrongpassword', false)
         }
         console.log('All valid');
         // If the user exists && the password is valid
@@ -39,10 +39,9 @@ const initPassport = () => {
     passport.use('signup', new LocalStrategy({passReqToCallback: true}, 
         async (req, username, password, done) => {
         // First check if the username is available
-        console.log(username, password);
         const usernameAvailable = await usersDao.checkUserNameAvailable(username)
         if (!usernameAvailable) {
-            return done(null, false)
+            return done('usernametaken', false)
         }
 
         // Create a new User
@@ -52,12 +51,15 @@ const initPassport = () => {
         }
 
         // Add the user to the mongodbDatabase
-        await usersDao.add(newUser)
-        return done(null, await usersDao.getUser(username))
+        const addedUser = await usersDao.add(newUser)
+        console.log('The added user is: ', addedUser, 'end');
+        return done(null, addedUser)
     }))
 
     passport.serializeUser((user, done) => {
+        console.log('Serializing');
         done(null, user._id)
+        console.log('Serialized');
     })
 
     passport.deserializeUser( async (id, done) => {

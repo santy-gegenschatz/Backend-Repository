@@ -8,8 +8,9 @@ class usersMongoDbDao {
 
     async add(newUser) {
         const user = new users(newUser)
-        await this.container.add(user)
+        const insertUser = await this.container.add(user)
         console.log('Dao finished saving user');
+        return insertUser
     }
 
     async checkUserExists(username) {
@@ -42,11 +43,12 @@ class usersMongoDbDao {
 
     async getUser(username) {
         console.log('Dao: getting specific user', username);
-        return await this.container.getByKey(users, 'username', username)
+        return await this.container.getByUsername(users, username)
     }
 
     async getUserById(id) {
-        return await this.container.getByKey(users, '_id', id)
+        console.log('Dao: getting specific id', id);
+        return await this.container.getById(users, id)
     }
 }
 

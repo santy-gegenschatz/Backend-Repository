@@ -1,6 +1,30 @@
 const passport = require('passport')
 
-const loginUser = 0;
+const loginUser = async (req, res, next) => {
+    passport.authenticate('login', (err, user, info) => {
+        if (!err) {
+            console.log('User: ', user);
+            res.redirect('/')
+        } else {
+            console.log('Error: ', err);
+            res.redirect(`/auth/error/?error=${err}`)
+        }
+      })
+      (req, res, next);
+}
+
+const signUpUser = async (req, res, next) => {
+    passport.authenticate('signup', (err, user, info) => {
+        if (!err) {
+            console.log('User: ', user);
+            res.send({url: '/'})
+        } else {
+            console.log('Error: ', err);
+            res.send({url : `/auth/error/?error=${err}`})
+        }
+      })
+      (req, res, next);
+}
 
 const logoutUser = async (req, res) => {
     const stringUsername = req.user.username
@@ -51,11 +75,5 @@ const renderUnauthorizedScreen = async (req, res) => {
     res.render('unauthorized.ejs')
 }
 
-const signUpUser = async (req, res) => {
-    return passport.authenticate('signup', {
-        successRedirect: '/api/products',
-        failureRedirect: '/auth/error/?error=usernametaken'
-    })
-}
 
 module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen}

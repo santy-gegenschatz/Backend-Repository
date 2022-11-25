@@ -30,14 +30,12 @@ class MessagesContainer {
     }
 
     async loadMessages() {
-        console.log('Reading from DB');
         const response = await this.read()
         this.messages = response
         return ('Read from DB')
     }
 
     async normalizeMessages() {
-        console.log('Normalizing messages');
         const author = new schema.Entity('authors', {}, {idAttribute: 'email'})
         const message = new schema.Entity('messages', {
             author: author
@@ -48,7 +46,6 @@ class MessagesContainer {
         const normalizedData = normalize({id: 1, messages: this.messages}, messageArray)
         const a = JSON.stringify(this.messages).length;
         const b = JSON.stringify(normalizedData).length;
-        console.log('Compression: ', a, b, b/a);
         // console.log('--- Data ---');
         // console.log(this.messages);
         // console.log('--- Normalized ---');
