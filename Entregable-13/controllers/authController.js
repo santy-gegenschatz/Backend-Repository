@@ -1,10 +1,14 @@
+const { serializeUser } = require('passport');
 const passport = require('passport')
 
 const loginUser = async (req, res, next) => {
     passport.authenticate('login', (err, user, info) => {
         if (!err) {
             console.log('User: ', user);
-            res.redirect('/')
+            console.log('Info: ', info);
+            req.login(user, () => {
+                return next();
+            })
         } else {
             console.log('Error: ', err);
             res.redirect(`/auth/error/?error=${err}`)
@@ -13,11 +17,18 @@ const loginUser = async (req, res, next) => {
       (req, res, next);
 }
 
+const goToHome = async (req, res) => {
+    console.log(req.user);
+    res.redirect('/')
+}
+
 const signUpUser = async (req, res, next) => {
     passport.authenticate('signup', (err, user, info) => {
         if (!err) {
             console.log('User: ', user);
-            res.send({url: '/'})
+            req.login(user, () => {
+                res.send({url: '/'})
+            })
         } else {
             console.log('Error: ', err);
             res.send({url : `/auth/error/?error=${err}`})
@@ -76,4 +87,4 @@ const renderUnauthorizedScreen = async (req, res) => {
 }
 
 
-module.exports = { renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen}
+module.exports = { goToHome, renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen}

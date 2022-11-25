@@ -2,6 +2,7 @@ const usersDao = require('../daos/users/index')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bCrypt = require('bcrypt')
+const { serializeUser } = require('passport')
 
 const createHash = (password) => {
     return bCrypt.hashSync(
