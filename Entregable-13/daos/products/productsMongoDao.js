@@ -1,39 +1,46 @@
-const { response } = require('express');
 const Container = require('../../containers/mongoDbContainer') 
+const mongoose = require('mongoose')
 const { products } = require('../../models/mongoDbSchemas/products')
+
 
 class ProductsMongoDao {
     constructor() {
         this.container = new Container('products', true)
-
     }
 
     async addProduct(product) {
-        // First, check if the product exists
-        const response = await this.container.getById(product.id)
-        console.log(response);
-        if (response) {
-            // Update Stock
-            const response = await this.container.updateFieldById(products, product.id, stock, product.stock + Number(response.stock))
-            return this.throwSuccess('Item already in the database. Stock augmented')
-        } else {
-            // Create the product
-            const response = await this.container.add(product)
-            return this.throwSuccess('New item added to the database')
+        try {
+            // First, check if the product exists
+            // That implies checking the id is valid
+            if (!mongoose.Types.ObjectId.isValid(product.id)) {
+                return {error : false}
+            }
+            const response = await this.container.getById(products, product.id)
+            console.log(response);
+            if (response) {
+                // Update Stock
+                const response = await this.container.updateFieldById(products, product.id, stock, product.stock + Number(response.stock))
+                return this.throwSuccess('Item already in the database. Stock augmented')
+            } else {
+                // Create the product
+                const response = await this.container.add(products, product)
+                return this.throwSuccess('New item added to the database', response)
+            }
+        } catch (err) {
+            return err
         }
 
     }
 
     async getProduct(id) {
         console.log(id);
-        const response = await this.container.getByKey(products, '_id', id)
+        const response = await this.container.getById(products, id)
         console.log('DAO: Response Obtained', response);
-        return response
+        return this.throwSuccess('Product recovered from the DB', response)
     }
 
     async getAllProducts() {
         const response = await this.container.getAll(products)
-        console.log('DAO: Response Obtained', response);
         return this.throwSuccess('Here are the Products', response)
     }
 

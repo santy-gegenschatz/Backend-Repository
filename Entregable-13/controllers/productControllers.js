@@ -7,17 +7,17 @@ const getProducts = async (req, res) => {
 
 const getProduct = async (req, res) => {
     const { id } = req.params
-    return res.json(productsDao.getProduct(id))
+    return res.json(await productsDao.getProduct(id))
 }
 
 const addProduct = async (req, res) => {
     const {id, name, description, price, stock, thumbnail, credential} = req.body
     const product = {id, name, description, price, stock, thumbnail}
     if (validateCredentials(credential).validated) {
-        if (validateFullFields(attributes).validated) {
+        if (validateFullFields(product).validated) {
             return res.json(await productsDao.addProduct(product))   
         } else {
-            return res.json((validateFullFields(attributes)))
+            return res.json((validateFullFields(product)))
         }
     } else {
         return res.json(validateCredentials(credential))

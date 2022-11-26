@@ -20,10 +20,15 @@ class MongoDbContainer {
         console.log('Connected to MongoDB. Collection: ', this.collectionName);
     }
 
-    async add(sth) {
-        console.log('Container: Saving');
-        let sthSaved = await sth.save()
-        return sthSaved
+    async add(model, sth) {
+        try {
+            console.log('Container: Saving');
+            let sthSaved = await model.save(sth)
+            return sthSaved
+        } catch(err) {
+            console.log(err);
+            return err
+        }
     }
 
     async getByKey(model, keyname, keyvalue) {
@@ -37,10 +42,14 @@ class MongoDbContainer {
     }
 
     async getById(model, id) {
-        console.log('Container: Getting by id');
-        const user = await model.findOne( {_id : id} )
-        console.log('Container - Found by id: ', user, 'end');
-        return user
+        try {
+            console.log('Container: Getting by id');
+            const user = await model.findOne( {_id : id} )
+            console.log('Container - Found by id: ', user, 'end');
+            return user
+        } catch (err) {
+            return err
+        }
     }
 
     async getByUsername(model, username) {
