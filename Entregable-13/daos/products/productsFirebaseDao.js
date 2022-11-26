@@ -1,11 +1,9 @@
 const Product = require('../../models/product')
 const Container = require('../../containers/firebaseContainer') 
 
-class Products {
+class ProductsFirebaseDao {
     constructor() {
         this.container = new Container('products')
-        this.items = []
-        this.readItems()
     }
 
     add(item) {
@@ -121,4 +119,4 @@ class Products {
     }
 }
 
-module.exports = new Products()
+module.exports = new ProductsFirebaseDao()

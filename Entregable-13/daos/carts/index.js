@@ -6,19 +6,19 @@ const sqlDbDao = require('./cartsSqlDao')
 // In the future, this variable will be defined via a server process
 // For now, we will leave it there, the switch statement will, in turn,
 // respond the default value for it.
-let environmentVariable;
+let cartsApiContainerType = process.env.CARTS_API_CONTAINER
 let moduleToExport;
-switch(environmentVariable) {
-    case 1:
+switch(cartsApiContainerType) {
+    case 'archive':
         moduleToExport = archiveDao
         return 
-    case 2:
+    case 'mongo':
         moduleToExport = mongoDbDao
         return
-    case 3:
+    case 'firebase':
         moduleToExport = firebaseDao
         return
-    case 4:
+    case 'sql':
         moduleToExport = sqlDbDao
         return
     default:
