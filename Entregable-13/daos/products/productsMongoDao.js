@@ -1,125 +1,69 @@
+const { response } = require('express');
 const Container = require('../../containers/mongoDbContainer') 
 const { products } = require('../../models/mongoDbSchemas/products')
 
-class ProductsDao {
+class ProductsMongoDao {
     constructor() {
         this.container = new Container('products', true)
 
     }
 
     async addProduct(product) {
-        const response = await this.container.add(product)
+        // First, check if the product exists
+        const response = await this.container.getById(product.id)
+        console.log(response);
+        if (response) {
+            // Update Stock
+            const response = await this.container.updateFieldById(products, product.id, stock, product.stock + Number(response.stock))
+            return this.throwSuccess('Item already in the database. Stock augmented')
+        } else {
+            // Create the product
+            const response = await this.container.add(product)
+            return this.throwSuccess('New item added to the database')
+        }
 
     }
 
     async getProduct(id) {
+        console.log(id);
         const response = await this.container.getByKey(products, '_id', id)
-        console.log(response);
+        console.log('DAO: Response Obtained', response);
+        return response
     }
 
-    // add(item) {
-    //     const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
-    //     if (prodExists !== -1) {
-    //         this.items[prodExists].stock = Number(this.items[prodExists].stock)
-    //         this.items[prodExists].stock += Number(item.stock)
-    //         this.saveToPersistentMemory(this.items)
-    //         return this.throwSuccess('Item already in the database. Stock augmented')
-    //     } else {
-    //         const newProduct = new Product(this.assignId(), item)
-    //         this.items.push(newProduct)
-    //         this.saveToPersistentMemory(this.items)
-    //         return this.throwSuccess('New item added to the database')
-    //     }
-    // }
+    async getAllProducts() {
+        const response = await this.container.getAll(products)
+        console.log('DAO: Response Obtained', response);
+        return this.throwSuccess('Here are the Products', response)
+    }
 
-    // assignId() {
-    //     if (this.items.length === 0) {
-    //         return 1
-    //     } else {
-    //         return this.items.length + 1
-    //     }
-    // }
+    async updateProduct(id, field, value) {
+        const response = await this.container.updateFieldById(products, id, field, value)
+        return this.throwSuccess('Here is how the product looks now: ', response)
+    }
 
-    // decreaseStock(prod) {
-    //     let stock = Number(prod.stock)
-    //     stock -= 1
-    //     prod.stock = stock
-    //     this.saveToPersistentMemory(this.items)
-    // }
+    async deleteProduct(id) {
+        const response = await this.container.delete(products, id)
+        return this.throwSuccess('Product deleted: ', response)
+    }
 
-    // deleteProduct(id) {
-    //     // First, figure out if the product effectively exists
-    //     const convertedId = Number(id)
-    //     const productIndex = this.items.findIndex((prod) => prod.id === convertedId)
-    //     if (productIndex !== -1) {
-    //         const removed = this.items.splice(productIndex)
-    //         this.saveToPersistentMemory(this.items)
-    //         return this.throwSuccess('Product deleted', {deleted: removed[0].toString(), currentArray: this.items.toString()})
-    //     } else {
-    //         return this.throwError(' There is no item with that id in the database')
-    //     }
+    async decreaseStock(id, decreaseAmount) {
+        // Find the product in the DB
+        // Get the current stock
+        const { stock } = await this.container.getByKey(products, '_id', id)
+        // Update the stock
+        if (stock - decreaseAmount >= 0) {
+            const response = await this.container.updateFieldById(products, id, 'stock', value)
+            return true
+        } else {
+            return new Error('Not enough stock to perform operation')            
+        }
+    }
 
-    // }
-
-    // editProduct(id, attributes) {
-    //     // Figure out if the product exists
-    //     const convertedId = Number(id)
-    //     const prodIndex = this.items.findIndex((prod) => prod.id === convertedId)
-    //     if (prodIndex !== -1) {
-    //         // If the product exists
-    //         try {
-    //             const product = this.items[prodIndex]
-    //             this.items[prodIndex] = {...product, ...attributes}
-    //             this.saveToPersistentMemory(this.items)
-    //             return this.throwSuccess('Succesfully modified product. Here is the new one', this.items[prodIndex])
-    //         } catch (error) {
-    //             throw new Error(error)
-    //         }
-    //     } else {
-    //         // If it does not exist
-    //         return this.throwError('Sorry, no product in our db matches the given id')
-    //     }
-    // }
-
-    // find(id) {
-    //     const product = this.items.find( (prod) => prod.id === id)
-    //     if (product) {
-    //         return product
-    //     } else {
-    //         return false
-    //     }
-    // }
-
-    // getProduct(id) {
-    //     // Figure out if the product exists
-    //     // In case some douchebag passes the id as a string we will turn it into a number
-    //     const convertedId = Number(id)
-    //     const prodExists = this.items.findIndex((prod) => prod.id === convertedId)
-    //     if (prodExists !== -1) {
-    //         // If the product exists
-    //         return this.throwSuccess('Returning requested product', this.items[prodExists])
-    //     } else {
-    //         // If it does not exist
-    //         return this.throwError('Sorry, no product in our db matches the given id')
-    //     }
-    // }
-
-    // getProducts() {
-    //     return this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
-    // }
-
-    // hasStock(id) {
-    //     const product = this.find(id)
-    //     return this.find(id).stock >= 1 
-    // }
-
-    // async readItems() {
-    //     this.items = await this.container.read()
-    // }
-
-    // saveToPersistentMemory(object) {
-    //     this.container.save(object)
-    // }
+    async productHasStock(id) {
+        const { stock } = await this.container.getByKey(products, '_id', id)
+        stock > 0 ? true : false 
+    }
 
     throwSuccess(message, payload) {
         return {code: 200, message, payload}
@@ -130,4 +74,4 @@ class ProductsDao {
     }
 }
 
-module.exports = new ProductsDao()
+module.exports = new ProductsMongoDao()

@@ -1,21 +1,21 @@
-const Products = require('../daos/products/index')
+const productsDao = require('../daos/products/index')
 const { validateFullFields, validateCredentials } = require('../utils/validation/validation')
 
 const getProducts = async (req, res) => {
-       return res.status(200).json(Products.getProducts())
+       return res.status(200).json(await productsDao.getAllProducts())
 }
 
 const getProduct = async (req, res) => {
     const { id } = req.params
-    return res.json(Database.getProduct(id))
+    return res.json(productsDao.getProduct(id))
 }
 
 const addProduct = async (req, res) => {
     const {id, name, description, price, stock, thumbnail, credential} = req.body
-    const attributes = {id, name, description, price, stock, thumbnail}
+    const product = {id, name, description, price, stock, thumbnail}
     if (validateCredentials(credential).validated) {
         if (validateFullFields(attributes).validated) {
-            return res.json(Products.add(attributes))   
+            return res.json(await productsDao.addProduct(product))   
         } else {
             return res.json((validateFullFields(attributes)))
         }

@@ -52,7 +52,32 @@ class MongoDbContainer {
 
     async getAll(model) {
         console.log('Container - Finding All');
-        return await model.find()
+        try {
+            const response = await model.find()
+            return response
+        } catch (err) {
+            console.log(err);
+            return err
+        }
+    }
+
+    async updateFieldById(model, id, field, value) {
+        console.log('Container - Updating by Id: ', field);
+        try {
+            const response = await model.updateOne({'_id': id}, {$set: {field: value}})
+            return response
+        } catch (err) {
+            return err
+        }
+    }
+
+    async delete(model, id) {
+        try {
+            const response = await model.deleteOne({'_id': id})
+            return response
+        } catch (err) {
+            return err
+        }
     }
 
 }
