@@ -27,9 +27,9 @@ const addProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
     const { id } = req.params
     const {name, description, price, stock, thumbnail, credential} = req.body
-    const attributes = {name, description, price, stock, thumbnail}
+    const newObject = {name, description, price, stock, thumbnail}
     if (validateCredentials(credential).validated) {
-        return res.json(Products.editProduct(id, attributes))
+        return res.json(await productsDao.updateProduct(id, newObject))
     } else {
         return res.json(validateCredentials(credential))
     }
@@ -39,7 +39,7 @@ const deleteProduct = async (req, res) => {
     const { id } = req.params
     const { credential } = req.body
     if (validateCredentials(credential).validated) {
-        return res.json(Products.deleteProduct(id))
+        return res.json(await productsDao.deleteProduct(id))
     } else {
         return res.json(validateCredentials(credential))
     }

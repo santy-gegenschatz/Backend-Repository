@@ -19,15 +19,18 @@ class ProductsMongoDao {
             console.log(response);
             if (response) {
                 // Update Stock
-                const response = await this.container.updateFieldById(products, product.id, stock, product.stock + Number(response.stock))
-                return this.throwSuccess('Item already in the database. Stock augmented')
+                console.log('Updating field');
+                const object = { stock :  Number(product.stock) + Number(response.stock)}
+                const response2 = await this.container.updateFieldById(products, product.id, object)
+                return this.throwSuccess('Item already in the database. Stock augmented', response2)
             } else {
                 // Create the product
                 const response = await this.container.add(products, product)
                 return this.throwSuccess('New item added to the database', response)
             }
         } catch (err) {
-            return err
+            console.log(err);
+            return new Error (err)
         }
 
     }
@@ -44,20 +47,27 @@ class ProductsMongoDao {
         return this.throwSuccess('Here are the Products', response)
     }
 
-    async updateProduct(id, field, value) {
-        const response = await this.container.updateFieldById(products, id, field, value)
-        return this.throwSuccess('Here is how the product looks now: ', response)
+    async updateProduct(id, newObject) {
+        const response = await this.container.updateFieldById(products, id, newObject)
+        if (response) {
+            return this.throwSuccess('Here is how the product looks now: ', await this.getProduct(id))
+        }
+
+        return this.throwError('The id did not match any object')
     }
 
     async deleteProduct(id) {
         const response = await this.container.delete(products, id)
-        return this.throwSuccess('Product deleted: ', response)
+        if (response) {
+            return this.throwSuccess('Product deleted: ', response)
+        }
+        return this.throwError('The id is incorrect')
     }
 
     async decreaseStock(id, decreaseAmount) {
         // Find the product in the DB
         // Get the current stock
-        const { stock } = await this.container.getByKey(products, '_id', id)
+        const { stock } = await this.container.getByKey(products, {_id: id})
         // Update the stock
         if (stock - decreaseAmount >= 0) {
             const response = await this.container.updateFieldById(products, id, 'stock', value)

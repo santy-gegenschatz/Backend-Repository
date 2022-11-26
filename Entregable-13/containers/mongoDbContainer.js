@@ -20,10 +20,10 @@ class MongoDbContainer {
         console.log('Connected to MongoDB. Collection: ', this.collectionName);
     }
 
-    async add(model, sth) {
+    async add(modelName, sth) {
         try {
             console.log('Container: Saving');
-            let sthSaved = await model.save(sth)
+            let sthSaved = await new modelName(sth).save()
             return sthSaved
         } catch(err) {
             console.log(err);
@@ -31,7 +31,7 @@ class MongoDbContainer {
         }
     }
 
-    async getByKey(model, keyname, keyvalue) {
+    async getByKey(model, filterObject) {
         try {
             console.log(keyname);
             const response = await model.findOne({keyname: keyvalue})
@@ -70,13 +70,14 @@ class MongoDbContainer {
         }
     }
 
-    async updateFieldById(model, id, field, value) {
-        console.log('Container - Updating by Id: ', field);
+    async updateFieldById(model, id, object) {
+        console.log('Container - Updating by Id: ');
         try {
-            const response = await model.updateOne({'_id': id}, {$set: {field: value}})
+            const response = await model.updateOne({_id: id}, {$set: object})
             return response
         } catch (err) {
-            return err
+            console.log(err);
+            return false
         }
     }
 
@@ -85,7 +86,7 @@ class MongoDbContainer {
             const response = await model.deleteOne({'_id': id})
             return response
         } catch (err) {
-            return err
+            return false
         }
     }
 
