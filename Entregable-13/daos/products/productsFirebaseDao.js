@@ -6,6 +6,11 @@ class ProductsFirebaseDao {
         this.container = new Container('products')
     }
 
+    async getAllProducts() {
+        const response = await this.container.getAll()
+        return response
+    }
+
     add(item) {
         const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
         if (prodExists !== -1) {
@@ -21,13 +26,6 @@ class ProductsFirebaseDao {
         }
     }
 
-    assignId() {
-        if (this.items.length === 0) {
-            return 1
-        } else {
-            return this.items.length + 1
-        }
-    }
 
     decreaseStock(prod) {
         let stock = Number(prod.stock)
@@ -70,15 +68,6 @@ class ProductsFirebaseDao {
         }
     }
 
-    find(id) {
-        const product = this.items.find( (prod) => prod.id === id)
-        if (product) {
-            return product
-        } else {
-            return false
-        }
-    }
-
     getProduct(id) {
         // Figure out if the product exists
         // In case some douchebag passes the id as a string we will turn it into a number
@@ -93,21 +82,13 @@ class ProductsFirebaseDao {
         }
     }
 
-    getProducts() {
-        return this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
-    }
+    // getProducts() {
+    //     return this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
+    // }
 
     hasStock(id) {
         const product = this.find(id)
         return this.find(id).stock >= 1 
-    }
-
-    async readItems() {
-        this.items = await this.container.read()
-    }
-
-    saveToPersistentMemory(object) {
-        this.container.save(object)
     }
 
     throwSuccess(message, payload) {
