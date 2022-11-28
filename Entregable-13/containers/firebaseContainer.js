@@ -1,13 +1,11 @@
 const admin = require('firebase-admin')
 
 class FirebaseContainer {
-    constructor(collectionName) {
+    constructor() {
         this.serviceAccount = JSON.parse(process.env.FIREBASE_SECURITY_CONFIG)
         this.databaseURL = process.env.FIREBASE_URL
-        this.collectionName = collectionName
         this.connect()
         this.db = admin.firestore()
-        this.query = this.db.collection(this.collectionName)
         this.connected = false;
     }
     
@@ -22,45 +20,49 @@ class FirebaseContainer {
         }
     }
 
-    create = async (sth) => {
+    create = async (collectionName, sth) => {
         try {
-            const doc = this.query.doc()
+            const query = this.db.collection(collectionName)
+            const doc = query.doc()
             const response = await doc.create(sth)
-            console.log(response);
+            return response
         } catch(err) {
             console.log(err);
             return new Error(err)
         }
     }
     
-    getAll = async() => {
+    getAll = async(collectionName) => {
         try {
-            const querySnapshot = await this.query.get()
+            const query = this.db.collection(collectionName)
+            const querySnapshot = await query.get()
             let docs = querySnapshot.docs;
             console.log(docs);
             const response = docs.map ((doc) => {
                 
             })
             console.log(response);
+            return response
         } catch (err) {
             console.log(err);
             return new Error(err)
         }
     }
 
-    getById = async (id) => {
+    getById = async (collectionName, id) => {
         try {
-            const doc = this.query.doc(id)
+            const query = this.db.collection(collectionName)
+            const doc = query.doc(id)
             const item = await doc.get()
             const response = item.data()
-            console.log(response);
+            return response
         } catch(err) {
             console.log(err);
             return new Error(err)
         }
     }
 
-    updateById = async (id, updateObject) => {
+    updateById = async (collectionName, id, updateObject) => {
         try {
             const doc = this.query.doc(id)
             // Note that the update operation is additive, whatever keys are not passed will remain as they are
@@ -72,7 +74,7 @@ class FirebaseContainer {
         }
     }
 
-    delete = async (id) => {
+    delete = async (collectionName, id) => {
         try {
             const doc = this.query.doc(id)
             const response = await doc.delete()
@@ -85,4 +87,4 @@ class FirebaseContainer {
     
 }
 
-module.exports = FirebaseContainer
+module.exports = new FirebaseContainer()

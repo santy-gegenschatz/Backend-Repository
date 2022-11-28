@@ -3,27 +3,35 @@ const Container = require('../../containers/firebaseContainer')
 
 class ProductsFirebaseDao {
     constructor() {
-        this.container = new Container('products')
+        this.container = Container
+        this.collectionName = process.env.FIREBASE_PRODUCTS_COLLECTION
+        console.log(this.collectionName);
     }
-
     async getAllProducts() {
-        const response = await this.container.getAll()
+        const response = await this.container.getAll(this.collectionName)
         return response
     }
 
-    add(item) {
-        const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
-        if (prodExists !== -1) {
-            this.items[prodExists].stock = Number(this.items[prodExists].stock)
-            this.items[prodExists].stock += Number(item.stock)
-            this.saveToPersistentMemory(this.items)
-            return this.throwSuccess('Item already in the database. Stock augmented')
-        } else {
-            const newProduct = new Product(this.assignId(), item)
-            this.items.push(newProduct)
-            this.saveToPersistentMemory(this.items)
-            return this.throwSuccess('New item added to the database')
+    async addProduct(product) {
+        // First, check if the product id matches with one in the firebase
+        const response = await this.container.getById(this.collectionName, product.id)
+        console.log(response);
+        console.log(typeof response);
+        if ((typeof response) === undefined) {
+            console.log('Not undefined');
         }
+        if (!response) {
+            console.log('Reponse is undefined');
+        }
+        // if it does, call the update function
+        // otherwise continue
+        const response2 = await this.container.create(this.collectionName, product)
+        if (!Error.prototype.isPrototypeOf(response)) {
+            return this.throwSuccess('Product added to the firebase')
+        } else {
+            return this.throwError('Something terrible happenned. Sorry.')
+        }
+
     }
 
 

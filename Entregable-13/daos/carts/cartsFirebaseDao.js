@@ -4,9 +4,7 @@ const Container = require('../../containers/firebaseContainer')
 
 class Carts {
     constructor() {
-        this.container = new Container('carts')
-        this.items = []
-        this.readCarts()
+        this.container = Container
     }
 
     assignId() {
