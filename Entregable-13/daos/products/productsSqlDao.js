@@ -8,16 +8,22 @@ class Products {
 
     async addProduct(product) {
         // Check if the id corresponds to a product of the database
-        const response = await this.container.getById(product.id)
+        const response = await this.container.getById(this.tablename, product.id)
+        console.log(response);
         if (!this.isError(response)) {
-            return this.throwSuccess('Product already in db, updating')
-        } else {
             const {id, ...rest} = product
-            const response2 = await this.container.create(this.tablename, rest)
-            if (!this.isError(response2)) {
-                return this.throwSuccess('Product added to the database')
-            } else {
-                return this.throwError('Could not add the product to the database')
+            return this.updateProduct(id, rest)
+        } else {
+            if (response.message !== 'Err') {
+                const {id, ...rest} = product
+                const response2 = await this.container.create(this.tablename, rest)
+                if (!this.isError(response2)) {
+                    return this.throwSuccess('Product added to the database')
+                } else {
+                    return this.throwError('Could not add the product to the database')
+                }
+            }  else {
+                return this.throwError('Wrong id')
             }
         }
     }
@@ -56,7 +62,12 @@ class Products {
     }
 
     async deleteProduct(id) {
-        const response = 0;
+        const response = await this.container.delete(this.tablename, id)
+        if (!this.isError(response)) {
+            return this.throwSuccess('Product deleted')
+        } else {
+            return this.throwError('Oops. There was a problem deleting the product. Please check the productId you have provided.')
+        }
     }
 
     isError(response) {

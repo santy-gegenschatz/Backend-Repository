@@ -34,7 +34,7 @@ class sqlContainer {
     async getById(tablename, id) {
         try {   
             const response = await this.knex.from(tablename).select('*').where('id', '=', id)
-            return response
+            return response.length !== 0 ? response : new Error('Err')
         } catch (err) {
             console.log(err)
             return new Error(err)
@@ -50,10 +50,10 @@ class sqlContainer {
         }
     }
 
-    async delete(id) {
+    async delete(tablename, id) {
         try {
             const response = await this.knex.from(tablename).where('id', '=', id).del()
-            return response
+            return response == 1 ? response : new Error('Product id incorrect')
         } catch(err) {
             return new Error(err)
         }
