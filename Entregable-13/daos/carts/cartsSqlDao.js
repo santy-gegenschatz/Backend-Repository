@@ -4,9 +4,8 @@ const Container = require('../../containers/sqlDbContainer')
 
 class Carts {
     constructor() {
-        this.container = new Container('carts')
-        this.items = []
-        this.readCarts()
+        this.container = Container
+        this.tablename = process.env.CARTS_COLLECTION_NAME
     }
 
     assignId() {

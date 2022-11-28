@@ -3,32 +3,12 @@ const Container = require('../../containers/sqlDbContainer')
 
 class Products {
     constructor() {
-        this.container = new Container('products')
-        this.items = []
-        this.readItems()
+        this.container = Container
+        this.tablename = process.env.PRODUCTS_COLLECTION_NAME
     }
 
-    add(item) {
-        const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
-        if (prodExists !== -1) {
-            this.items[prodExists].stock = Number(this.items[prodExists].stock)
-            this.items[prodExists].stock += Number(item.stock)
-            this.saveToPersistentMemory(this.items)
-            return this.throwSuccess('Item already in the database. Stock augmented')
-        } else {
-            const newProduct = new Product(this.assignId(), item)
-            this.items.push(newProduct)
-            this.saveToPersistentMemory(this.items)
-            return this.throwSuccess('New item added to the database')
-        }
-    }
-
-    assignId() {
-        if (this.items.length === 0) {
-            return 1
-        } else {
-            return this.items.length + 1
-        }
+    async addProduct(product) {
+        const response = this.container
     }
 
     decreaseStock(prod) {
@@ -102,14 +82,6 @@ class Products {
     hasStock(id) {
         const product = this.find(id)
         return this.find(id).stock >= 1 
-    }
-
-    async readItems() {
-        this.items = await this.container.read()
-    }
-
-    saveToPersistentMemory(object) {
-        this.container.save(object)
     }
 
     throwSuccess(message, payload) {

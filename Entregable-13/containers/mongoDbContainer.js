@@ -33,8 +33,7 @@ class MongoDbContainer {
 
     async getByKey(model, filterObject) {
         try {
-            console.log(keyname);
-            const response = await model.findOne({keyname: keyvalue})
+            const response = await model.findOne(filterObject)
             return response
         } catch (err) {
             return err

@@ -16,7 +16,6 @@ class FirebaseContainer {
                 databaseURL: this.databaseURL
             })
             console.log('Successfully connected to the firebase');
-            this.connected = true;
         }
     }
 
