@@ -1,4 +1,3 @@
-const Product = require('../../models/product')
 const Container = require('../../containers/sqlDbContainer') 
 
 class Products {
@@ -8,7 +7,60 @@ class Products {
     }
 
     async addProduct(product) {
-        const response = this.container
+        // Check if the id corresponds to a product of the database
+        const response = await this.container.getById(product.id)
+        if (!this.isError(response)) {
+            return this.throwSuccess('Product already in db, updating')
+        } else {
+            const {id, ...rest} = product
+            const response2 = await this.container.create(this.tablename, rest)
+            if (!this.isError(response2)) {
+                return this.throwSuccess('Product added to the database')
+            } else {
+                return this.throwError('Could not add the product to the database')
+            }
+        }
+    }
+
+    async getAllProducts() {
+        const response = await this.container.getAll(this.tablename)
+        if (!this.isError(response)) {
+            return this.throwSuccess('Products obtained', response)
+        } else {
+            return this.throwError('There was a problem retrieving the products from the DB') 
+        }
+    }
+
+    async getProduct(id) {
+        const response = await this.container.getById(this.tablename, id)
+        if (!this.isError(response)) {
+            return this.throwSuccess('Product successfully obtained', response)
+        } else {
+            return this.throwError('Oops. Something went wrong. Please check the product id.')
+        }
+    }
+
+    async updateProduct(id, newObject) {
+        // Check if the product exists
+        const response = await this.container.getById(this.tablename, id)
+        if (!this.isError(response)) {
+            const response2 = await this.container.update(this.tablename, id, newObject)
+            if (!this.isError(response2)) {
+                return this.throwSuccess('The product was updated')
+            } else {
+                return this.throwError('Ooops. There was an unknown problem updateing your product')
+            }
+        } else {
+            return this.throwError('Oops. There was a problem. Check the product id you submitted.')
+        }
+    }
+
+    async deleteProduct(id) {
+        const response = 0;
+    }
+
+    isError(response) {
+        return Error.prototype.isPrototypeOf(response)
     }
 
     decreaseStock(prod) {
@@ -16,67 +68,6 @@ class Products {
         stock -= 1
         prod.stock = stock
         this.saveToPersistentMemory(this.items)
-    }
-
-    deleteProduct(id) {
-        // First, figure out if the product effectively exists
-        const convertedId = Number(id)
-        const productIndex = this.items.findIndex((prod) => prod.id === convertedId)
-        if (productIndex !== -1) {
-            const removed = this.items.splice(productIndex)
-            this.saveToPersistentMemory(this.items)
-            return this.throwSuccess('Product deleted', {deleted: removed[0].toString(), currentArray: this.items.toString()})
-        } else {
-            return this.throwError(' There is no item with that id in the database')
-        }
-
-    }
-
-    editProduct(id, attributes) {
-        // Figure out if the product exists
-        const convertedId = Number(id)
-        const prodIndex = this.items.findIndex((prod) => prod.id === convertedId)
-        if (prodIndex !== -1) {
-            // If the product exists
-            try {
-                const product = this.items[prodIndex]
-                this.items[prodIndex] = {...product, ...attributes}
-                this.saveToPersistentMemory(this.items)
-                return this.throwSuccess('Succesfully modified product. Here is the new one', this.items[prodIndex])
-            } catch (error) {
-                throw new Error(error)
-            }
-        } else {
-            // If it does not exist
-            return this.throwError('Sorry, no product in our db matches the given id')
-        }
-    }
-
-    find(id) {
-        const product = this.items.find( (prod) => prod.id === id)
-        if (product) {
-            return product
-        } else {
-            return false
-        }
-    }
-
-    getProduct(id) {
-        // Figure out if the product exists
-        // In case some douchebag passes the id as a string we will turn it into a number
-        const convertedId = Number(id)
-        const prodExists = this.items.findIndex((prod) => prod.id === convertedId)
-        if (prodExists !== -1) {
-            // If the product exists
-            return this.throwSuccess('Returning requested product', this.items[prodExists])
-        } else {
-            // If it does not exist
-            return this.throwError('Sorry, no product in our db matches the given id')
-        }
-    }
-
-    getProducts() {
-        return this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
     }
 
     hasStock(id) {

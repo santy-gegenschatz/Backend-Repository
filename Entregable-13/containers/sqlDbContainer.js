@@ -16,6 +16,7 @@ class sqlContainer {
             const response = await this.knex(tablename).insert(sth)
             return response
         } catch (err) {
+            console.log(err);
             return new Error(err)
         }
     }
@@ -23,8 +24,9 @@ class sqlContainer {
     async getAll(tablename) {
         try {
             const response = await this.knex.from(tablename).select('*')
-            return this.throwSuccess('Retrieved from DB')
+            return response
         } catch (err) {
+            console.log(err)
             return new Error(err)
         }
     }
@@ -34,6 +36,7 @@ class sqlContainer {
             const response = await this.knex.from(tablename).select('*').where('id', '=', id)
             return response
         } catch (err) {
+            console.log(err)
             return new Error(err)
         }
     }
