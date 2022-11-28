@@ -5,7 +5,6 @@ class ProductsFirebaseDao {
     constructor() {
         this.container = Container
         this.collectionName = process.env.FIREBASE_PRODUCTS_COLLECTION
-        console.log(this.collectionName);
     }
 
     async addProduct(product) {

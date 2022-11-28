@@ -3,7 +3,7 @@ const { generateFakeProducts } = require('../utils/fakeProductGenerator')
 
 const renderHome = async (req, res) => {
     console.log('receiving');
-    res.render('form.ejs', {products: products, noRender : products.length===0, username : req.user.username})
+    res.render('home.ejs', {products: products, noRender : products.length===0, username : req.user.username})
 }
 
 const renderProducts = async (req, res) => {

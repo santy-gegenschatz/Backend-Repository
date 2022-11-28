@@ -1,14 +1,14 @@
 const Product = require('../../models/product')
 const Container = require('../../containers/archiveContainer') 
 
-class Products {
+class ProductsArchiveDao {
     constructor() {
-        this.container = new Container('', 'products.txt')
+        this.container = new Container('products.txt')
         this.items = []
-        this.readItems()
+        this.initialRead()
     }
 
-    add(item) {
+    addProduct(item) {
         const prodExists = this.items.findIndex((prod) => prod.id === Number(item.id))
         if (prodExists !== -1) {
             this.items[prodExists].stock = Number(this.items[prodExists].stock)
@@ -29,6 +29,29 @@ class Products {
         } else {
             return this.items.length + 1
         }
+    }
+    
+    getAllProducts() {
+        return this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
+    }
+
+    getProduct(id) {
+        // Figure out if the product exists
+        // In case some douchebag passes the id as a string we will turn it into a number
+        const convertedId = Number(id)
+        const prodExists = this.items.findIndex((prod) => prod.id === convertedId)
+        if (prodExists !== -1) {
+            // If the product exists
+            return this.throwSuccess('Returning requested product', this.items[prodExists])
+        } else {
+            // If it does not exist
+            return this.throwError('Sorry, no product in our db matches the given id')
+        }
+    }
+
+    async initialRead() {
+        await this.readItems()
+        console.log('Successfully connected to the archives');
     }
 
     decreaseStock(prod) {
@@ -81,24 +104,6 @@ class Products {
         }
     }
 
-    getProduct(id) {
-        // Figure out if the product exists
-        // In case some douchebag passes the id as a string we will turn it into a number
-        const convertedId = Number(id)
-        const prodExists = this.items.findIndex((prod) => prod.id === convertedId)
-        if (prodExists !== -1) {
-            // If the product exists
-            return this.throwSuccess('Returning requested product', this.items[prodExists])
-        } else {
-            // If it does not exist
-            return this.throwError('Sorry, no product in our db matches the given id')
-        }
-    }
-
-    getProducts() {
-        return this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
-    }
-
     hasStock(id) {
         const product = this.find(id)
         return this.find(id).stock >= 1 
@@ -121,4 +126,4 @@ class Products {
     }
 }
 
-module.exports = new Products()
+module.exports = new ProductsArchiveDao()
