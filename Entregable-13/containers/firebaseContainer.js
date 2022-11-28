@@ -55,7 +55,11 @@ class FirebaseContainer {
             const doc = query.doc(id)
             const item = await doc.get()
             const response = item.data()
-            return response
+            if (typeof response !== 'undefined') {
+                return response
+            } else {
+                return new Error('Something went wrong')
+            }
         } catch(err) {
             console.log(err);
             return new Error(err)
@@ -64,21 +68,23 @@ class FirebaseContainer {
 
     updateById = async (collectionName, id, updateObject) => {
         try {
-            const doc = this.query.doc(id)
+            const query = this.db.collection(collectionName)
+            const doc = query.doc(id)
             // Note that the update operation is additive, whatever keys are not passed will remain as they are
             const response = await doc.update(updateObject)
-            console.log(response);
+            return response
         } catch(err) {
-            console.log(err);
             return new Error(err)
         }
     }
 
     delete = async (collectionName, id) => {
         try {
-            const doc = this.query.doc(id)
+            const query = this.db.collection(collectionName)
+            const doc = query.doc(id)
             const response = await doc.delete()
-            console.log(response);
+            console.log('Response: ', response);
+            return response
         } catch(err) {
             console.log(err);
             return new Error(err)
