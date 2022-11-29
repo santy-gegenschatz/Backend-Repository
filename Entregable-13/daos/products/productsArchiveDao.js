@@ -30,11 +30,41 @@ class ProductsArchiveDao {
             return this.items.length + 1
         }
     }
+
+    decreaseStock(prod) {
+        let stock = Number(prod.stock)
+        stock -= 1
+        const productIndex = this.items.findIndex( (p) => p.id === prod.id)
+        this.items[productIndex].stock = stock
+        this.saveToPersistentMemory(this.items)
+    }
     
+    deleteProduct(id) {
+        // First, figure out if the product effectively exists
+        const convertedId = Number(id)
+        const productIndex = this.items.findIndex((prod) => prod.id === convertedId)
+        if (productIndex !== -1) {
+            const removed = this.items.splice(productIndex, 1)
+            this.saveToPersistentMemory(this.items)
+            return this.throwSuccess('Product deleted', {deleted: removed[0], currentArray: this.items})
+        } else {
+            return this.throwError(' There is no item with that id in the database')
+        }
+    }
+
+    find(id) {
+        const product = this.items.find( (prod) => prod.id === id)
+        if (product) {
+            return product
+        } else {
+            return false
+        }
+    }
+
     getAllProducts() {
         return this.items.length !== 0 ? {items: this.items} : this.throwError('No products in the database')
     }
-
+    
     getProduct(id) {
         // Figure out if the product exists
         // In case some douchebag passes the id as a string we will turn it into a number
@@ -54,38 +84,21 @@ class ProductsArchiveDao {
         console.log('Successfully connected to the archives');
     }
 
-    decreaseStock(prod) {
-        let stock = Number(prod.stock)
-        stock -= 1
-        prod.stock = stock
-        this.saveToPersistentMemory(this.items)
-    }
-
-    deleteProduct(id) {
-        // First, figure out if the product effectively exists
-        const convertedId = Number(id)
-        const productIndex = this.items.findIndex((prod) => prod.id === convertedId)
-        if (productIndex !== -1) {
-            const removed = this.items.splice(productIndex)
-            this.saveToPersistentMemory(this.items)
-            return this.throwSuccess('Product deleted', {deleted: removed[0].toString(), currentArray: this.items.toString()})
-        } else {
-            return this.throwError(' There is no item with that id in the database')
-        }
-
-    }
-
-    editProduct(id, attributes) {
+    async updateProduct(id, attributes) {
         // Figure out if the product exists
         const convertedId = Number(id)
-        const prodIndex = this.items.findIndex((prod) => prod.id === convertedId)
-        if (prodIndex !== -1) {
+        const prodExists = this.items.findIndex((prod) => prod.id === convertedId)
+        // => Remember that the array.findIndex funciton in js returns -1 if there is no match
+        if (prodExists !== -1) { 
             // If the product exists
             try {
-                const product = this.items[prodIndex]
-                this.items[prodIndex] = {...product, ...attributes}
+                const originalProduct = await this.items[prodExists]
+                console.log('Original product: ', originalProduct);
+                console.log('Attributes: ', attributes);
+                const newProduct = {...originalProduct, ...attributes}
+                // this.items[prodExists] = newProduct
                 this.saveToPersistentMemory(this.items)
-                return this.throwSuccess('Succesfully modified product. Here is the new one', this.items[prodIndex])
+                return this.throwSuccess('Succesfully modified product. Here is the new one', newProduct)
             } catch (error) {
                 throw new Error(error)
             }
@@ -95,17 +108,7 @@ class ProductsArchiveDao {
         }
     }
 
-    find(id) {
-        const product = this.items.find( (prod) => prod.id === id)
-        if (product) {
-            return product
-        } else {
-            return false
-        }
-    }
-
     hasStock(id) {
-        const product = this.find(id)
         return this.find(id).stock >= 1 
     }
 
@@ -117,12 +120,12 @@ class ProductsArchiveDao {
         this.container.save(object)
     }
 
-    throwSuccess(message, payload) {
-        return {code: 200, message, payload}
-    }
-
     throwError(message) {
         return {code: 500, message}
+    }
+
+    throwSuccess(message, payload) {
+        return {code: 200, message, payload}
     }
 }
 

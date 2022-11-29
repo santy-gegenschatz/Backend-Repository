@@ -13,6 +13,7 @@ class ArchiveContainer {
     // Use the following line to figure out where in your system your script is being executed
     // console.log(process.cwd());
     async read() {
+        console.log(this.path);
         const p = new Promise( (resolve, reject) => {
             this.fs.readFile(this.path, (error, content) => {
                 try {
