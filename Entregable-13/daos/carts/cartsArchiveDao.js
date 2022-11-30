@@ -1,6 +1,6 @@
 const Container = require('../../containers/archiveContainer')
-const Products = require('../products/productsArchiveDao')
 const Cart = require('../../models/cart')
+const productsDao = require('../products/index')
 
 class CartsArchiveDao {
     constructor() {
@@ -8,7 +8,7 @@ class CartsArchiveDao {
         this.items = []
         this.readCarts()
     }
-å
+    
     assignId() {
         if (this.items.length === 0) {
             return 1
@@ -17,20 +17,20 @@ class CartsArchiveDao {
         }
     }
 
-    addItemsToCart(idCart, idProduct) {
+    addItemToCart(idCart, idProduct) {
         // First, numberize the items
         const convertedCartId = Number(idCart)
         const convertedProductId = Number(idProduct)
         // Then, make sure the cart exists, the product exists and the product has stock
         const cart = this.find(convertedCartId)
-        const product = Products.find(convertedProductId)
-        const productHasStock = Products.hasStock(convertedProductId)
+        const product = productsDao.find(convertedProductId)
+        const productHasStock = productsDao.hasStock(convertedProductId)
         if (cart) {
             if (product) {
                 if (productHasStock) {
                     // Then, add the product to the cart and then decrease the stock
                     cart.add(product)
-                    Products.decreaseStock(product)
+                    productsDao.decreaseStock(product)
                     this.saveToPersistentMemory(this.items)
                     return this.throwSuccess(`Successfully added ${product.name} to cart ${cart.id}`, {cart, product})
                 } else {

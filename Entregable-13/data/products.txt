@@ -1,1 +1,0 @@
-[{"id":1,"creationDate":"2022-11-28T23:14:20.150Z","name":"Summer","description":"The acclaimed book","price":35,"stock":4,"thumbnail":"url"}]

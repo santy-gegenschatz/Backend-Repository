@@ -34,7 +34,8 @@ class MongoDbContainer {
             const response = await model.findOne(filterObject)
             return response
         } catch (err) {
-            return err
+            console.log(err);
+            return new Error(err)
         }
     }
 

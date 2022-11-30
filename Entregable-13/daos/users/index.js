@@ -1,14 +1,12 @@
-const userMongoDao = require('./usersMongoDbDao')
-
-const usersDao = process.env.USERS_DAO
+const usersDao = process.env.USERS_API_CONTAINER
 let moduleToExport;
 
 switch(usersDao) {
-    case(1):
-        moduleToExport = userMongoDao
-    
+    case('mongo'):
+        moduleToExport = require('./usersMongoDao')
+        break;
     default:
-        moduleToExport = userMongoDao
+        moduleToExport = require('./usersMongoDao')
 }
 
 module.exports = moduleToExport

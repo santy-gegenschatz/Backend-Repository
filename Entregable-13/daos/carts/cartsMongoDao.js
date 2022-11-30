@@ -1,32 +1,24 @@
 const Container = require('../../containers/mongoDbContainer')
-const Products = require('../products/index')
-const Cart = require('../../models/cart')
+const productsDao = require('../products/index')
+const { carts } = require('../../models/mongoDbSchemas/carts')
 
 class CartsMongoDao {
     constructor() {
         this.container = new Container('carts')
     }
 
-    assignId() {
-        if (this.items.length === 0) {
-            return 1
-        } else {
-            return this.items.length + 1
-        }
-    }
-
-    addItemsToCart(idCart, idProduct) {
-        // First, numberize the items
-        const convertedCartId = Number(idCart)
-        const convertedProductId = Number(idProduct)
+    async addItemToCart(idCart, idProduct) {
         // Then, make sure the cart exists, the product exists and the product has stock
-        const cart = this.find(convertedCartId)
-        const product = Products.find(convertedProductId)
-        const productHasStock = Products.hasStock(convertedProductId)
-        if (cart) {
-            if (product) {
-                if (productHasStock) {
+        const cartResponse = await this.getCart(idCart)
+        const productResponse = await productsDao.getProduct(idProduct)
+        if (cartResponse.code === 200) {
+            if (productResponse.code === 200) {
+                if (stockResponse.code === 200) {
+                    // Check the product has stock
+                    const stockResponse = productsDao.productHasStock(idProduct) // We already know the product exists, so the response needs no error handling
                     // Then, add the product to the cart and then decrease the stock
+                    const addReponse = await this.up
+
                     cart.add(product)
                     Products.decreaseStock(product)
                     this.saveToPersistentMemory(this.items)
@@ -79,24 +71,28 @@ class CartsMongoDao {
 
     }
 
-    find(id) {
-        const cart = this.items.find( (cart) => cart.id === id)
-        if (cart) {
-            return cart
+    async findCart(id) {
+        const response = await this.container.getByKey(carts, {id: id})
+        if (this.isNotError(response)) {
+            return response
+        }
+
+    }
+
+    async getCart(id) {
+        const response = await this.container.getById(carts, id)
+        if (this.isNotError(response)) {
+            return this.throwSuccess('Cart obtained', response)
         } else {
-            return false
+            this.throwError('Could not find a cart with that id. Please try again.')
         }
     }
 
-    getCart(id) {
-        // Just in case some random idiot passes a string
-        const convertedId = Number(id)
-        // Find the cart that corresponds to the input id
-        const cart = this.items.find( (item) => item.id === convertedId)
-        if (cart) {
-            return this.throwSuccess(`Returning a cart with id ${id}`, cart)
+    isNotError(response) {
+        if (!Error.prototype.isPrototypeOf(response)) {
+            return true
         } else {
-            return this.throwError('No cart in our database matches the given id')
+            return false
         }
     }
 

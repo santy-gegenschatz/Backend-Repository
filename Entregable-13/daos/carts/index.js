@@ -8,9 +8,7 @@ switch(cartsApiContainerType) {
         moduleToExport = require('./cartsArchiveDao')
         return 
     case 'mongo':
-        console.log('Starting');
         moduleToExport = require('./cartsMongoDao')
-        console.log('Done');
         return
     case 'firebase':
         moduleToExport = require('./cartsFirebaseDao')
