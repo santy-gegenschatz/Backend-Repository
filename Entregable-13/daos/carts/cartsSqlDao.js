@@ -1,6 +1,6 @@
+const Container = require('../../containers/sqlDbContainer')
 const Products = require('../products/productsArchiveDao')
 const Cart = require('../../models/cart')
-const Container = require('../../containers/sqlDbContainer')
 
 class Carts {
     constructor() {

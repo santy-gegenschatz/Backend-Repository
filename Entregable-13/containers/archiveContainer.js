@@ -4,16 +4,15 @@ class ArchiveContainer {
         this.fileName = fileName
         this.path = './data/archiveData/' + this.fileName
         this.fs = fs
+        this.logConnectionMessage()
     }
 
-    save(object) {
-        this.fs.writeFileSync(this.path, JSON.stringify(object))
+    logConnectionMessage() {
+        console.log(`Connected to Text Archive DB. Collection: ${this.fileName}`)
     }
-    
     // Use the following line to figure out where in your system your script is being executed
     // console.log(process.cwd());
     async read() {
-        console.log(this.path);
         const p = new Promise( (resolve, reject) => {
             this.fs.readFile(this.path, (error, content) => {
                 try {
@@ -26,6 +25,12 @@ class ArchiveContainer {
         })
         return p   
     }
+
+    save(object) {
+        this.fs.writeFileSync(this.path, JSON.stringify(object))
+    }
+    
+
 }
 
 module.exports = ArchiveContainer

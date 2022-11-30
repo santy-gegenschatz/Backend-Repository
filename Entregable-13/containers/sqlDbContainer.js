@@ -8,7 +8,7 @@ class sqlContainer {
 
     connectToDb() {
         this.knex = knex(configObject)
-        console.log('Connected to SQL DB');
+        console.log('Connected to SQL DB. Collections depend on parameters');
     }
 
     async create(tablename, sth) {

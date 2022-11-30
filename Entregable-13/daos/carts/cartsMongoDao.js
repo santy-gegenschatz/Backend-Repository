@@ -1,10 +1,10 @@
-const Products = require('../products/productsArchiveDao')
-const Cart = require('../../models/cart')
 const Container = require('../../containers/mongoDbContainer')
+const Products = require('../products/index')
+const Cart = require('../../models/cart')
 
-class Carts {
+class CartsMongoDao {
     constructor() {
-        this.container = new Container('carts', false)
+        this.container = new Container('carts')
     }
 
     assignId() {
@@ -118,4 +118,4 @@ class Carts {
 
 }
 
-module.exports = new Carts()
+module.exports = new CartsMongoDao()

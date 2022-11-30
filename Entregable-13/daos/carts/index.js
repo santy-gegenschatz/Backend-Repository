@@ -1,25 +1,27 @@
-const archiveDao = require('./cartsArchiveDao')
-const mongoDbDao = require('./cartsMongoDao')
-const firebaseDao = require('./cartsFirebaseDao')
-const sqlDbDao = require('./cartsSqlDao')
+console.log('Exporting Carts Dao');
 
 let cartsApiContainerType = process.env.CARTS_API_CONTAINER
 let moduleToExport;
+
 switch(cartsApiContainerType) {
     case 'archive':
-        moduleToExport = archiveDao
+        moduleToExport = require('./cartsArchiveDao')
         return 
     case 'mongo':
-        moduleToExport = mongoDbDao
+        console.log('Starting');
+        moduleToExport = require('./cartsMongoDao')
+        console.log('Done');
         return
     case 'firebase':
-        moduleToExport = firebaseDao
+        moduleToExport = require('./cartsFirebaseDao')
         return
     case 'sql':
-        moduleToExport = sqlDbDao
+        moduleToExport = require('./cartsSqlDao')
         return
     default:
-        moduleToExport = archiveDao
+        moduleToExport = require('./cartsArchiveDao')
 }
+
+console.log('Finished exporting');
 
 module.exports = moduleToExport

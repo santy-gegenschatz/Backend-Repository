@@ -2,14 +2,12 @@ const mongoose = require('mongoose')
 const { route, advancedOptions} = require('../data/mongoDBData/mongoDbConfig')
 
 class MongoDbContainer {
-    constructor(collectionName, connect) {
+    constructor(collectionName) {
         this.collectionName = collectionName
         // A method to connect to the db
         // To do this we will use mongoose
         // We also need to check that the mongodb is server is running locally on our computer
-        if (connect) {
-            this.connect()
-        }
+        this.connect()
     }
 
 

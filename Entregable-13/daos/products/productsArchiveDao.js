@@ -38,6 +38,14 @@ class ProductsArchiveDao {
         this.items[productIndex].stock = stock
         this.saveToPersistentMemory(this.items)
     }
+
+    deleteUndefinedKeys = (obj) => {
+        Object.keys(obj).forEach( (key) => {
+            if (obj[key] === undefined) {
+                delete obj[key]
+            }
+        })
+    }
     
     deleteProduct(id) {
         // First, figure out if the product effectively exists
@@ -92,11 +100,10 @@ class ProductsArchiveDao {
         if (prodExists !== -1) { 
             // If the product exists
             try {
-                const originalProduct = await this.items[prodExists]
-                console.log('Original product: ', originalProduct);
-                console.log('Attributes: ', attributes);
+                const originalProduct = this.items[prodExists]
+                this.deleteUndefinedKeys(attributes)
                 const newProduct = {...originalProduct, ...attributes}
-                // this.items[prodExists] = newProduct
+                this.items[prodExists] = newProduct
                 this.saveToPersistentMemory(this.items)
                 return this.throwSuccess('Succesfully modified product. Here is the new one', newProduct)
             } catch (error) {

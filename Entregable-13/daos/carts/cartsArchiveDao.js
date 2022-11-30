@@ -1,14 +1,14 @@
+const Container = require('../../containers/archiveContainer')
 const Products = require('../products/productsArchiveDao')
 const Cart = require('../../models/cart')
-const Container = require('../../containers/archiveContainer')
 
-class Carts {
+class CartsArchiveDao {
     constructor() {
         this.container = new Container('carts.txt')
         this.items = []
         this.readCarts()
     }
-
+å
     assignId() {
         if (this.items.length === 0) {
             return 1
@@ -120,4 +120,4 @@ class Carts {
 
 }
 
-module.exports = new Carts()
+module.exports = new CartsArchiveDao()

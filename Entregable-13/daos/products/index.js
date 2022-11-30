@@ -1,26 +1,24 @@
-const archiveDao = require('./productsArchiveDao')
-const mongoDao = require('./productsMongoDao')
-const firebaseDao = require('./productsFirebaseDao')
-const sqlDao = require('./productsSqlDao')
+console.log('Exporting Product Dao');
 
 const productsApiContainerType = process.env.PRODUCTS_API_CONTAINER
 let moduleToExport;
 
 switch(productsApiContainerType) {
     case 'archive':
-        moduleToExport = archiveDao
+        moduleToExport = require('./productsArchiveDao')
         break
     case 'mongo':
-        moduleToExport = mongoDao
+        moduleToExport = require('./productsMongoDao')
         break
     case 'firebase':
-        moduleToExport = firebaseDao
+        moduleToExport = require('./productsFirebaseDao')
         break
     case 'sql':
-        moduleToExport = sqlDao
+        moduleToExport = require('./productsSqlDao')
         break
     default:
-        moduleToExport = archiveDao
+        moduleToExport = require('./productsArchiveDao')
 }
+
 
 module.exports = moduleToExport
