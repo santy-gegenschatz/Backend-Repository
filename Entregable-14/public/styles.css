@@ -1,0 +1,195 @@
+/* This file updates the styles, somehow rudimentary, for the layouts */
+h1 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+h5 {
+    color: red;
+}
+
+input {
+    margin: 12px;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+}
+
+input[type = 'text']::placeholder {
+    text-align: center;
+}
+
+button {
+    margin: 20px;
+}
+
+a {
+    color: white;
+}
+
+img {
+    height: 70px;
+    width: 70px;
+}
+
+table {
+    width: 400px;
+    background-color: red;
+    margin: 20px;
+    border-radius: 25px;
+}
+
+th {
+    text-align: center;
+    background-color: blue;
+    color: white;
+}
+
+tr {
+    text-align: center;
+}
+
+/* Classes */
+.black-background {
+    background-color: black;
+}
+
+.blue {
+    color: blue;
+}
+
+.column-centered-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-card {
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    margin: 20px;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.error-image {
+    width: 300px;
+    height: 300px;
+}
+
+.form-table-div {
+    display: flex;
+    justify-content: center;
+}
+
+.general-card {
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.green {
+    color: green
+}
+
+.header {
+    background-color: black;
+    width: 100%;
+}
+
+.messages-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: lightgray;
+    border-radius: 25px;
+    margin: 5px;
+}
+
+.white {
+    color: white;
+}
+
+/* Id's */
+#chat-div {
+    background-color: lightgray;
+    min-height: 40px;
+    margin: 10px;
+    border-radius: 25px;
+    padding: 10px;
+}
+
+#fake-product-image {
+    height: 50;
+    width: 50;
+}
+
+#header-div__middle {
+    grid-area: middle;
+    background-color: reblackd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#header-div__right {
+    grid-area: right;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 30px;
+}
+
+#h5 {
+    text-align: center;
+    margin: 7px;
+}
+
+#main-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: beige;
+}
+
+#messages-div {
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#secondary-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: red;
+    margin: 20px;
+    padding: 10px;
+}
+
+#unauthorized-jumbofont {
+    font-size: 100px;
+    color: white;
+}
+
+#user-greeting-header {
+    background-color: black;
+    border-style: solid;
+    border-color: white;
+    border-width: 5px 0px 0px 0px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 100%;
+    grid-template-areas: '. middle right';
+}
