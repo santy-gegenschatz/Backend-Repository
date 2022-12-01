@@ -1,3 +1,5 @@
+console.log('Exporting Users Dao');
+
 const usersDao = process.env.USERS_API_CONTAINER
 let moduleToExport;
 

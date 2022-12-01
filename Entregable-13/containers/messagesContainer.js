@@ -22,9 +22,7 @@ class MessagesContainer {
     }
 
     async getMessages() {
-        console.log('Getting Messages');
         const response = await this.loadMessages()
-        console.log(response);
         const responseNormalization = await this.normalizeMessages() // We use await just in case we make it asynchronous in the future
         return responseNormalization
     }

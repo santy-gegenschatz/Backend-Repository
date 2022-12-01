@@ -20,7 +20,6 @@ class MongoDbContainer {
 
     async add(modelName, sth) {
         try {
-            console.log('Container: Saving');
             let sthSaved = await new modelName(sth).save()
             return sthSaved
         } catch(err) {
@@ -41,12 +40,11 @@ class MongoDbContainer {
 
     async getById(model, id) {
         try {
-            console.log('Container: Getting by id');
-            const user = await model.findOne( {_id : id} )
-            console.log('Container - Found by id: ', user, 'end');
-            return user
+            const response = await model.findOne( {_id : id} )
+            return response
         } catch (err) {
-            return err
+            console.log(err);
+            return new Error(err)
         }
     }
 
@@ -69,7 +67,7 @@ class MongoDbContainer {
     }
 
     async updateFieldById(model, id, object) {
-        console.log('Container - Updating by Id: ');
+        console.log('Container - Updating by Id');
         try {
             const response = await model.updateOne({_id: id}, {$set: object})
             return response

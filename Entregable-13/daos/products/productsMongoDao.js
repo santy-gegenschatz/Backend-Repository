@@ -38,7 +38,6 @@ class ProductsMongoDao {
     async getProduct(id) {
         console.log(id);
         const response = await this.container.getById(products, id)
-        console.log('DAO: Response Obtained', response);
         return this.throwSuccess('Product recovered from the DB', response)
     }
 
@@ -69,8 +68,9 @@ class ProductsMongoDao {
         // Get the current stock
         const { stock } = await this.container.getByKey(products, {_id: id})
         // Update the stock
-        if (stock - decreaseAmount >= 0) {
-            const response = await this.container.updateFieldById(products, id, 'stock', value)
+        const value = stock - decreaseAmount 
+        if (value >= 0) {
+            const response = await this.container.updateFieldById(products, id, {stock: value})
             return true
         } else {
             return new Error('Not enough stock to perform operation')            
@@ -78,8 +78,12 @@ class ProductsMongoDao {
     }
 
     async productHasStock(id) {
-        const { stock } = await this.container.getByKey(products, '_id', id)
-        stock > 0 ? true : false 
+        const { stock } = await this.container.getByKey(products, {_id: id})
+        console.log('Stock: ', stock);
+        if (stock > 0) {
+            return true
+        }
+        return false
     }
 
     throwSuccess(message, payload) {

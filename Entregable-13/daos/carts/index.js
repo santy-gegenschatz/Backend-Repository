@@ -1,25 +1,23 @@
 console.log('Exporting Carts Dao');
 
-let cartsApiContainerType = process.env.CARTS_API_CONTAINER
+const cartsApiContainerType = process.env.CARTS_API_CONTAINER
 let moduleToExport;
 
 switch(cartsApiContainerType) {
     case 'archive':
         moduleToExport = require('./cartsArchiveDao')
-        return 
+        break 
     case 'mongo':
         moduleToExport = require('./cartsMongoDao')
-        return
+        break
     case 'firebase':
         moduleToExport = require('./cartsFirebaseDao')
-        return
+        break
     case 'sql':
         moduleToExport = require('./cartsSqlDao')
-        return
+        break
     default:
         moduleToExport = require('./cartsArchiveDao')
 }
-
-console.log('Finished exporting');
 
 module.exports = moduleToExport
