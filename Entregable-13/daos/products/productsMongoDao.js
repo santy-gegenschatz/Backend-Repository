@@ -36,7 +36,6 @@ class ProductsMongoDao {
     }
 
     async getProduct(id) {
-        console.log(id);
         const response = await this.container.getById(products, id)
         return this.throwSuccess('Product recovered from the DB', response)
     }

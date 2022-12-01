@@ -79,20 +79,21 @@ class CartsMongoDao {
     }
 
     async deleteCartItem(idCart, idProduct) {
-        const cartResponse = await this.container.getById(carts, idCart)
-        const productResponse = await productsDao.getProduct(id)
+        const cartResponse = await this.getCart(idCart)
+        const productResponse = await productsDao.getProduct(idProduct)
         if (cartResponse.code === 200 && productResponse.code === 200) {
             // Means the cart exists and the product exists
             // Now, 
             // 1) delete the product from the cart items array
             const product = productResponse.payload
             const cartItems = cartResponse.payload.items
-            const productIndex = cartItems.findIndex( (prod) => prod._id === idProduct)
+            const productIndex = cartItems.findIndex( (prod) => prod._id.toString() === idProduct)
             // 1.1) Verify the cart effectively has that product
             if (productIndex !== -1) {
-                const newCartItems = cartItems.splice(productIndex, 1)
+                cartItems.splice(productIndex, 1)
                 // 2) Then update the cart items field
-                const updateReponse = await this.container.updateFieldById(carts, idCart, {items: newCartItems})
+                const updateReponse = await this.container.updateFieldById(carts, idCart, {items: cartItems})
+                return this.throwSuccess('Product deleted')
             } else {
                 return this.throwError('The cart does not contain that product')
             }   
@@ -103,7 +104,7 @@ class CartsMongoDao {
 
     async getCart(id) {
         const response = await this.container.getById(carts, id)
-        if (this.isNotError(response)) {
+        if (this.isNotError(response) && response !== null) {
             return this.throwSuccess('Cart obtained', response)
         } else {
             return this.throwError('Could not find a cart with that id. Please try again.')
