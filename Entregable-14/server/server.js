@@ -1,5 +1,7 @@
 // Requiring dotenv as early as possible in the application
 require('dotenv').config() // => Then we can use it anywhere in our Node project.
+// Require yargs to obtain data from cmd initialization
+const yargs = require('yargs/yargs')(process.argv.slice(2))
 
 // Plain vanilla server with express
 const express = require('express');
@@ -31,7 +33,7 @@ const messagesContainer = require('../containers/messagesContainer')
 
 class Server {
     constructor() {
-        this.PORT = process.env.PORT || 8080
+        this.PORT = yargs.argv.port || 8080
         this.app = express()
         this.httpServer = new HttpServer(this.app)
         this.ioServer = new IOServer(this.httpServer)
