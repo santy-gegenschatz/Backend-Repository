@@ -19,35 +19,36 @@ class Carts {
                 // the product has stock
                 const stockResponse = productsDao.productHasStock(idProduct)
                 if (stockResponse) {
-                    // all conditions cleared  
-                    // add it to the cart items array
-                        // get the current cart items array
-                        const currentCartItems = cartResponse.items
-                        // create an updated array with the pertinent changes
-                        let newCartItems;
-                        let newProduct;
-                    // if it is already there update the quantity
-                        // find out if it is already there
-                        const currentProduct = currentCartItems.find( (prod) => prod.id === idProduct)
-                        if (currentProduct !== undefined) {
-                            currentProduct.quantity +=1
-                            newCartItems = [...currentCartItems]
-                        } else {
-                            // if it is not already there add it for the first time
-                            const {stock, ...rest } = productResponse.payload
-                            newProduct = {...rest, quantity: 1}
-                            newCartItems = [...currentCartItems, newProduct]
-                        }
-                    // post the changes to the carts db
-                    const updateCartResponse = await this.container.updateById(this.collectionName, idCart, {items: newCartItems})
-                    // decrease the stock of the product in the products db
-                    const updateStockResponse = await productsDao.decreaseStock(idProduct, 1)
-                    // return a success message if everything went right
-                    if (this.isNotError(updateCartResponse) && this.isNotError(updateStockResponse)) {
-                        return this.throwSuccess(`The product ${productResponse.payload.name} has been added to the cart ${cartResponse.payload}`)
+                // all conditions cleared  
+                // add it to the cart items array
+                    // get the current cart items array
+                    const currentCartItems = cartResponse.items
+                    // create an updated array with the pertinent changes
+                    let newCartItems;
+                    let newProduct;
+                // if it is already there update the quantity
+                    // find out if it is already there
+                    const currentProduct = currentCartItems.find( (prod) => prod.id === idProduct)
+                    if (currentProduct !== undefined) {
+                        currentProduct.quantity +=1
+                        newCartItems = [...currentCartItems]
+                    } else {
+                        // if it is not already there add it for the first time
+                        const {stock, ...rest } = productResponse.payload
+                        newProduct = {...rest, quantity: 1}
+                        newCartItems = [...currentCartItems, newProduct]
                     }
+                // post the changes to the carts db
+                const updateCartResponse = await this.container.updateById(this.collectionName, idCart, {items: newCartItems})
+                // decrease the stock of the product in the products db
+                const updateStockResponse = await productsDao.decreaseStock(idProduct, 1)
+                // return a success message if everything went right
+                if (this.isNotError(updateCartResponse) && this.isNotError(updateStockResponse)) {
+                    return this.throwSuccess(`The product ${productResponse.payload.name} has been added to the cart ${cartResponse.payload}`)
+                } else {
                     // return an error if something went wrong
-
+                    return this.throwError('There was an unkwown error and your operation could not be performed.')
+                }
                 } else {
                     return this.throwError('There is not enough stock of the selected product.')
                 }
@@ -57,77 +58,74 @@ class Carts {
         } else {
             return this.throwError('The cart id does not match any id in our carts DB.')
         }
-        // the product has stock
+    }
 
-        // Then, make sure the cart exists, the product exists and the product has stock
-        const cart = this.find(convertedCartId)
-        const product = productsDao.find(convertedProductId)
-        const productHasStock = productsDao.hasStock(convertedProductId)
-        if (cart) {
-            if (product) {
-                if (productHasStock) {
-                    // Then, add the product to the cart and then decrease the stock
-                    cart.add(product)
-                    productsDao.decreaseStock(product)
-                    this.saveToPersistentMemory(this.items)
-                    return this.throwSuccess(`Successfully added ${product.name} to cart ${cart.id}`, {cart, product})
+    async createCart() {
+        const newCart = {items: [], creationDate: new Date().toLocaleString()}
+        // Create the cart in firebase
+        const createResponse = await this.container.create(this.collectionName, newCart)
+        // Retrieve the created cart in firebase
+        if (this.isNotError(createResponse)) {
+            return this.throwSuccess('Succesfully created cart', createResponse.id)
+        } else {
+            return this.throwError('There was a problem creating your cart. Please contact the system admin.')
+        }
+    }
+
+    async deleteCart(id) {
+        // Check the cart exists
+        const cartResponse = await this.getCart(id)
+        if (cartResponse.code === 200) {
+            // if so delete it
+            const deleteResponse = await this.container.delete(this.collectionName, id)
+            if (this.isNotError(deleteResponse)) {
+                return this.throwSuccess(`Succesfully deleted cart with id ${id}`)
+            } else {
+                // if there is a problem also show an error message
+                return this.throwError('Oops. There was a problem deleting your cart.')
+            } 
+        } else {
+            // otherwise, show an error message
+            this.throwError('The provided id does not match any cart in our DB.')
+        }
+    }
+
+    async deleteCartItem(idCart, idProduct) {
+        // Check the cart exists
+        const cartResponse = await this.getCart(idCart)
+        // Check the product exists
+        const productResponse = await productsDao.getProduct(idProduct)
+        if (cartResponse.code === 200) {
+            if (productResponse.code === 200) {
+                // Get the current array
+                const currentCartItems = cartResponse.payload.items
+                // Check if the product exists in that array
+                const productIndex = currentCartItems.findIndex( (prod) => prod.id === idProduct)
+                if (productIndex !== -1) {
+                    // Splice it
+                    currentCartItems.splice(productIndex, 1) 
+                    // update the cart with the new array
+                    const updateResponse = await this.container.updateById(this.collectionName, idCart, {items: currentCartItems})
+                    if (this.isNotError(updateResponse)) {
+                        // return success and errors
+                        return this.throwSuccess(`Deleted product ${productResponse.payload.name} from cart ${cartResponse.payload.id}`)
+                    } else {
+                        return this.throwError('There was an unknown error deleting the product. Please contact the system admin.')
+                    }
                 } else {
-                    return this.throwError('There is not enough stock of the product')
+                    // Product not in cart, return an error
+                    this.throwError('The product is not present in the cart. Check the provided cart and products ids.')
                 }
-            } else {
-                return this.throwError('The product id does not match any product')
             }
-        } else {
-            return this.throwError('The cart id does not match any cart')
-        }
-
-    }
-
-    createCart() {
-        const cart = new Cart(this.assignId())
-        this.items.push(cart)
-        this.saveToPersistentMemory(this.items)
-        return this.throwSuccess('Cart succesfully created', cart)
-    }
-
-    deleteCart(id) {
-        const convertedCartId = Number(id)
-        const cartIndex = this.items.findIndex((cart) => cart.id === convertedCartId)
-        if (cartIndex !== -1) {
-            const removed = this.items.splice(cartIndex)
-            this.saveToPersistentMemory(this.items)
-            return this.throwSuccess('The cart has been successfully deleted', {deleted: removed[0]})
-        } else {
-            return this.throwError('The id does not match with any cart')
         }
     }
 
-    deleteCartItem(idCart, idProduct) {
-        const convertedCartId = Number(idCart)
-        const convertedProductId = Number(idProduct)
-        const cart = this.find(convertedCartId)
-        if (cart) {
-            if (cart.removeItem(convertedProductId)) {
-                this.saveToPersistentMemory(this.items)
-                return this.throwSuccess('Product removed from the cart', cart)
-            } else {
-                return this.throwError('The if of the product does not match a product in the cart')
-            }
+    async getCart(id) {
+        const response = await this.container.getById(this.collectionName, id)
+        if (this.isNotError(response)) {
+            return this.throwSuccess('Cart obtained', response)
         } else {
-            return this.throwError('The id of the cart does not match any cart')
-        }
-
-    }
-
-    getCart(id) {
-        // Just in case some random idiot passes a string
-        const convertedId = Number(id)
-        // Find the cart that corresponds to the input id
-        const cart = this.items.find( (item) => item.id === convertedId)
-        if (cart) {
-            return this.throwSuccess(`Returning a cart with id ${id}`, cart)
-        } else {
-            return this.throwError('No cart in our database matches the given id')
+            return this.throwError('There was a problem retrieving your cart from the DB. Please check the provided id.')
         }
     }
 

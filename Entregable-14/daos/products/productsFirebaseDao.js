@@ -24,8 +24,13 @@ class ProductsFirebaseDao {
     }
 
     async getAllProducts() {
-        const response = await this.container.getAll(this.collectionName)
-        return response
+        try {
+            const response = await this.container.getAll(this.collectionName)
+            return response
+        } catch (err) {
+            console.log(err);
+            return new Error(err)
+        }
     }
 
     async getProduct(id) {
