@@ -8,7 +8,7 @@ class Carts {
         this.collectionName = process.env.CARTS_COLLECTION_NAME
     }
 
-    async addItemsToCart(idCart, idProduct) {
+    async addItemToCart(idCart, idProduct) {
         // We need to check
         // the cart exists
         const cartResponse = await this.container.getById(this.collectionName, idCart)
@@ -23,6 +23,7 @@ class Carts {
                 // add it to the cart items array
                     // get the current cart items array
                     const currentCartItems = cartResponse.items
+                    console.log('Current cart items: ', currentCartItems);
                     // create an updated array with the pertinent changes
                     let newCartItems;
                     let newProduct;
@@ -38,13 +39,14 @@ class Carts {
                         newProduct = {...rest, quantity: 1}
                         newCartItems = [...currentCartItems, newProduct]
                     }
+                    console.log('New cart Items: ', newCartItems);
                 // post the changes to the carts db
                 const updateCartResponse = await this.container.updateById(this.collectionName, idCart, {items: newCartItems})
                 // decrease the stock of the product in the products db
                 const updateStockResponse = await productsDao.decreaseStock(idProduct, 1)
                 // return a success message if everything went right
                 if (this.isNotError(updateCartResponse) && this.isNotError(updateStockResponse)) {
-                    return this.throwSuccess(`The product ${productResponse.payload.name} has been added to the cart ${cartResponse.payload}`)
+                    return this.throwSuccess(`The product ${productResponse.payload.name} has been added to the cart ${cartResponse.id}`)
                 } else {
                     // return an error if something went wrong
                     return this.throwError('There was an unkwown error and your operation could not be performed.')
@@ -66,7 +68,7 @@ class Carts {
         const createResponse = await this.container.create(this.collectionName, newCart)
         // Retrieve the created cart in firebase
         if (this.isNotError(createResponse)) {
-            return this.throwSuccess('Succesfully created cart', createResponse.id)
+            return this.throwSuccess('Succesfully created cart', {...newCart, id: createResponse.id})
         } else {
             return this.throwError('There was a problem creating your cart. Please contact the system admin.')
         }

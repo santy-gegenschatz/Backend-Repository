@@ -21,9 +21,7 @@ class FirebaseContainer {
 
     create = async (collectionName, sth) => {
         try {
-            const query = this.db.collection(collectionName)
-            const doc = query.doc()
-            const response = await doc.create(sth)
+            const response = await this.db.collection(collectionName).add(sth)
             return response
         } catch(err) {
             console.log(err);
@@ -55,7 +53,10 @@ class FirebaseContainer {
             const item = await doc.get()
             const response = item.data()
             if (typeof response !== 'undefined') {
-                return response
+                return {
+                    ...response,
+                    id
+                }
             } else {
                 return new Error('Something went wrong')
             }
