@@ -1,10 +1,9 @@
-const Product = require('../../models/product')
 const Container = require('../../containers/firebaseContainer') 
 
 class ProductsFirebaseDao {
     constructor() {
         this.container = Container
-        this.collectionName = process.env.FIREBASE_PRODUCTS_COLLECTION
+        this.collectionName = process.env.PRODUCTS_COLLECTION_NAME
     }
 
     async addProduct(product) {
@@ -63,7 +62,7 @@ class ProductsFirebaseDao {
     }
 
 
-    async hasStock(id) {
+    async productHasStock(id) {
         const product = await this.getProduct(id)
         if (product.code === 200) {
             if (product.stock >= 1) {
@@ -76,7 +75,7 @@ class ProductsFirebaseDao {
         }
     }
 
-    async decreaseStock(id) {
+    async decreaseStock(id, decreaseAmount) {
         const product = await this.getProduct(id)
         if (product.code === 200) {
             if (product.stock >= 1) {

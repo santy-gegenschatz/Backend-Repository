@@ -73,6 +73,7 @@ class FirebaseContainer {
             const response = await doc.update(updateObject)
             return response
         } catch(err) {
+            console.log(err);
             return new Error(err)
         }
     }

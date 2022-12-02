@@ -74,14 +74,14 @@ class Products {
         return Error.prototype.isPrototypeOf(response)
     }
 
-    decreaseStock(prod) {
+    decreaseStock(prod, decreaseAmount) {
         let stock = Number(prod.stock)
         stock -= 1
         prod.stock = stock
         this.saveToPersistentMemory(this.items)
     }
 
-    hasStock(id) {
+    productHasStock(id) {
         const product = this.find(id)
         return this.find(id).stock >= 1 
     }

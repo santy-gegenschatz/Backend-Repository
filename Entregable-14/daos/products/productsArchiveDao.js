@@ -31,12 +31,13 @@ class ProductsArchiveDao {
         }
     }
 
-    decreaseStock(prod) {
+    decreaseStock(prod, decreaseAmount) {
         let stock = Number(prod.stock)
         stock -= 1
         const productIndex = this.items.findIndex( (p) => p.id === prod.id)
         this.items[productIndex].stock = stock
         this.saveToPersistentMemory(this.items)
+        return true
     }
 
     deleteUndefinedKeys = (obj) => {
@@ -115,7 +116,7 @@ class ProductsArchiveDao {
         }
     }
 
-    hasStock(id) {
+    productHasStock(id) {
         return this.find(id).stock >= 1 
     }
 
