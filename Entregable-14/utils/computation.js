@@ -25,5 +25,7 @@ process.on('message', (cant) => {
     console.log('Cant: ', cant);
     const response = calculateRandomNumbers(cant)
     console.log('Sending back');
-    process.send(JSON.stringify(response))
+    setTimeout(() => {
+        process.send(JSON.stringify(response, null, 2))
+    }, 2000)
 })
