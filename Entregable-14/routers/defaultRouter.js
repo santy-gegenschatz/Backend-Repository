@@ -1,4 +1,4 @@
-const { renderHome, renderProducts, renderFakeProducts, renderServerInfo } = require('../controllers/defaultController')
+const { renderHome, renderProducts, renderFakeProducts, renderServerInfo, renderRandomNumbers} = require('../controllers/defaultController')
 const { Router } = require('express')
 const { auth } = require('../middlewares/auth')
 const { checkAuthentication } = require('../middlewares/passportAuth')
@@ -16,6 +16,9 @@ defaultRouter.get('/api/products-test', renderFakeProducts)
 
 // Show process data (Entregable 14)
 defaultRouter.get('/info', renderServerInfo)
+
+// Trigger a fork child process
+defaultRouter.get('/api/randoms', renderRandomNumbers)
 
 // Test cookie functionality
 defaultRouter.get('/set-cookie', (req, res) => {
