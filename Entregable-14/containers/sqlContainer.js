@@ -21,6 +21,15 @@ class sqlContainer {
         }
     }
 
+    async delete(tablename, id) {
+        try {
+            const response = await this.knex.from(tablename).where('id', '=', id).del()
+            return response === 1 ? response : new Error('Product id incorrect')
+        } catch(err) {
+            return new Error(err)
+        }
+    }
+
     async getAll(tablename) {
         try {
             const response = await this.knex.from(tablename).select('*')
@@ -34,9 +43,29 @@ class sqlContainer {
     async getById(tablename, id) {
         try {   
             const response = await this.knex.from(tablename).select('*').where('id', '=', id)
-            return response.length !== 0 ? response : new Error('Err')
+            return response.length !== 0 ? response : new Error('Not found by id')
         } catch (err) {
             console.log(err)
+            return new Error(err)
+        }
+    }
+
+    async getByKey(tablename, key, value) {
+        try {
+            const response = await this.knex.from(tablename).select('*').where(key, '=', value)
+            return response.length !== 0 ? response : new Error('Cart not found')
+        } catch(err) {
+            console.log(err);
+            return new Error(err)
+        }
+    }
+
+    async getByDoubleCondition(tablename, firstFieldName, firstFieldId, secondFieldName, secondFieldId) {
+        try {
+            const response = await this.knex.from(tablename).select('*').where(firstFieldName, '=', firstFieldId).andWhere(secondFieldName, '=', secondFieldId)
+            return response.length !== 0 ? response : new Error('Err')
+        } catch(err) {
+            console.log(err);
             return new Error(err)
         }
     }
@@ -50,14 +79,17 @@ class sqlContainer {
         }
     }
 
-    async delete(tablename, id) {
-        try {
-            const response = await this.knex.from(tablename).where('id', '=', id).del()
-            return response == 1 ? response : new Error('Product id incorrect')
+    async updateByDoubleCondition(tablename, firstFieldName, firstFieldId, secondFieldName, secondFieldId, newObject) {
+        try {   
+            const response = this.knex(tablename).where(firstFieldName, '=', firstFieldId).andWhere(secondFieldName, '=', secondFieldId).update(newObject)
+            return response
         } catch(err) {
+            console.log(err);
             return new Error(err)
         }
+        
     }
+
 }
 
 module.exports = new sqlContainer()
