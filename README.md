@@ -7,13 +7,13 @@ A repository with work that represents a fully functional ecommerce backend. It 
 3) nodemon app.js
 
 ## Features
-Api 1: Data persistency via MongoDB.  
+**Api 1:** Data persistency via MongoDB.  
 
-Api 2: Data persistency via SQL (MariaDB).  
+**Api 2:** Data persistency via SQL (MariaDB).  
 
-Api 3: Data persistency via Firebase.  
+**Api 3:** Data persistency via Firebase.  
 
-Api 4: Data persistency via Local Storage.  
+**Api 4:** Data persistency via Local Storage.  
 
 
 ## Architecture
@@ -22,21 +22,21 @@ The system is based on an express server running on Node.JS. A good amount of mi
 ## Tech
 Several npm packages are used to provide specific functionality to the backend. Some of them are:  
 
--socket.io: To generate realtime connections between server and client.  
+**-socket.io:** To generate realtime connections between server and client.  
 
--normalizr: To compress data and improve overall performance.  
+**-normalizr:** To compress data and improve overall performance.  
 
--bcrypt: Generate salted and hashed passwords. 
+**-bcrypt:** Generate salted and hashed passwords. 
 
--passport.js: Facilitate authentication and allow route protection.  
+**-passport.js:** Facilitate authentication and allow route protection.  
 
--knex.js: Query builder for SQL.  
+**-knex.js:** Query builder for SQL.  
 
--mongoose.js: Connect between MongoDB & Node.js. 
+**-mongoose.js:** Connect between MongoDB & Node.js. 
 
--yargs: Receive parameters via command line on start.  
+**-yargs:** Receive parameters via command line on start.  
 
--Session File Store: Store sessions locally if needed.  
+**-Session File Store:** Store sessions locally if needed.  
 
--Cookie Parser: Manage cookies in the client.  
+**-Cookie Parser:** Manage cookies in the client.  
 
