@@ -17,4 +17,12 @@ The system is based on an express server running on Node.JS. A good amount of mi
 
 ## Tech
 Several npm packages are used to provide specific functionality to the backend. Some of them are:
-
+-socket.io: To generate realtime connections between server and client.
+-normalizr: To compress data and improve overall performance.
+-bcrypt: Generate salted and hashed passwords
+-passport.js: Facilitate authentication and allow route protection.
+-knex.js: Query builder for SQL.
+-mongoose.js: Connect between MongoDB & Node.js
+-yargs: Receive parameters via command line on start.
+-Session File Store: Store sessions locally if needed.
+-Cookie Parser: Manage cookies in the client.
