@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Container = require('../../containers/mongoDbContainer') 
+const Container = require('../../containers/mongoContainer') 
 const { products } = require('../../models/mongoDbSchemas/products')
 
 

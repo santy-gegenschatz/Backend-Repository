@@ -1,4 +1,4 @@
-const Container = require('../../containers/sqlDbContainer') 
+const Container = require('../../containers/sqlContainer') 
 
 class Products {
     constructor() {

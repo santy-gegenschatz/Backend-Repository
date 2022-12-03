@@ -1,4 +1,4 @@
-const Container = require('../../containers/mongoDbContainer')
+const Container = require('../../containers/mongoContainer')
 const { users } = require('../../models/mongoDbSchemas/users')
 
 class usersMongoDbDao {

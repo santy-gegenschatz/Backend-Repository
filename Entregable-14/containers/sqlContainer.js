@@ -14,7 +14,7 @@ class sqlContainer {
     async create(tablename, sth) {
         try {
             const response = await this.knex(tablename).insert(sth)
-            return response
+            return response[0]
         } catch (err) {
             console.log(err);
             return new Error(err)
