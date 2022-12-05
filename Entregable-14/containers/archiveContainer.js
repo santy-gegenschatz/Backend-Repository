@@ -1,14 +1,14 @@
 const fs = require('fs')
 class ArchiveContainer {
-    constructor(fileName) {
-        this.fileName = fileName
-        this.path = './data/archiveData/' + this.fileName
+    constructor(filename) {
+        this.filename = filename
+        this.path = './data/archiveData/' + this.filename
         this.fs = fs
         this.logConnectionMessage()
     }
 
     logConnectionMessage() {
-        console.log(`Connected to Text Archive DB. Collection: ${this.fileName}`)
+        console.log(`Connected to Text Archive DB. Collection: ${this.filename}`)
     }
     // Use the following line to figure out where in your system your script is being executed
     // console.log(process.cwd());

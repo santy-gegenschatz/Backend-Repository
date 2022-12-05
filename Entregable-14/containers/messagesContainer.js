@@ -8,6 +8,7 @@ class MessagesContainer {
         this.filename = filename
         this.fs = fs
         this.messages = []
+        this.path = './data/archiveData/' + this.filename
     }
     
     async add(message) {
@@ -55,7 +56,7 @@ class MessagesContainer {
 
     async read() {
         const p = new Promise( (resolve, reject) => {
-            this.fs.readFile(__dirname + '/' + this.filename, (error, content) => {
+            this.fs.readFile(this.path, (error, content) => {
                 try {
                     const parsedContent = JSON.parse(content)
                     resolve(parsedContent)
@@ -69,7 +70,7 @@ class MessagesContainer {
 
     async save(object) {
         const p = new Promise( (resolve, reject) => {
-            this.fs.writeFile(__dirname + '/' + this.filename, JSON.stringify(object), () => {
+            this.fs.writeFile(this.path, JSON.stringify(object), () => {
                 resolve(true)
             })
         })
