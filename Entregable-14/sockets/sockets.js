@@ -5,7 +5,7 @@ const startSockets = (ioServer) => {
     ioServer.on('connection', async (client) => {
         console.log('Client connected');
         const messages = await messagesDao.getMessages()
-        client.emit('messages', messages)
+        client.emit('messages', 1)
     
         // Operation when a message is added
         client.on('new-message', async (msg) => {

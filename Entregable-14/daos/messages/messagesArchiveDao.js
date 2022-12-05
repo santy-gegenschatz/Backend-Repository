@@ -6,6 +6,9 @@ class MessagesArchiveDao {
     }
 
     async addMessage(message) {
+        // Retrieve the messages form the db
+        const response = await this.container.read()
+        this.messages = response
         // Add it to the array
         this.messages.push(message)
         // Normalize It
@@ -19,6 +22,7 @@ class MessagesArchiveDao {
     async getMessages() {
         // Read from text archive
         const response = await this.container.read()
+        console.log(typeof response);
         // The response is normalized data
         // Return it
         return response

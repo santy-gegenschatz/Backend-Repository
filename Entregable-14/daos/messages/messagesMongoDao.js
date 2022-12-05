@@ -1,5 +1,6 @@
 const { normalizeMessages } = require('../../utils/normalize') 
 const Container = require('../../containers/mongoContainer')
+const { isNotError } = require('../../utils/errors')
 
 class MessagesMongoDao {
     constructor() {
@@ -8,7 +9,8 @@ class MessagesMongoDao {
 
     async addMessage(message) {
         // Add it to the db
-        // If everything went allright return true
+        const response = await this.container.add(message)
+        return isNotError(response)
     }
 
     async getMessages() {

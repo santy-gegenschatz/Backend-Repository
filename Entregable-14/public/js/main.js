@@ -12,10 +12,14 @@ const socket = io()
 
 // Define actions for each case
 socket.on('messages', (data) => {
-    console.log('rendering compression');
-    renderCompression(data)
-    console.log('compresion rendering ok');
-    renderMessages(data)
+    try {
+        console.log('rendering compression');
+        renderCompression(data)
+        console.log('compresion rendering ok');
+        renderMessages(data)
+    } catch(err) {
+        console.log(err);
+    }
 })
 
 socket.on('products', (data) => {
