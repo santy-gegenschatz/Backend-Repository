@@ -16,6 +16,9 @@ const { productsRouter } = require('../routers/productsRouter')
 const { cartRouter } = require('../routers/cartRouter')
 const { authRouter } = require('../routers/authRouter')
 
+// Sockets 
+const { startSockets } = require('../sockets/sockets')
+
 // Cookies and sessions
 const cookieParser = require('cookie-parser') // This is a middleware, so you need to use app.use later on
 const session = require('express-session') // Another middleware, but in this case for sessions
@@ -27,10 +30,6 @@ const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true} // To 
 const passport = require('passport')
 const { initPassport } = require('../middlewares/passport') 
 
-// Data
-const { products } = require('../data/archiveData/index')
-const messagesContainer = require('../containers/messagesContainer')
-
 class Server {
     constructor() {
         this.PORT = yargs.argv.port || 8080
@@ -40,7 +39,7 @@ class Server {
         this.middlewares()
         this.routes()
         this.templatingEngines()
-        this.startSockets()
+        startSockets(this.ioServer)
     }
 
     middlewares() {
@@ -66,34 +65,9 @@ class Server {
 
     routes() {
       this.app.use('/', defaultRouter)
+      this.app.use('/auth', authRouter)
       this.app.use('/api/cart', cartRouter)
       this.app.use('/api/products', productsRouter)
-      this.app.use('/auth', authRouter)
-    }
-
-    // Websocket connections
-     async startSockets() {
-        const messages = await messagesContainer.getMessages()
-        this.ioServer.on('connection', (client) => {
-            console.log('Client connected');
-            client.emit('messages', messages)
-        
-            // Operation when a message is added
-            client.on('new-message', async (msg) => {
-                console.log('Receiving');
-                const response = await messagesContainer.add(msg)
-                console.log('Server - Saved');
-                console.log(response);
-                console.log('Sending');
-                this.ioServer.sockets.emit('messages', await messagesContainer.getMessages())
-            })
-        
-            // Operation when a product is added
-            client.on('add-product', (product) => {
-                products.push(product)
-                this.ioServer.sockets.emit('products', product)
-            })
-        })
     }
 
     templatingEngines() {

@@ -1,29 +1,41 @@
 const Container = require('../../containers/archiveContainer')
 class MessagesArchiveDao {
     constructor() {
-        this.container = new Container(process.env.MESSAGES_COLLECTION_FILENAME)
+        this.container = new Container(process.env.MESSAGES_COLLECTION_NAME + '.txt')
         this.messages = []
     }
 
-    addMessage(message) {
+    async addMessage(message) {
         // Add it to the array
         this.messages.push(message)
+        // Normalize It
+        const { normalizedData } = this.normalizeMessages(this.messages)
         // Save the array to text
-        this.container.save(this.messages)
+        this.container.save(normalizedData)
+        // Return success
+        return true
     }
 
-    getMessages() {
-        return this.messages
-    }
-
-    async loadMessages() {
-        // Update the messages array with the contents of the text archive
+    async getMessages() {
+        // Read from text archive
         const response = await this.container.read()
-        this.messages = response
+        // The response is normalized data
+        // Return it
+        return response
     }
 
-    normalizeMessages() {
-
+    normalizeMessages(messagesToNormalize) {
+        const author = new schema.Entity('authors', {}, {idAttribute: 'email'})
+        const message = new schema.Entity('messages', {
+            author: author
+        }, {idAttribute: 'date'})
+        const messageArray = new schema.Entity('messageArrays', {
+            messages: [message]
+        })
+        const normalizedData = normalize({id: 1, messages: messagesToNormalize}, messageArray)
+        const a = JSON.stringify(messagesToNormalize).length;
+        const b = JSON.stringify(normalizedData).length;
+        return { normalizedData, compression: b/a }
     }
 }
 
