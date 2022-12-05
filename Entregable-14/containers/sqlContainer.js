@@ -30,6 +30,15 @@ class sqlContainer {
         }
     }
 
+    async deleteByDoubleCondition(tablename, firstFieldName, firstFieldValue, secondFieldName, secondFieldValue) {
+        try {
+            const response = await this.knex.from(tablename).where(firstFieldName, '=', firstFieldValue).andWhere(secondFieldName, '=', secondFieldValue).del()
+            return response === 1 ? response : new Error('Could not perform delete')
+        } catch(err) {
+
+        }
+    }
+
     async getAll(tablename) {
         try {
             const response = await this.knex.from(tablename).select('*')

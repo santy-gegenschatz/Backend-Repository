@@ -27,12 +27,18 @@ class Carts {
                         // If no error returns, the product is already added and only the quantity has to be updated.
                         // Will need to create a custom update by double id function in the sql container
                         const newQuantity = productExists[0].quantity + 1
-                        const updateProductResponse = await this.container.updateByDoubleCondition(this.secondaryTablename, 'id_cart', idCart, 'id_product', idProduct, {quantity: newQuantity})
-                        // Check for errors
-                        if (this.isNotError(updateProductResponse)) {
-                            const newCartResponse = await this.getCart(idCart)
-                            if (newCartResponse.code === 200) {
-                                return this.throwSuccess('Updated the stock in the cart', newCartResponse)
+                        // Decrease the stock of the product
+                        const decreaseStockResponse = await this.productsDao.decreaseStock(idProduct, 1)
+                        if (decreaseStockResponse) {
+                            const updateProductResponse = await this.container.updateByDoubleCondition(this.secondaryTablename, 'id_cart', idCart, 'id_product', idProduct, {quantity: newQuantity})
+                            // Check for errors
+                            if (this.isNotError(updateProductResponse)) {
+                                const newCartResponse = await this.getCart(idCart)
+                                if (newCartResponse.code === 200) {
+                                    return this.throwSuccess('Updated the stock in the cart', newCartResponse)
+                                } else {
+                                    return this.throwError('There was an unknown error that prevented the product from being added to the cart')
+                                }
                             } else {
                                 return this.throwError('There was an unknown error that prevented the product from being added to the cart')
                             }
@@ -47,15 +53,19 @@ class Carts {
                             id_cart: idCart,
                             quantity: 1
                         }
-                        const insertProductResponse = await this.container.create(this.secondaryTablename, productToInsert)
-                        // Check for errors
-                        if (this.isNotError(insertProductResponse)) {
-                            const newCartResponse = await this.getCart(idCart)
-                            if (newCartResponse.code === 200) {
-                                return this.throwSuccess('Updated the stock in the cart', newCartResponse)
-                            } else {
-                                return this.throwError('There was an unknown error that prevented the product from being added to the cart')
-                            }
+                        // Decrease the stock of the product
+                        const decreaseStockResponse = await this.productsDao.decreaseStock(idProduct, 1)
+                        if (decreaseStockResponse) {
+                            // Make an API call to insert the product into the DB
+                            const insertProductResponse = await this.container.create(this.secondaryTablename, productToInsert)
+                            if (this.isNotError(insertProductResponse)) {
+                                const newCartResponse = await this.getCart(idCart)
+                                if (newCartResponse.code === 200) {
+                                    return this.throwSuccess('Updated the stock in the cart', newCartResponse)
+                                } else {
+                                    return this.throwError('There was an unknown error that prevented the product from being added to the cart')
+                                }
+                        }
                         } else {
                             return this.throwError('There was an unknown error that prevented the product from being added to the cart')
                         }
@@ -91,20 +101,35 @@ class Carts {
         }
     }
 
-    deleteCartItem(idCart, idProduct) {
-        const convertedCartId = Number(idCart)
-        const convertedProductId = Number(idProduct)
-        const cart = this.find(convertedCartId)
-        if (cart) {
-            if (cart.removeItem(convertedProductId)) {
-                this.saveToPersistentMemory(this.items)
-                return this.throwSuccess('Product removed from the cart', cart)
+    async deleteCartItem(idCart, idProduct) {
+        // Check the cart exists
+        const cartResponse = await this.getCart(idCart)
+        if (cartResponse.code === 200) {
+            // Check the product exists
+            const productResponse = await this.productsDao.getProduct(idProduct)
+            if (productResponse.code === 200) {
+                // Check the product is in the cart
+                const productInCartResponse = await this.container.getByDoubleCondition(this.secondaryTablename, 'id_cart', idCart, 'id_product', idProduct)
+                if (this.isNotError(productInCartResponse)) {
+                    // Delete the product from the cart
+                    const deleteReponse = await this.container.deleteByDoubleCondition(this.secondaryTablename, 'id_cart', idCart, 'id_product', idProduct)
+                    // Get the updated version of the cart to present it back to the user
+                    const updatedCartResponse = await this.getCart(idCart)
+                    // Check there was no error in the final API calls
+                    if (this.isNotError(deleteReponse) && this.isNotError(updatedCartResponse)) {
+                        return this.throwSuccess(`Product ${productResponse.payload.name} delete from cart with id ${idCart}. Here is the new Cart: ${JSON.stringify(updatedCartResponse.payload)}`)
+                    }
+                } else {
+                    return this.throwError('Could not delete product. Product not in cart.')
+                }
+                // A neat trick to avoid checking is to simply try to delete it
             } else {
-                return this.throwError('The if of the product does not match a product in the cart')
+                return this.throwError('Could not delete product. Product not found. Please check the product id.')
             }
         } else {
-            return this.throwError('The id of the cart does not match any cart')
+            return this.throwError('Could not delete product. Cart not found. Please check the cart id')
         }
+        // Check the item exists
 
     }
 
