@@ -14,14 +14,14 @@ const startSockets = (ioServer) => {
             if (response) {
                 console.log('Server - Saved');
                 console.log('Sending');
-                this.ioServer.sockets.emit('messages', await messagesDao.getMessages())
+                ioServer.sockets.emit('messages', await messagesDao.getMessages())
             }
         })
     
         // Operation when a product is added
         client.on('add-product', (product) => {
             products.push(product)
-            this.ioServer.sockets.emit('products', product)
+            ioServer.sockets.emit('products', product)
         })
     })
 }
