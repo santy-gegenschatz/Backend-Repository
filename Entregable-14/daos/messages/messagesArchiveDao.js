@@ -13,7 +13,7 @@ class MessagesArchiveDao {
         // The data is normalized, so we need to denormalize it
         const denormalizedData = denormalizeMessages(response)
         console.log(response, '----', denormalizedData);
-        this.messages = denormalizedData
+        this.messages = denormalizedData.messages
         // Add it to the array
         this.messages.push(message)
         // Normalize It
@@ -27,6 +27,7 @@ class MessagesArchiveDao {
     async getMessages() {
         // Read from text archive
         const response = await this.container.read()
+        console.log(response);
         // The response is normalized data
         // Return it
         return response

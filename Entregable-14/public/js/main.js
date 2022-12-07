@@ -34,9 +34,7 @@ const renderCompression = (data) => {
 }
 
 const renderMessages = (data) => {
-    console.log(data);
-    const { normalizedData } = data
-    const denormalizedData = normalizr.denormalize(normalizedData, messageArray)
+    const denormalizedData = normalizr.denormalize(data, messageArray, data.entities)
     const messagesObject = denormalizedData.entities.messages;
     console.log(messagesObject);
     console.log(Object.entries(messagesObject));
@@ -100,6 +98,3 @@ const addProduct = (p) => {
     socket.emit('add-product', product)
     return false
 }
-
-
-{/* //             <strong class = 'blue'> ${m.author.name}, ${m.author.surname} [${m.author.age}] </strong> <span class = 'brown'> [${m.date.toString().slice(0, 11)}] </span> :  <em class = 'green' > ${m.text} </em> */}
