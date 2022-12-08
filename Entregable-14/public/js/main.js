@@ -13,10 +13,11 @@ const socket = io()
 // Define actions for each case
 socket.on('messages', (data) => {
     try {
+        console.log(data);
         console.log('rendering compression');
-        renderCompression(data)
+        renderCompression(data.compression)
         console.log('compresion rendering ok');
-        renderMessages(data)
+        renderMessages(data.normalizedData)
     } catch(err) {
         console.log(err);
     }
@@ -27,9 +28,10 @@ socket.on('products', (data) => {
 })
 
 // Define specific functions
-const renderCompression = (data) => {
+const renderCompression = (compression) => {
+    console.log(compression);
     const h5 = document.getElementById('h5')
-    const { compression } = data
+    console.log(h5);
     h5.innerText = `Compression: ${(compression*100).toString().slice(0, 4)}%`
 }
 

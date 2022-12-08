@@ -12,7 +12,6 @@ class MessagesArchiveDao {
         const response = await this.container.read()
         // The data is normalized, so we need to denormalize it
         const denormalizedData = denormalizeMessages(response)
-        console.log(response, '----', denormalizedData);
         this.messages = denormalizedData.messages
         // Add it to the array
         this.messages.push(message)
@@ -27,10 +26,12 @@ class MessagesArchiveDao {
     async getMessages() {
         // Read from text archive
         const response = await this.container.read()
-        console.log(response);
-        // The response is normalized data
+        // The response is normalized data, so denormalize it to know its length and calculate the compression rate
+        const denormalizedData = denormalizeMessages(response)
+        const a = JSON.stringify(response).length;
+        const b = JSON.stringify(denormalizedData).length;
         // Return it
-        return response
+        return { normalizedData: response, compression: a/b }
     }
 
 }
