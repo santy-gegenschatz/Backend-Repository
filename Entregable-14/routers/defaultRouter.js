@@ -1,3 +1,4 @@
+const yargs = require('yargs/yargs')(process.argv.slice(2))
 const { renderHome, renderProducts, renderFakeProducts, renderServerInfo, renderRandomNumbers} = require('../controllers/defaultController')
 const { Router } = require('express')
 const { auth } = require('../middlewares/auth')
@@ -19,6 +20,11 @@ defaultRouter.get('/info', renderServerInfo)
 
 // Trigger a fork child process
 defaultRouter.get('/api/randoms', renderRandomNumbers)
+
+// Test the datos route
+defaultRouter.get('/datos', (req, res) => {
+    res.send(`This is the endpoint datos of the server. This server is has a process id of ${process.pid} and runs on port ${yargs.argv.port}`)
+})
 
 // Test cookie functionality
 defaultRouter.get('/set-cookie', (req, res) => {
