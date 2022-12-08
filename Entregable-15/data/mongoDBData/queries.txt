@@ -1,0 +1,56 @@
+# Show dbs
+show dbs
+
+# Create a db called ecommerce
+use ecommerce
+
+# Create a products and a messages collection
+db.createCollection('products')
+db.createCollection('messages')
+
+# Create 10 documents in the products collection
+db.products.insertOne({name : 'Shirt', description: 'A black shirt', price: 100, stock: 5, thumbnail: 'url'})
+    # Now, we will use the insertMany command
+    db.products.insertMany([{title : 'Calculator', description: 'a', price : 110, stock: 5, thumbnail : 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png'}, {title : 'Clock', description: 'b', price : 200, stock: 5, thumbnail : 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/clock-128.png'}])
+    db.products.insertMany([{title : 'Pants', description: 'c', price : 400, stock: 5, thumbnail : 'https://cdn3.iconfinder.com/data/icons/remixicon-others/24/shirt-fill-128.png'}, {title : 'Shoes', description: 'd', price : 300, stock: 5, thumbnail : 'https://cdn4.iconfinder.com/data/icons/fashion-industry-set/88/Di-128.png'}, {title : 'Car', description: 'e', price : 500, stock: 5, thumbnail : 'url6'}])
+    db.products.insertMany([{title : 'Satellite', description: 'f', price : 600, stock: 5, thumbnail : 'url7'}, {title : 'Spaceship', description: 'g', price : 2700, stock: 5, thumbnail : 'url8'}, {title : 'Microscope', description: 'h', price : 3800, stock: 5, thumbnail : 'url9'}, {title : 'Wine', description: 'i', price : 1900, stock: 5, thumbnail : 'url10'}])
+
+# Create 10 documents in the messages collecion
+db.messages.insertOne({text: 'Hello', author: 'John'})
+db.messages.insertOne({text: 'Great', author: 'Booster'})
+    # Now, we will use the insertMany command
+    db.messages.insertMany([{text: 'Good', author: 'Susan'}, {text: 'Goodbye', author: 'John'}])
+    db.messages.insertMany([{text: 'Cool', author: 'Paul'}, {text: 'Ok', author: 'Peter'}, {text: 'syl', author: 'Jamie'}, {text: 'fyi', author: 'Jonah'}, {text: 'It was a beatiful day in the West Coast', author: 'Duncan'}, {text: 'Who could have thought about that', author: 'Erica'}])
+
+# List the documents in each collection
+db.products.find()
+db.messages.find()
+
+# Show the quantity of documents in each collection
+db.products.estimatedDocumentCount()
+db.messages.estimatedDocumentCount()
+
+# CRUD for the products collection
+    # Add an extra product
+    db.products.insertOne({title : 'Beer', description: 'j', price : 5000, stock: 5, thumbnail : 'url11'})
+
+    # Find products with filtered queries
+    db.products.find({price: {$lt: 1000}})
+    db.products.find({$and: [ {price : {$gte: 1000}}, {price : {$lte: 3000}} ]})
+    db.products.find({price: {$gt: 3000}})
+    db.products.find().sort({price: 1}).skip(2).limit(1)
+
+    # Add another key to all products in a collection
+    db.products.updateMany({}, {$set : {extraStock: 100}})
+
+    # Update the stock of certain products
+    db.products.updateMany({price : {$gt : 4000}}, {$set: {stock : 0}})
+
+    # Delete certain products (price <1000)
+    db.products.deleteMany({price : {$lt : 1000}})
+
+# Create a user with only read access to the ecommerce databse
+db.createUser({user: 'pepe', pwd: 'asd456', roles : [{role: 'read', db: 'ecommerce'}]})
+mongo -u pepe - p asd456
+    # Check that it cannot modify data
+    dd.products.insertOne({name : 'Wallet'}) => not authorized
