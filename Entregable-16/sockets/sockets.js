@@ -12,8 +12,7 @@ const startSockets = (ioServer) => {
             console.log('Receiving');
             const response = await messagesDao.addMessage(msg)
             if (response) {
-                console.log('Server - Saved');
-                console.log('Sending');
+                console.log('Server - Saved');  
                 ioServer.sockets.emit('messages', await messagesDao.getMessages())
             }
         })

@@ -20,6 +20,7 @@ const normalizeMessages = (messagesToNormalize) => {
 
 const denormalizeMessages = (messagesToDenormalize) => {
     try {
+        console.log(messagesToDenormalize);
         const denormalizedData = normalizr.denormalize(messagesToDenormalize.result, messageArraySchema, messagesToDenormalize.entities)
         return denormalizedData
     } catch (err) {
