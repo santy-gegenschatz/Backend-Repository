@@ -1,0 +1,41 @@
+events {
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    
+    upstream node_app {
+        server 127.0.0.1:8081;
+        server 127.0.0.1:8082 weight=3;
+    }
+    
+    upstream node_cluster {
+        server 127.0.0.1:8081;
+    }
+        
+    upstream nginx_cluster {
+        server 127.0.0.1:8082;
+        server 127.0.0.1:8083;
+        server 127.0.0.1:8084;
+        server 127.0.0.1:8085;
+    }
+
+    server {
+        listen 80;
+        server_name nginx_node;
+        root "/Users/santy/Documents/Coderhouse Backend/Entregables/Entregable-14/public";
+
+        location /datos/ {
+            proxy_pass http://node_app;
+        }
+        
+        location /api/randoms {
+            proxy_pass http://nginx_cluster;
+        }
+
+        location / {
+            proxy_pass http://node_cluster;
+        }
+    }
+}
