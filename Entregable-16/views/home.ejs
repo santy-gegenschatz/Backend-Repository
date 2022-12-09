@@ -19,29 +19,29 @@
 
     <div id = 'user-greeting-header'>
         <div id = 'header-div__middle'>
-            <h4 class = "white"> Welcome, <%= username %> </h4>
+            <h4 class = 'white'> Welcome, <%= username %> </h4>
         </div>
         <div id = 'header-div__right'>
             <form action="/auth/logout" method="post">
+                <button class = "btn btn-primary"> <a href="/products"> Go to products </a> </button>
                 <button class = 'btn btn-info' name = 'logoutButton'> Log out </button>
             </form>
         </div>
     </div>
 
-    <div id = 'main-div'>
-        <h4> Form </h4>
-        <form onsubmit = 'return addProduct(this)'>
-            <div id = 'secondary-div'>
+    <div id = 'home-div'>
+        <div id = 'insert-product-div'>
+            <h4> Form </h4>
+            <form onsubmit = 'return addProduct(this)' class = "column-centered-div">
                 <input type="text" placeholder = "Name" name = 'title' id = 'title'>
                 <input type="text" placeholder = "Price" name = 'price' id = 'price'>
                 <input type="text" placeholder = "Url" name = 'thumbnail' id = 'thumbnail'>
-                <input type="submit" placeholder = "Send">
-            </div>
-        </form>
-        <% if (noRender) { %>
-            <h3> Sorry... There are no products to browse. </h3>
-            <% } else { %>
-            <div id = 'main-div'>
+                <input type="submit" class = 'btn btn-info' placeholder = "Send">
+            </form>
+        </div>
+
+        <div id = 'products-table-div'>
+            <% if (!noRender) { %>
                 <h4> Products table </h4>
                 <table id = 'table'> 
                     <tr>
@@ -51,38 +51,42 @@
                     </tr>
                     <% products.forEach( prod => { %>
                         <tr>
-                            <td> <%= prod.title%> </td>
+                            <td> <%= prod.title%>  </td>
                             <td> <%= prod.price%> </td>
                             <td> <img src = <%= prod.thumbnail%> alt="image_not_found"> </td>
                         </tr>
                      <% }) %>
                 </table>
-            </div>
-            <br>
+                <br>
+            <% } else { %>
+                <h3> Sorry... There are no products to browse. </h3>
             <% } %>
-        <h4 style = 'text-align: center;'> Message Center </h4>
-        <h5 id = 'h5'> Compresison Rate </h5>
+        </div>
+
         <div id = 'messages-div'>
-            <div>
-                <form onsubmit = 'return addMessage(this)' class = 'messages-form'>
-                    <input type="text" name = 'name' id = 'name' placeholder = 'Enter your name'>
-                    <input type="text" name = 'surname' id = 'surname' placeholder = 'Enter your surname'>
-                    <input type="text" name = 'text' id = 'email' placeholder = 'Enter your email'>
-                    <input type="text" name = 'age' id = 'age' placeholder = 'Enter your age'>
-                    <input type="text" name = 'alias' id = 'alias' placeholder = 'Enter your alias'>
-                    <input type="text" name = 'text' id = 'text' placeholder = 'Enter your message'>
-                    <button> Send </button>
-                </form>
-            </div>
-            <div>
-                <h5 id = 'h5'> Online Chat </h5>
-                <div id = 'chat-div'> 
-                    <!-- Here it is that the messages are rendered -->
+            <h4 style = 'text-align: center;'> Message Center </h4>
+            <div class = 'row-centered-div'>
+                <div>
+                    <h5 id = 'compression-title'> Compression Rate </h5>
+                    <form onsubmit = 'return addMessage(this)' class = 'messages-form'>
+                        <input type="text" name = 'name' id = 'name' placeholder = 'Enter your name'>
+                        <input type="text" name = 'surname' id = 'surname' placeholder = 'Enter your surname'>
+                        <input type="text" name = 'text' id = 'email' placeholder = 'Enter your email'>
+                        <input type="text" name = 'age' id = 'age' placeholder = 'Enter your age'>
+                        <input type="text" name = 'alias' id = 'alias' placeholder = 'Enter your alias'>
+                        <input type="text" name = 'text' id = 'text' placeholder = 'Enter your message'>
+                        <button class = "btn btn-info"> Send </button>
+                    </form>
+                </div>
+                
+                <div>
+                    <h5 id = 'h5'> Online Chat </h5>
+                    <div id = 'chat-div'> 
+                        <!-- Here it is that the messages are rendered -->
+                    </div>
                 </div>
             </div>
-        </div>
-        <div>
-            <button class = "btn btn-primary"> <a href="/products"> Go to products </a> </button>
+
         </div>
     </div>
     <script defer src = 'https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js'></script>

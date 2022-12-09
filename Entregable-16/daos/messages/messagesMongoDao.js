@@ -70,8 +70,6 @@ class MessagesMongoDao {
             const { messages } = denormalizeMessages(relevantData)
             const a = JSON.stringify(response).length;
             const b = JSON.stringify(messages).length;
-            console.log(a);
-            console.log(b);
             // Return it
             return { normalizedData: response, compression: a/b }
         

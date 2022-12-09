@@ -105,9 +105,16 @@ tr {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: lightgray;
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
     border-radius: 25px;
     margin: 5px;
+}
+
+.row-centered-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .white {
@@ -116,7 +123,7 @@ tr {
 
 /* Id's */
 #chat-div {
-    background-color: lightgray;
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
     min-height: 40px;
     margin: 10px;
     border-radius: 25px;
@@ -146,30 +153,69 @@ tr {
     padding-right: 30px;
 }
 
-#h5 {
+#home-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    padding-top: 5px;
+}
+
+#compression-title {
     text-align: center;
     margin: 7px;
+}
+
+#insert-product-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgreen;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 25px;
 }
 
 #main-div {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     background-color: beige;
 }
 
+#message-input-div {
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+}
+
 #messages-div {
-    background-color: red;
+    background-color: lightgreen;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    border-radius: 25px;
+}
+
+#online-chat-div {
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+}
+
+#products-table-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgreen;
+    border-radius: 25px;
+    margin: 10px;
+    padding-top: 10px;
 }
 
 #secondary-div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: red;
+    background-color: black;
     margin: 20px;
     padding: 10px;
 }
@@ -183,7 +229,7 @@ tr {
     background-color: black;
     border-style: solid;
     border-color: white;
-    border-width: 5px 0px 0px 0px;
+    border-width: 5px 0px 5px 0px;
     display: grid;
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: 100%;
