@@ -5,7 +5,8 @@ const getServerInfo = () => {
         currentDirectory: process.cwd(),
         processId: process.pid,
         memoryUsage: process.memoryUsage().toString(),
-        entryArguments: process.argv
+        entryArguments: process.argv,
+        numCPUs: require('os').cpus().length
     }
 }
 
