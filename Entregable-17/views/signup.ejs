@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <title> Signup </title>
+</head>
+<body>
+    <div class = "column-centered-div">
+        <div class = 'header'>
+            <div class = "column-centered-div">
+                <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
+                <h2 class = 'white'> This is the Signup Screen </h2>
+            </div>
+        </div>
+    </div>
+    <div class = 'general-card column-centered-div'>
+        <input type="text" name = 'username' placeholder = "Select your username" id = 'usernameField'>
+        <input type="password" name = 'password1' placeholder = "Enter your password" id = 'passwordField1'>
+        <input type="password" name = 'password2' placeholder = "Confirm your password" id = 'passwordField2'>
+        <input type="submit" class = 'btn btn-primary' onclick = "return verifyPasswordsMatch()">
+        
+        <form action="/auth/login" method="get">
+            <input type="submit" class = 'btn btn-info' value = 'Go to Login'>
+        </form>
+    </div>
+</body>
+<script src="../../js/signup.js"></script>
+</html>
