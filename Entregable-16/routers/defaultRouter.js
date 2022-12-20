@@ -30,9 +30,4 @@ defaultRouter.get('/datos', logRouteInfo, (req, res) => {
     res.send(`This is the endpoint datos of the server. This server is has a process id of ${process.pid} and runs on port ${yargs.argv.port}`)
 })
 
-// defaultRouter.get('*', (req, res) => {
-//     const { url, method } = req
-//     console.log(url, method);
-//     res.redirect(url)
-// })
 exports.defaultRouter = defaultRouter

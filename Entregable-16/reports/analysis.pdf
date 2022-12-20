@@ -1,0 +1,5 @@
+Several methods were used to profile the /info route of the current server. Here are some insights: 
+1) Median response rate was 424.2 miliseconds.
+2) Over 11K different ticks (most of them in C++) ocurred while performing the 1000 GET requests we tested.
+3) The flame graph obtained via autocannon shows typical asynchronic behaviour.
+4) getCPU's was one of the processes that took the most time to execute.
