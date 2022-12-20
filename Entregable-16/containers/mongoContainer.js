@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { route, advancedOptions} = require('../data/mongoDBData/mongoDbConfig')
+const { logError, logInfo } = require('../loggers/logger')
 
 class MongoDbContainer {
     constructor(collectionName) {
@@ -23,18 +24,29 @@ class MongoDbContainer {
             let sthSaved = await new modelName(sth).save()
             return sthSaved
         } catch(err) {
-            console.log(err);
+            logError(err)
             return err
         }
     }
 
-    async getByKey(model, filterObject) {
+    async delete(model, id) {
         try {
-            const response = await model.findOne(filterObject)
+            const response = await model.deleteOne({'_id': id})
             return response
         } catch (err) {
-            console.log(err);
-            return new Error(err)
+            logError(err)
+            return false
+        }
+    }
+
+    async getAll(model) {
+        console.log('Container - Finding All');
+        try {
+            const response = await model.find()
+            return response
+        } catch (err) {
+            logError(err)
+            return err
         }
     }
 
@@ -46,28 +58,29 @@ class MongoDbContainer {
             const newObj = {id: _id.toString(), ...rest}
             return newObj
         } catch (err) {
-            console.log(err);
+            logError(err)
+            return new Error(err)
+        }
+    }
+
+    async getByKey(model, filterObject) {
+        try {
+            const response = await model.findOne(filterObject)
+            return response
+        } catch (err) {
+            logError(err)
             return new Error(err)
         }
     }
 
     async getByUsername(model, username) {
-        console.log('Container: Getting by username');
+        logInfo('Getting by username')
         const user = await model.findOne( {username : username} )
         console.log('Container: Found by username: ', user);
         return user
     }
 
-    async getAll(model) {
-        console.log('Container - Finding All');
-        try {
-            const response = await model.find()
-            return response
-        } catch (err) {
-            console.log(err);
-            return err
-        }
-    }
+
 
     async updateFieldById(model, id, object) {
         console.log('Container - Updating by Id');
@@ -75,16 +88,7 @@ class MongoDbContainer {
             const response = await model.updateOne({_id: id}, {$set: object})
             return response
         } catch (err) {
-            console.log(err);
-            return false
-        }
-    }
-
-    async delete(model, id) {
-        try {
-            const response = await model.deleteOne({'_id': id})
-            return response
-        } catch (err) {
+            logError(err)
             return false
         }
     }

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Container = require('../../containers/mongoContainer') 
 const { products } = require('../../models/mongoDbSchemas/products')
+const { logError } = require('../../loggers/logger')
 
 
 class ProductsMongoDao {
@@ -16,7 +17,6 @@ class ProductsMongoDao {
                 return {error : false}
             }
             const response = await this.container.getById(products, product.id)
-            console.log(response);
             if (response) {
                 // Update Stock
                 console.log('Updating field');
@@ -29,37 +29,9 @@ class ProductsMongoDao {
                 return this.throwSuccess('New item added to the database', response)
             }
         } catch (err) {
-            console.log(err);
-            return new Error (err)
+            return this.throwError('Could not add product to the DB.')
         }
 
-    }
-
-    async getProduct(id) {
-        const response = await this.container.getById(products, id)
-        return this.throwSuccess('Product recovered from the DB', response)
-    }
-
-    async getAllProducts() {
-        const response = await this.container.getAll(products)
-        return this.throwSuccess('Here are the Products', response)
-    }
-
-    async updateProduct(id, newObject) {
-        const response = await this.container.updateFieldById(products, id, newObject)
-        if (response) {
-            return this.throwSuccess('Here is how the product looks now: ', await this.getProduct(id))
-        }
-
-        return this.throwError('The id did not match any object')
-    }
-
-    async deleteProduct(id) {
-        const response = await this.container.delete(products, id)
-        if (response) {
-            return this.throwSuccess('Product deleted: ', response)
-        }
-        return this.throwError('The id is incorrect')
     }
 
     async decreaseStock(id, decreaseAmount) {
@@ -73,6 +45,40 @@ class ProductsMongoDao {
             return true
         } else {
             return new Error('Not enough stock to perform operation')            
+        }
+    }
+
+    async deleteProduct(id) {
+        const response = await this.container.delete(products, id)
+        if (response) {
+            return this.throwSuccess('Product deleted: ', response)
+        }
+        return this.throwError('The id is incorrect')
+    }
+
+    async getProduct(id) {
+        try {
+            const response = await this.container.getById(products, id)
+            if (this.isNotError(response)) {
+                return this.throwSuccess('Product recovered from the DB', response)
+            } else {
+                return this.throwError('There was an error retrieving the product with the given id in our DB.')
+            }
+        } catch (err) {
+            return this.throwError('Unknown error')
+        }
+    }
+
+    async getAllProducts() {
+        const response = await this.container.getAll(products)
+        return this.throwSuccess('Here are the Products', response)
+    }
+
+    isNotError(response) {
+        if (!Error.prototype.isPrototypeOf(response)) {
+            return true
+        } else {
+            return false
         }
     }
 
@@ -91,6 +97,15 @@ class ProductsMongoDao {
 
     throwError(message) {
         return {code: 500, message}
+    }
+
+    async updateProduct(id, newObject) {
+        const response = await this.container.updateFieldById(products, id, newObject)
+        if (response) {
+            return this.throwSuccess('Here is how the product looks now: ', await this.getProduct(id))
+        }
+
+        return this.throwError('The id did not match any object')
     }
 }
 

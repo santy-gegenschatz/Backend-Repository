@@ -1,24 +1,25 @@
 const { goToHome, renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen} = require('../controllers/authController')
+const { logRouteInfo } = require('../loggers/logger')
 const { Router } = require('express')
 
 const authRouter = Router()
 
-authRouter.get('/login', renderLoginScreen)
+authRouter.get('/login', logRouteInfo, renderLoginScreen)
 
-authRouter.get('/logout', renderLogoutScreen)
+authRouter.get('/logout', logRouteInfo, renderLogoutScreen)
 
-authRouter.get('/signup', renderSignUpScreen)
+authRouter.get('/signup', logRouteInfo, renderSignUpScreen)
 
-authRouter.get('/unauthorized', renderUnauthorizedScreen)
+authRouter.get('/unauthorized', logRouteInfo, renderUnauthorizedScreen)
 
-authRouter.get('/error', renderErrorScreen)
+authRouter.get('/error', logRouteInfo, renderErrorScreen)
 
-authRouter.get('*', renderSignUpScreen)
+authRouter.get('*', logRouteInfo, renderSignUpScreen)
 
-authRouter.post('/login', loginUser, goToHome)
+authRouter.post('/login', logRouteInfo, loginUser, goToHome)
 
-authRouter.post('/signup', signUpUser)
+authRouter.post('/signup', logRouteInfo, signUpUser)
 
-authRouter.post('/logout', logoutUser)
+authRouter.post('/logout', logRouteInfo, logoutUser)
 
 module.exports = { authRouter }
