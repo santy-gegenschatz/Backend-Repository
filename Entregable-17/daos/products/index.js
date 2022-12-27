@@ -7,7 +7,10 @@ switch(productsApiContainerType) {
     case 'archive':
         moduleToExport = require('./productsArchiveDao')
         break
-    case 'mongo':
+    case 'mongoLocal':
+        moduleToExport = require('./productsMongoDao')
+        break
+    case 'mongoOnline':
         moduleToExport = require('./productsMongoDao')
         break
     case 'firebase':

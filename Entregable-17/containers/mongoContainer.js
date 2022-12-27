@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { route, advancedOptions} = require('../data/mongoDBData/mongoDbConfig')
+const { route, advancedOptions} = require('../config/mongo/mongoDbConfig')
 const { logError, logInfo } = require('../loggers/logger')
 
 class MongoDbContainer {
@@ -10,7 +10,6 @@ class MongoDbContainer {
         // We also need to check that the mongodb is server is running locally on our computer
         this.connect()
     }
-
 
     // Which methods do I need ? => A simple answer is the CRUD methods (6)
     // A more complex answer is that I also need an async method that connects to the local instance of the MongoDB server

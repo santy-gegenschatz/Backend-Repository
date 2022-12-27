@@ -24,7 +24,7 @@ const cookieParser = require('cookie-parser') // This is a middleware, so you ne
 const session = require('express-session') // Another middleware, but in this case for sessions
 const FileStore = require('session-file-store')(session) // Store session data persistently in JSON files
 const MongoStore = require('connect-mongo') // idem but store it in MongoDB
-const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true} // To connect to MongoDB Atlas
+const { advancedOptions } = require('../config/mongo/mongoDbConfig') // To connect to MongoDB Atlas
 
 // Login - Logout
 const passport = require('passport')
@@ -65,8 +65,8 @@ class Server {
     routes() {
       this.app.use('/', defaultRouter)
       this.app.use('/auth', authRouter)
-      this.app.use('/api/cart', cartRouter)
       this.app.use('/api/products', productsRouter)
+      this.app.use('/api/cart', cartRouter)
     }
 
     templatingEngines() {
