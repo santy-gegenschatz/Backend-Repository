@@ -11,6 +11,8 @@ class CartsMongoDao {
         // Then, make sure the cart exists, the product exists and the product has stock
         let cartResponse = await this.getCart(idCart)
         const productResponse = await productsDao.getProduct(idProduct)
+        console.log(productResponse);
+        console.log(cartResponse);
         if (cartResponse.code === 200) {
             if (productResponse.code === 200) {
                     // Check the product has stock
@@ -20,8 +22,8 @@ class CartsMongoDao {
                         const currentCartItems = cartResponse.payload.items
                         // Check if the products already exists in the cart
                         const productInArray = currentCartItems.find( (prod) => {
-                            console.log('Prod: ', prod._id, idProduct);
-                            return prod._id.toString() === idProduct
+                            console.log('Prod: ', prod, idProduct);
+                            return prod.id?.toString() === idProduct
                         })
                         let newCartItems;
                         let product;
@@ -32,9 +34,11 @@ class CartsMongoDao {
                             newCartItems = currentCartItems
                         } else {
                             // If it does not exist, add a new object to the array
-                            const currentProduct = {...productResponse.payload._doc}
+                            const currentProduct = {...productResponse.payload}
+                            console.log(currentProduct)
                             const {stock, ...rest} = currentProduct
                             product = {...rest, quantity: 1}
+                            console.log('product: ', product);
                             newCartItems = [...currentCartItems, product]
                         }
                         // Update the items array via an API call to the container
@@ -44,7 +48,7 @@ class CartsMongoDao {
                         // Check for errors and return
                         if (this.isNotError(addReponse) && this.isNotError(decreaseResponse)) {
                             cartResponse = await this.getCart(idCart)
-                            return this.throwSuccess(`Added ${product.name} to the cart ${cartResponse.payload._id}`)
+                            return this.throwSuccess(`Added ${product.name} to the cart ${cartResponse.payload.id}`)
                         } else {
                             return this.throwError('An unknown error prevented the system from performing your request. Please contact the support team.')
                         }
