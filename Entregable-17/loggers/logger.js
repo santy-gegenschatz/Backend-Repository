@@ -6,7 +6,7 @@ const loggerError = pino('./logs/error.log')
 
 const logRouteInfo = (req, res, next) => {
     const { method, url } = req
-    logger.info(`There was an api call to the endpoint ${url} of type ${method}`)
+    logger.info(`There was an api call of type ${method} to the endpoint ${url}`)
     next()
 }
 

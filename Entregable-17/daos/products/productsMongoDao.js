@@ -13,20 +13,25 @@ class ProductsMongoDao {
         try {
             // First, check if the product exists
             // That implies checking the id is valid
-            if (!mongoose.Types.ObjectId.isValid(product.id)) {
+            console.log(typeof product.id);
+            if (!mongoose.Types.ObjectId.isValid(product.id) || typeof product.id === 'number') {
                 return {error : false}
             }
             const response = await this.container.getById(products, product.id)
-            if (response) {
-                // Update Stock
-                console.log('Updating field');
-                const object = { stock :  Number(product.stock) + Number(response.stock)}
-                const response2 = await this.container.updateFieldById(products, product.id, object)
-                return this.throwSuccess('Item already in the database. Stock augmented', response2)
+            if (this.isNotError(response)) {
+                if (response) {
+                    // Update Stock
+                    console.log('Updating field');
+                    const object = { stock :  Number(product.stock) + Number(response.stock)}
+                    const response2 = await this.container.updateFieldById(products, product.id, object)
+                    return this.throwSuccess('Item already in the database. Stock augmented', response2)
+                } else {
+                    // Create the product
+                    const response = await this.container.add(products, product)
+                    return this.throwSuccess('New item added to the database', response)
+                }
             } else {
-                // Create the product
-                const response = await this.container.add(products, product)
-                return this.throwSuccess('New item added to the database', response)
+                return this.throwError('Could not add product to the DB.')    
             }
         } catch (err) {
             return this.throwError('Could not add product to the DB.')
@@ -71,7 +76,11 @@ class ProductsMongoDao {
 
     async getAllProducts() {
         const response = await this.container.getAll(products)
-        return this.throwSuccess('Here are the Products', response)
+        if (this.isNotError(response)) {
+            return this.throwSuccess('Here are the Products', response)
+        } else {
+            return this.throwError('There was an error and products could not be retrieved')
+        }
     }
 
     isNotError(response) {

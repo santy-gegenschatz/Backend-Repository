@@ -45,19 +45,23 @@ class MongoDbContainer {
             return response
         } catch (err) {
             logError(err)
-            return err
+            return new Error(err)
         }
     }
 
     async getById(model, id) {
         try {
             const response = await model.findOne( {_id : id} )
-            const obj = response._doc
-            const {_id, ...rest} = obj
-            const newObj = {id: _id.toString(), ...rest}
-            return newObj
+            if (response !== null) {
+                const obj = response._doc
+                const {_id, ...rest} = obj
+                const newObj = {id: _id.toString(), ...rest}
+                return newObj
+            }
+            return null
         } catch (err) {
-            logError(err)
+            console.log(err);
+            // logError(err)
             return new Error(err)
         }
     }
