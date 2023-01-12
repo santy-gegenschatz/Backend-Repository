@@ -1,0 +1,6 @@
+pm2 start app.js --name='server1' --watch -- --port 8081 --mode cluster
+pm2 start app.js --name='server2' --watch -- --port 8080
+pm2 start app.js --name='server3' --watch -- --port 8082
+pm2 start app.js --name='server4' --watch -- --port 8083
+pm2 start app.js --name='server5' --watch -- --port 8084
+pm2 start app.js --name='server6' --watch -- --port 8085
