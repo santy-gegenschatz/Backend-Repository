@@ -1,15 +1,17 @@
 const Container = require('../../containers/mongoContainer')
 const { users } = require('../../models/mongoDbSchemas/users')
+const { logInfo } = require('../../loggers/logger')
 
 class usersMongoDbDao {
     constructor() {
-        this.container = new Container('users', true)
+        const isLocal = process.env.USER_API_CONTAINER === 'mongoLocal' ? true : false
+        this.container = new Container('users', isLocal)
     }
 
     async add(newUser) {
         const user = new users(newUser)
         const insertUser = await this.container.add(users, user)
-        console.log('Dao finished saving user');
+        logInfo('Dao: User added', insertUser)
         return insertUser
     }
 
@@ -17,10 +19,8 @@ class usersMongoDbDao {
         const users = await this.getAllUsers()
         const userExists = users.find( (user) => {return user.username === username})
         if (userExists) {
-            console.log('Dao: User exists');
             return true
         } else {
-            console.log('Dao: User does not exist');
             return false
         }
     }
@@ -29,10 +29,8 @@ class usersMongoDbDao {
         const users = await this.getAllUsers()
         const userExists = users.find( (user) => { return user.username === username  })
         if (userExists) {
-            console.log('Dao: User exists');
             return false
         } else {
-            console.log('Dao: User does not exist');
             return true
         }
     }

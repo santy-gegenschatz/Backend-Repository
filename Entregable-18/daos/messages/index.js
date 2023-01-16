@@ -7,7 +7,10 @@ switch(messagesContainer) {
     case 'archive':
         moduleToExport = require('./messagesArchiveDao')
         break;
-    case 'mongo':
+    case 'mongoOnline':
+        moduleToExport = require('./messagesMongoDao')
+        break;
+    case 'mongoLocal':
         moduleToExport = require('./messagesMongoDao')
         break;
     default:

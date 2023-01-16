@@ -3,6 +3,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bCrypt = require('bcrypt')
 const { serializeUser } = require('passport')
+const { logInfo } = require('../loggers/logger')
 
 const createHash = (password) => {
     return bCrypt.hashSync(
@@ -21,18 +22,18 @@ const initPassport = () => {
     passport.use('login', new LocalStrategy( async (username, password, done) => {
         // First, check if user exists
         const userExists = await usersDao.checkUserExists(username)
-        console.log(userExists);
+        logInfo(userExists);
         if (!userExists) {
             return done('userdoesnotexist', false)
         }
         
         // User does exist, retreive it from MongoDB
         const user = await usersDao.getUser(username)
-        console.log('User returned: ', user);
+        logInfo('User returned: ', user);
         if (!isValidPassword(user, password)) {
             return done('wrongpassword', false)
         }
-        console.log('All valid');
+        logInfo('All valid');
         // If the user exists && the password is valid
         return done(null, user) // This will get passed to the serialize user method defined below
     }))
@@ -48,7 +49,11 @@ const initPassport = () => {
         // Create a new User
         const newUser = {
             username,
-            password: createHash(password)
+            password: createHash(password),
+            firstName: req.body.firstName,
+            address: req.body.address,
+            phoneNumber: req.body.phoneNumber,
+            age: req.body.age
         }
 
         // Add the user to the mongodbDatabase

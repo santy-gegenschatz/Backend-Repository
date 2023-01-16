@@ -4,7 +4,10 @@ const usersDao = process.env.USERS_API_CONTAINER
 let moduleToExport;
 
 switch(usersDao) {
-    case('mongo'):
+    case('mongoOnline'):
+        moduleToExport = require('./usersMongoDao')
+        break;
+    case('mongoLocal'):
         moduleToExport = require('./usersMongoDao')
         break;
     default:

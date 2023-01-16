@@ -6,7 +6,8 @@ const { logError } = require('../../loggers/logger')
 
 class ProductsMongoDao {
     constructor() {
-        this.container = new Container('products', true)
+        const isLocal = process.env.PRODUCTS_API_CONTAINER === 'mongoLocal' ? true : false
+        this.container = new Container('products', isLocal)
     }
 
     async addProduct(product) {

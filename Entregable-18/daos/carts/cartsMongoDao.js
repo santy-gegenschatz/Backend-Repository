@@ -4,7 +4,8 @@ const { carts } = require('../../models/mongoDbSchemas/carts')
 
 class CartsMongoDao {
     constructor() {
-        this.container = new Container('carts')
+        const isLocal = process.env.CART_API_CONTAINER === 'mongoLocal' ? true : false
+        this.container = new Container('carts', isLocal)
     }
 
     async addItemToCart(idCart, idProduct) {

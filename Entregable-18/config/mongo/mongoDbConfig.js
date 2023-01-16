@@ -5,5 +5,4 @@ const advancedOptions = {
     useUnifiedTopology: true
 }
 
-const route = process.env.PRODUCTS_API_CONTAINER === 'mongoLocal' ? localRoute : serverRoute
-module.exports = { route, advancedOptions}
+module.exports = { localRoute, serverRoute, advancedOptions}

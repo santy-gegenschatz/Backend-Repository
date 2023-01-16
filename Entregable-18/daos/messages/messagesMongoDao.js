@@ -5,7 +5,9 @@ const { isNotError } = require('../../utils/errors')
 
 class MessagesMongoDao {
     constructor() {
-        this.container = new Container(process.env.MESSAGES_COLLECTION_NAME)
+        // I need a variable that is a boolean and that changes as a function of the selected type of storage in the env file
+        const isLocal = process.env.MESSAGES_CONTAINER === 'mongoLocal' ? true : false
+        this.container = new Container(process.env.MESSAGES_COLLECTION_NAME, isLocal)
         this.messages = []
     }
 

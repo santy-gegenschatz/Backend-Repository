@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
-const { route, advancedOptions} = require('../config/mongo/mongoDbConfig')
+const { localRoute, serverRoute, advancedOptions} = require('../config/mongo/mongoDbConfig')
 const { logError, logInfo } = require('../loggers/logger')
 
 class MongoDbContainer {
-    constructor(collectionName) {
+    constructor(collectionName, isLocal) {
         this.collectionName = collectionName
+        this.isLocal = isLocal === undefined ? true : isLocal
         // A method to connect to the db
         // To do this we will use mongoose
         // We also need to check that the mongodb is server is running locally on our computer
@@ -14,8 +15,10 @@ class MongoDbContainer {
     // Which methods do I need ? => A simple answer is the CRUD methods (6)
     // A more complex answer is that I also need an async method that connects to the local instance of the MongoDB server
     async connect() {
+        const route = this.isLocal ? localRoute : serverRoute
         mongoose.connect(route, advancedOptions)
-        console.log('Connected to MongoDB. Collection: ', this.collectionName);
+        const connectionMessageString = `Connected to MongoDB. Via: ${this.isLocal ? 'Local' : 'Server'}. Collection: ${this.collectionName}`
+        console.log(connectionMessageString);
     }
 
     async add(modelName, sth) {
