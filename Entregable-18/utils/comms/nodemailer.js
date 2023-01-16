@@ -1,4 +1,4 @@
-import { createTransport } from "nodemailer"
+const { createTransport } = require('nodemailer') 
 
 const SENDER_MAIL = process.env.SENDER_MAIL
 const SENDER_PASSWORD = process.env.SENDER_PASSWORD
@@ -20,5 +20,6 @@ const sendEmail = async (to, subject, text) => {
         text
     })
     console.log('Message sent: %s', info.messageId);
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 }
+
+module.exports = { sendEmail }

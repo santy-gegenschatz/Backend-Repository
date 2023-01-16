@@ -6,10 +6,10 @@ const verifyFields = () => {
         return;
     }
 
-    if (phoneNumber.length !== 10) {
-        alert('Phone number must be at least 10 digits long ')
-        return;
-    }
+    // if (phoneNumber.length < 10) {
+    //     alert('Phone number must be at least 10 digits long ')
+    //     return;
+    // }
 
     verifyPasswordsMatch()
 }
@@ -18,10 +18,10 @@ const verifyPasswordsMatch = () => {
     const pass1 = document.getElementById('passwordField1').value
     const pass2 = document.getElementById('passwordField2').value
     if (pass1 === pass2) {
-        if (pass1.length < 8) {
-            alert('Password must be at least 8 characters')
-            return;
-        }
+        // if (pass1.length < 8) {
+        //     alert('Password must be at least 8 characters')
+        //     return;
+        // }
 
         if (pass1.length > 20) {
             alert('Password must be less than 20 characters')
