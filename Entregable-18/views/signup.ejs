@@ -18,10 +18,15 @@
         </div>
     </div>
     <div class = 'general-card column-centered-div'>
-        <input type="text" name = 'username' placeholder = "Select your username" id = 'usernameField'>
-        <input type="password" name = 'password1' placeholder = "Enter your password" id = 'passwordField1'>
-        <input type="password" name = 'password2' placeholder = "Confirm your password" id = 'passwordField2'>
-        <input type="submit" class = 'btn btn-primary' onclick = "return verifyPasswordsMatch()">
+        <input type = "text" name = 'username' placeholder = "Select your username" id = 'usernameField'>
+        <input type = "password" name = 'password1' placeholder = "Enter your password" id = 'passwordField1'>
+        <input type = "password" name = 'password2' placeholder = "Confirm your password" id = 'passwordField2'>
+        <input type = "text" name = 'firstName' placeholder = 'Enter your first name' id = 'firstNameField'>
+        <input type = "text" name = 'address' placeholder = 'Enter your address' id = 'addressField'>
+        <input type = "number" name = 'age' placeholder = 'Enter your age' id = 'ageField'>
+        <input type = "tel" name = 'phone' placeholder = 'Enter your phone number' id = 'phoneField'>
+
+        <input type="submit" class = 'btn btn-primary' onclick = "return verifyFields()">
         
         <form action="/auth/login" method="get">
             <input type="submit" class = 'btn btn-info' value = 'Go to Login'>

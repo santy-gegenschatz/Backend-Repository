@@ -8,7 +8,7 @@ class usersMongoDbDao {
 
     async add(newUser) {
         const user = new users(newUser)
-        const insertUser = await this.container.add(user)
+        const insertUser = await this.container.add(users, user)
         console.log('Dao finished saving user');
         return insertUser
     }
