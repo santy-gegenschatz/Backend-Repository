@@ -1,17 +1,32 @@
 const pino = require('pino')
-
-const logger = pino()
+let logger;
+if(process.env.ENVIRONMENT_TYPE === 'development') {
+    logger = pino({
+        level: 'debug',
+        transport: {
+            target: 'pino-pretty'
+        }
+    })
+} else {
+    logger = pino({
+        level: 'info'
+    })
+}
 const loggerWarn = pino({level: 'warn'}, './logs/warn.log')
 const loggerError = pino('./logs/error.log')
 
 const logRouteInfo = (req, res, next) => {
     const { method, url } = req
-    logger.info(`There was an api call of type ${method} to the endpoint ${url}`)
+    logger.info({message: `There was an api call of type ${method} to the endpoint ${url}`})
     next()
 }
 
+const logDebug = (msg) => {
+    logger.debug(msg)
+}
+
 const logInfo = (msg) => {
-    logger.info(msg)
+    logger.info({message: msg})
 }
 
 const logWarn = (msg) => {
@@ -25,4 +40,4 @@ const logError = (msg) => {
 }
 
 
-module.exports = { logRouteInfo, logInfo, logWarn , logError}
+module.exports = { logRouteInfo, logDebug, logInfo, logWarn , logError}

@@ -1,6 +1,7 @@
 const passport = require('passport')
 const adminEmail = process.env.ADMIN_EMAIL
 const { sendEmail } = require('../utils/comms/nodemailer')
+const { logDebug } = require('../loggers/logger')
 
 
 const loginUser = async (req, res, next) => {
@@ -27,10 +28,10 @@ const goToHome = async (req, res) => {
 const signUpUser = async (req, res, next) => {
     passport.authenticate('signup', (err, user, info) => {
         if (!err) {
-            console.log('User: ', user);
+            logDebug('User created')
+            // Send an email indicating that a new user has been created
             sendEmail(adminEmail, 'New user created', `A new user has been created. Username: ${user.username}. Address: ${user.address}. Phone number: ${user.phoneNumber}. Age: ${user.age}`)
             req.login(user, () => {
-                // Send an email indicating that a new user has been created
                 res.send({url: '/'})
             })
         } else {

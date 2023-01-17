@@ -12,22 +12,22 @@
 <body>
     <div class = 'header'>
         <div class = "column-centered-div">
-            <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
-            <h2 class = 'white'> This is the Products Screen </h2>
+
         </div>
     </div>
 
     <div id = 'user-greeting-header'>
         <div id = 'header-div__middle'>
+            <h1 class = 'white'> The Summer Store 🌻</h1>
             <h4 class = 'white'> Welcome, <%= username %> </h4>
         </div>
         <div id = 'header-div__right'>
             <form action="/auth/logout" method="post">
-                <button class = "btn btn-primary"> <a href="/products"> Go to products </a> </button>
                 <button class = 'btn btn-info' name = 'logoutButton'> Log out </button>
             </form>
         </div>
     </div>
+        <button class = "btn btn-primary"> <a href="/products"> Go to products </a> </button>
 
     <div id = 'home-div'>
         <div id = 'insert-product-div'>
