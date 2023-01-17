@@ -1,0 +1,19 @@
+<header>
+    <div id = 'header'>
+        <div id = 'header-div__middle'>
+            <h1 class = 'white'> 🌻 The Summer Store 🌻</h1>
+            <h4 class = 'white'> Welcome, <%= username %> </h4>
+        </div>
+        <div id = 'header-div__right'>
+            <form action="/auth/logout" method="post">
+                <button class = 'btn btn-info' name = 'logoutButton'> Log out </button>
+            </form>
+        </div>
+    </div>
+    <div id = 'buttons-menu' class = 'row-centered-div black-background'>
+        <button class = "btn btn-primary"> <a href="/products"> Products </a> </button>
+        <button class = "btn btn-primary"> <a href="/products"> Carts </a> </button>
+        <button class = "btn btn-primary"> <a href="/products"> Messages </a> </button>
+        <button class = "btn btn-primary"> <a href="/products"> Account </a> </button>
+    </div>
+</header>

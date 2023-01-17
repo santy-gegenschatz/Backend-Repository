@@ -122,6 +122,13 @@ tr {
 }
 
 /* Id's */
+#buttons-menu {
+    background-color: black;
+    border-style: solid;
+    border-color: white;
+    border-width: 0px 0px 5px 0px;
+}
+
 #chat-div {
     background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
     min-height: 40px;
@@ -130,9 +137,38 @@ tr {
     padding: 10px;
 }
 
+#compression-title {
+    text-align: center;
+    margin: 7px;
+}
+
 #fake-product-image {
     height: 50;
     width: 50;
+}
+
+#footer {
+    margin-top: auto;
+    background-color: black;
+    border-style: solid;
+    border-color: white;
+    border-width: 5px 0px 0px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#header {
+    background-color: black;
+    border-style: solid;
+    border-color: white;
+    border-width: 0px 0px 5px 0px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 100%;
+    grid-template-areas: '. middle right';
 }
 
 #header-div__middle {
@@ -160,11 +196,6 @@ tr {
     align-items: center;
     background-color: black;
     padding-top: 5px;
-}
-
-#compression-title {
-    text-align: center;
-    margin: 7px;
 }
 
 #insert-product-div {
@@ -223,15 +254,4 @@ tr {
 #unauthorized-jumbofont {
     font-size: 100px;
     color: white;
-}
-
-#user-greeting-header {
-    background-color: black;
-    border-style: solid;
-    border-color: white;
-    border-width: 5px 0px 5px 0px;
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-template-rows: 100%;
-    grid-template-areas: '. middle right';
 }
