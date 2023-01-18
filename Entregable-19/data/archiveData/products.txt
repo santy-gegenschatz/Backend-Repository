@@ -1,0 +1,1 @@
+[{"id":1,"creationDate":"2022-10-14T18:59:35.267Z","name":"Summer","description":"The acclaimed book","price":"35","stock":7,"thumbnail":"url"},{"id":2,"creationDate":"2022-11-29T16:33:04.888Z","name":"The Wonderful Book of Tales","description":"Out in july","price":35,"stock":1000,"thumbnail":"url"}]
