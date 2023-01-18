@@ -121,12 +121,40 @@ tr {
     color: white;
 }
 
+.yellow {
+    color: yellow;
+}
+
 /* Id's */
+#account-div {
+    flex-grow: 1;
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    margin: 10px;
+    padding: 10px;
+}
+
 #buttons-menu {
     background-color: black;
     border-style: solid;
     border-color: white;
     border-width: 0px 0px 5px 0px;
+}
+
+#cart-div {
+    flex-grow: 1;
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    margin: 10px;
+    padding: 10px;
 }
 
 #chat-div {
@@ -154,7 +182,7 @@ tr {
     border-color: white;
     border-width: 5px 0px 0px 0px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 10px;
@@ -190,6 +218,7 @@ tr {
 }
 
 #home-div {
+    flex-grow: 1;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -199,6 +228,7 @@ tr {
 }
 
 #insert-product-div {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -254,4 +284,11 @@ tr {
 #unauthorized-jumbofont {
     font-size: 100px;
     color: white;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: black;
 }

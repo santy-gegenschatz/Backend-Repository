@@ -1,5 +1,5 @@
 const yargs = require('yargs/yargs')(process.argv.slice(2))
-const { renderHome, renderProducts, renderFakeProducts, renderServerInfo, renderRandomNumbers} = require('../controllers/defaultController')
+const { renderHome, renderProducts, renderCart, renderMessages, renderAccount, renderAdminPanel, renderFakeProducts, renderServerInfo, renderRandomNumbers} = require('../controllers/defaultController')
 const { logRouteInfo } = require('../loggers/logger')
 const { Router } = require('express')
 const compression = require('compression')
@@ -12,6 +12,21 @@ defaultRouter.get('/', logRouteInfo, checkAuthentication, renderHome)
 
 // Show the products screen
 defaultRouter.get('/products', logRouteInfo, checkAuthentication, renderProducts)
+
+// Show the carts screen
+defaultRouter.get('/cart', logRouteInfo, renderCart)
+
+// Show the messages screen
+defaultRouter.get('/messages', logRouteInfo, renderMessages)
+
+// Show the account screen
+defaultRouter.get('/account', logRouteInfo, checkAuthentication, renderAccount)
+
+// Show the admin screen
+defaultRouter.get('/admin', logRouteInfo, checkAuthentication, renderAdminPanel)
+
+// Wildcard route
+defaultRouter.get('*', logRouteInfo, checkAuthentication, renderHome)
 
 // Show faker data (Entregable 11)
 defaultRouter.get('/api/products-test', renderFakeProducts)
