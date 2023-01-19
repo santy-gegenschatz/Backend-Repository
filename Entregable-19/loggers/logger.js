@@ -17,7 +17,11 @@ const loggerError = pino('./logs/error.log')
 
 const logRouteInfo = (req, res, next) => {
     const { method, url } = req
-    logger.info({message: `There was an api call of type ${method} to the endpoint ${url}`})
+    if (process.env.ENVIRONMENT_TYPE === 'development') {
+        console.log(`There was an api call of type ${method} to the endpoint ${url}`)
+    } else {
+        logger.info({message: `There was an api call of type ${method} to the endpoint ${url}`})
+    }
     next()
 }
 
@@ -26,7 +30,11 @@ const logDebug = (msg) => {
 }
 
 const logInfo = (msg) => {
-    logger.info({message: msg})
+    if (process.env.ENVIRONMENT_TYPE === 'development') {
+        console.log(msg)
+    } else {
+        logger.info({message: msg})
+    }
 }
 
 const logWarn = (msg) => {

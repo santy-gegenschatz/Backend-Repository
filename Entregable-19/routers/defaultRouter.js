@@ -26,7 +26,8 @@ defaultRouter.get('/account', logRouteInfo, checkAuthentication, renderAccount)
 defaultRouter.get('/admin', logRouteInfo, checkAuthentication, renderAdminPanel)
 
 // Wildcard route
-defaultRouter.get('*', logRouteInfo, checkAuthentication, renderHome)
+// This route is generating collosal damage. Why?
+// defaultRouter.get('*', logRouteInfo, checkAuthentication, renderHome)
 
 // Show faker data (Entregable 11)
 defaultRouter.get('/api/products-test', renderFakeProducts)

@@ -14,18 +14,20 @@
     <div id = 'home-div'>
         <div id = 'products-table-div'>
             <% if (!noRender) { %>
-                <h4> Products table </h4>
+                <h4> Available Products </h4>
                 <table id = 'table'> 
                     <tr>
                         <th> Name </th>
                         <th> Price </th>
                         <th> Visual </th>
+                        <th> Buy </th>
                     </tr>
                     <% products.forEach( prod => { %>
                         <tr>
                             <td> <%= prod.title%>  </td>
                             <td> <%= prod.price%> </td>
                             <td> <img src = <%= prod.thumbnail%> alt="image_not_found"> </td>
+                            <td> <button> Add to cart </button></td>
                         </tr>
                      <% }) %>
                 </table>

@@ -27,6 +27,7 @@ const renderFakeProducts = async (req, res) => {
 
 const renderHome = async (req, res) => {
     const { payload } = await productsDao.getAllProducts()
+    logInfo(payload)
     const products = payload.map( (p) => {
         return {
             title: p._doc.name,
@@ -39,7 +40,12 @@ const renderHome = async (req, res) => {
 }
 
 const renderMessages = async (req, res) => {
-    res.render('messages.ejs', {username : req.user.username})
+    try {
+        logInfo(req.user)
+        res.render('messages.ejs', {username : req.user.username})
+    } catch (err) {
+        res.redirect('/')
+    }
 }
 
 const renderProducts = async (req, res) => {
