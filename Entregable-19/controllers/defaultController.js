@@ -32,7 +32,8 @@ const renderHome = async (req, res) => {
         return {
             title: p._doc.name,
             price: p.price,
-            thumbnail: p._doc.thumbnail
+            thumbnail: p._doc.thumbnail,
+            id: p._id
         }
     })
     logDebug(products);

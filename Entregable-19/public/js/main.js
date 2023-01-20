@@ -1,4 +1,10 @@
 // Imports
+const addToCart = async (id) => {
+    // Get the cartId for this user
+    const cartId = await fetch('/')
+    const response = await fetch('')
+}
+
 const author = new normalizr.schema.Entity('authors', {}, {idAttribute: 'email'})
 const message = new normalizr.schema.Entity('messages', {
     author: author
@@ -100,3 +106,4 @@ const addProduct = (p) => {
     socket.emit('add-product', product)
     return false
 }
+

@@ -15,6 +15,7 @@ const { defaultRouter } = require('../routers/defaultRouter')
 const { productsRouter } = require('../routers/productsRouter')
 const { cartRouter } = require('../routers/cartRouter')
 const { authRouter } = require('../routers/authRouter')
+const { usersRouter } = require('../routers/usersRouter')
 
 // Sockets 
 const { startSockets } = require('../sockets/sockets')
@@ -67,6 +68,7 @@ class Server {
       this.app.use('/auth', authRouter)
       this.app.use('/api/products', productsRouter)
       this.app.use('/api/cart', cartRouter)
+      this.app.use('/api/users', usersRouter)
     }
 
     templatingEngines() {
