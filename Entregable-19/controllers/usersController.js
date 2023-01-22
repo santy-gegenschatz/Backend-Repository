@@ -5,8 +5,10 @@ const addProductToCart = async (req, res) => {
     try {
         const { user } = req
         const { productId } = req.body
-        logDebug(user)
-        usersDao.addProductToCart(user.id, productId)
+        const response = await usersDao.addProductToCart(user.id, productId)
+        logDebug('--- Controller Response ---')
+        logDebug(response)
+        return res.json(response)
     } catch (err) {
         logDebug(err)
         return res.json({error: 'Unknwon error'})

@@ -1,6 +1,7 @@
 const Container = require('../../containers/mongoContainer')
 const productsDao = require('../products/index')
 const { carts } = require('../../models/mongoDbSchemas/carts')
+const { logDebug } = require('../../loggers/logger')
 
 class CartsMongoDao {
     constructor() {
@@ -12,9 +13,12 @@ class CartsMongoDao {
         // Then, make sure the cart exists, the product exists and the product has stock
         let cartResponse = await this.getCart(idCart)
         const productResponse = await productsDao.getProduct(idProduct)
+        logDebug('--- Product Response ---')
         console.log(productResponse);
+        logDebug('--- Cart Response ---')
         console.log(cartResponse);
         if (cartResponse.code === 200) {
+            logDebug('Entered')
             if (productResponse.code === 200) {
                     // Check the product has stock
                     const stockResponse = await productsDao.productHasStock(idProduct) // We already know the product exists, so the response needs no error handling
@@ -129,6 +133,10 @@ class CartsMongoDao {
     }
     
     throwSuccess(message, payload) {
+        if (typeof payload === 'undefined') {
+            return {code: 200, message}
+        }
+        
         return {code: 200, message, payload}
     }
 }

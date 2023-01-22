@@ -8,7 +8,8 @@ const addToCart = async (id) => {
         },
         body: JSON.stringify({productId: id})
     })
-    console.log(response);
+    const data = await response.json()
+    console.log(data);
 }
 
 const author = new normalizr.schema.Entity('authors', {}, {idAttribute: 'email'})
