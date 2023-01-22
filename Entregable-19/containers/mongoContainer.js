@@ -86,12 +86,10 @@ class MongoDbContainer {
         return user
     }
 
-
-
     async updateFieldById(model, id, object) {
         console.log('Container - Updating by Id');
         try {
-            const response = await model.updateOne({_id: id}, {$set: object})
+            const response = await model.updateOne({_id: id}, {$set: object}, {new: true})
             return response
         } catch (err) {
             logError(err)

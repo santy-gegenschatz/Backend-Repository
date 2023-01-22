@@ -26,7 +26,11 @@ const logRouteInfo = (req, res, next) => {
 }
 
 const logDebug = (msg) => {
-    logger.debug(msg)
+    if (process.env.ENVIRONMENT_TYPE === 'development') {
+        console.log(msg)
+    } else {
+        logger.debug(msg)
+    }
 }
 
 const logInfo = (msg) => {

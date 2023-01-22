@@ -1,8 +1,14 @@
 // Imports
 const addToCart = async (id) => {
-    // Get the cartId for this user
-    const cartId = await fetch('/')
-    const response = await fetch('')
+    // Add the product with the given id to the cart of the user
+    const response = await fetch(`/api/users/addToCart`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({productId: id})
+    })
+    console.log(response);
 }
 
 const author = new normalizr.schema.Entity('authors', {}, {idAttribute: 'email'})
