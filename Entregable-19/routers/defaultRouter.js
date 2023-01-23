@@ -14,10 +14,10 @@ defaultRouter.get('/', logRouteInfo, checkAuthentication, renderHome)
 defaultRouter.get('/products', logRouteInfo, checkAuthentication, renderProducts)
 
 // Show the carts screen
-defaultRouter.get('/cart', logRouteInfo, renderCart)
+defaultRouter.get('/cart', logRouteInfo, checkAuthentication, renderCart)
 
 // Show the messages screen
-defaultRouter.get('/messages', logRouteInfo, renderMessages)
+defaultRouter.get('/messages', logRouteInfo, checkAuthentication, renderMessages)
 
 // Show the account screen
 defaultRouter.get('/account', logRouteInfo, checkAuthentication, renderAccount)

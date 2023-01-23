@@ -8,7 +8,7 @@ class usersMongoDbDao {
         const isLocal = process.env.USER_API_CONTAINER === 'mongoLocal' ? true : false
         this.container = new Container('users', isLocal)
     }
-
+    
     async add(newUser) {
         const user = new users(newUser)
         const insertUser = await this.container.add(users, user)
@@ -53,10 +53,41 @@ class usersMongoDbDao {
         }
     }
 
+    async completePurchase(id) {
+        try {
+            const cartId = await this.getCurrentCartIdForUser(id)
+            // Check if cart is not empty
+            const cart = await cartsDao.getCart(cartId)
+            if (cart.payload.items.length === 0) {
+                return this.throwError('Cart is empty')
+            }
+            // Add cart to user's purchase history
+            const updatedUser = await this.updateUser(id, {purchaseHistory: cartId})
+            // Set CurrentCart to undefined
+            const updatedUser2 = await this.updateUser(id, {currentCart: undefined})
+            // Return success
+            return this.throwSuccess('Purchase completed')
+        } catch (err) {
+            logError(err)
+            return this.throwError(err)
+        }
+    }
+
     async getAllUsers() {
         return await this.container.getAll(users)
     }
 
+    async getCurrentCartForUser (id) {
+        try {
+            const cartId = await this.getCurrentCartIdForUser(id)
+            const cart = await cartsDao.getCart(cartId)
+            return cart
+        } catch (err) {
+            logError(err)
+            return this.throwError(err)
+        }
+    }
+    
     async getCurrentCartIdForUser(id) {
         try {
             const user = await this.getUserById(id)

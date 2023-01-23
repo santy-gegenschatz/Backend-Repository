@@ -1,8 +1,9 @@
 const { fork } = require('child_process')
-const productsDao = require('../daos/products/index')
 const { logInfo, logDebug } = require('../loggers/logger')
 const { generateFakeProducts } = require('../utils/fakeProductGenerator')
 const { getServerInfo } = require('../utils/serverInfo.js')
+const productsDao = require('../daos/products/index')
+const usersDao = require('../daos/users/index')
 
 const renderAccount = async (req, res) => {
     res.render('account.ejs', {username: req.user.username, user : req.user})
@@ -13,9 +14,28 @@ const renderAdminPanel = async (req, res) => {
 }
 
 const renderCart = async (req, res) => {
-    logInfo(req.user)
+    const { id:userId } = req.user
+    const cart = await usersDao.getCurrentCartForUser(userId)
+    logDebug('--- Cart Obtained in Default Controller ---');
+    logDebug(cart);
+    if (cart.code !== 200) {
+        res.redirect('/auth/error?message=Error+obtaining+cart')
+    }
+    
+    if (cart.payload.items.length === 0) {
+        res.render('cart.ejs', {username : req.user.username, cartProducts: [], noRender : true, total: 0})
+        return
+    }
+    const products = cart.payload.items
+    let total = 0
+    cart.payload.items.forEach( (p) => {
+        total += p.price * p.quantity
+    })
+    logDebug('--- Total Obtained in Default Controller ---');
+    logDebug(total);
+    logDebug(products);
     try {
-        res.render('cart.ejs', {username : req.user.username})
+        res.render('cart.ejs', {username : req.user.username, cartProducts: products, noRender : products.length===0, total})
     } catch(err) {
         logInfo(err)
     }

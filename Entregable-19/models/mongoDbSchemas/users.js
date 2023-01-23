@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     age: {type: Number, require: false},
     phoneNumber: {type: String, require: false},
     currentCart: {type: String, require: false},
-    purchasedCarts: {type: Array, require: false},
+    purchaseHistory: {type: Array, require: false},
 })
 
 const users = mongoose.model('users', userSchema)

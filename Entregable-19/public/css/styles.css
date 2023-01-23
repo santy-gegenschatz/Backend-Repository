@@ -152,7 +152,7 @@ td {
 
 #cart-div {
     flex-grow: 1;
-    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    background: lightgreen;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -296,5 +296,5 @@ td {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: red;
+    background-color: black;
 }
