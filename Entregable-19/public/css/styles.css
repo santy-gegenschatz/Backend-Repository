@@ -118,6 +118,12 @@ td {
     width: 100%;
 }
 
+
+.logout-button-div {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .messages-form {
     display: flex;
     flex-direction: column;
@@ -212,14 +218,14 @@ td {
     border-color: white;
     border-width: 0px 0px 5px 0px;
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 25% 50% 25%;
     grid-template-rows: 100%;
     grid-template-areas: '. middle right';
 }
 
 #header-div__middle {
     grid-area: middle;
-    background-color: reblackd;
+    background-color: black;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -228,11 +234,11 @@ td {
 
 #header-div__right {
     grid-area: right;
-    background-color: black;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    padding-right: 30px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-right: 10px;
 }
 
 #home-div {
@@ -254,6 +260,11 @@ td {
     margin: 20px;
     padding: 10px;
     border-radius: 25px;
+}
+
+#logout-button {
+    padding: 5px;
+    margin: 5px;
 }
 
 #main-div {
