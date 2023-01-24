@@ -62,7 +62,12 @@ class usersMongoDbDao {
                 return this.throwError('Cart is empty')
             }
             // Add cart to user's purchase history
-            const updatedUser = await this.updateUser(id, {purchaseHistory: cartId})
+            // First get the user's purchase history and create a new object that includes the current one and the new one
+            const user = await this.getUserById(id)
+            const purchaseHistory = user.purchaseHistory
+            purchaseHistory.push(cartId)
+            // Update the user's purchase history
+            const updatedUser = await this.updateUser(id, {purchaseHistory})
             logDebug('------- Updated User -------')
             logDebug(updatedUser)
             // Set CurrentCart to undefined
@@ -99,16 +104,23 @@ class usersMongoDbDao {
             const user = await this.getUserById(id)
             logDebug('------- User -------')
             logDebug(user)
+            // Simple check to see if there is a current cart
             if (typeof user.currentCart === 'undefined' || typeof user.currentCart === 'string') {
-                // Create a new cart
-                const newCart = await cartsDao.createCart()
-                logDebug('------- New Cart -------')
-                logDebug(newCart)
-                // Update the user with the new cart
-                const updatedUser = await this.updateUser(user.id, {currentCart: newCart.payload._id})
-                logDebug('------- Updated User -------')
-                logDebug(updatedUser)
-                return updatedUser.currentCart
+                // Prevent that the type of string clause is not a false positive
+                if (user.currentCart.length === 0) {
+                    // Create a new cart
+                    const newCart = await cartsDao.createCart()
+                    logDebug('------- New Cart -------')
+                    logDebug(newCart)
+                    // Update the user with the new cart
+                    await this.updateUser(user.id, {currentCart: newCart.payload._id})
+                    const updatedUser = await this.getUserById(id)
+                    logDebug('------- Updated User -------')
+                    logDebug(updatedUser)
+                    return updatedUser.currentCart
+                } else {
+                    return user.currentCart
+                }
             } else {
                 return user.currentCart
             }
