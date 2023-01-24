@@ -63,8 +63,12 @@ class usersMongoDbDao {
             }
             // Add cart to user's purchase history
             const updatedUser = await this.updateUser(id, {purchaseHistory: cartId})
+            logDebug('------- Updated User -------')
+            logDebug(updatedUser)
             // Set CurrentCart to undefined
-            const updatedUser2 = await this.updateUser(id, {currentCart: undefined})
+            const updatedUser2 = await this.updateUser(id, {currentCart: ''})
+            logDebug('------- Updated User 2-------')
+            logDebug(updatedUser2)
             // Return success
             return this.throwSuccess('Purchase completed')
         } catch (err) {
@@ -80,6 +84,8 @@ class usersMongoDbDao {
     async getCurrentCartForUser (id) {
         try {
             const cartId = await this.getCurrentCartIdForUser(id)
+            logDebug('------ Retrieved Cart Id ---------')
+            logDebug(cartId)
             const cart = await cartsDao.getCart(cartId)
             return cart
         } catch (err) {
@@ -93,7 +99,7 @@ class usersMongoDbDao {
             const user = await this.getUserById(id)
             logDebug('------- User -------')
             logDebug(user)
-            if (typeof user.currentCart === 'undefined') {
+            if (typeof user.currentCart === 'undefined' || typeof user.currentCart === 'string') {
                 // Create a new cart
                 const newCart = await cartsDao.createCart()
                 logDebug('------- New Cart -------')
@@ -132,6 +138,10 @@ class usersMongoDbDao {
     }
     
     throwSuccess(message, payload) {
+        if (typeof payload === 'undefined') {
+            return {code: 200, message}
+        }
+        
         return {code: 200, message, payload}
     }
 }

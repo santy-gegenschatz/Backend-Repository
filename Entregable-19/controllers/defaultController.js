@@ -20,6 +20,7 @@ const renderCart = async (req, res) => {
     logDebug(cart);
     if (cart.code !== 200) {
         res.redirect('/auth/error?message=Error+obtaining+cart')
+        return
     }
     
     if (cart.payload.items.length === 0) {

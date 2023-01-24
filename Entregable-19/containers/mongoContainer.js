@@ -90,7 +90,8 @@ class MongoDbContainer {
         console.log('Container - Updating by Id');
         try {
             const response = await model.updateOne({_id: id}, {$set: object}, {new: true})
-            return response
+            const data = await response._doc
+            return data
         } catch (err) {
             logError(err)
             return false
