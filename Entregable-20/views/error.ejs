@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <title> Oops... That's an error </title>
+</head>
+<body>
+    <div class = "column-centered-div">
+        <div class = 'header'>
+            <div class = "column-centered-div">
+                <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
+                <h2 class = 'white'> This is the Error Screen </h2>
+            </div>
+        </div>
+
+        <div class = "error-card column-centered-div">
+            <h3> It seems you have an error, in particular:</h3>
+            <h3> <%= error %> </h3>
+            <img src="https://media1.giphy.com/media/l46Czzp0KEHSO7OdG/200w.webp?cid=ecf05e47y4lzq6p0nmdbz7sr26efy4azw16s6aw3ld5svbl2&rid=200w.webp&ct=g" class = 'error-image' alt="">
+            <button class = "btn btn-info" onclick= "return goToSignup()"> Go to Sign Up </button>
+        </div>
+
+    </div>
+</body>
+    <script src="../../js/error.js"></script>
+</html>
