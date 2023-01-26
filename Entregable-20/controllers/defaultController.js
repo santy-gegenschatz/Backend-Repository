@@ -5,9 +5,6 @@ const { getServerInfo } = require('../utils/serverInfo.js')
 const productsDao = require('../daos/products/index')
 const usersDao = require('../daos/users/index')
 
-const renderProfile = async (req, res) => {
-    res.render('profile.ejs', {username: req.user.username, user : req.user})
-}
 
 const renderAdminPanel = async (req, res) => {
     res.render('admin.ejs', {username : req.user.username})
@@ -85,6 +82,18 @@ const renderProducts = async (req, res) => {
     res.render('products.ejs', {products: products, noRender : products.length===0})
 }
 
+const renderProfile = async (req, res) => {
+    res.render('profile.ejs', {username: req.user.username, user : req.user})
+}
+
+const renderPurchases = async (req, res) => {
+    const { payload } = await usersDao.getPurchaseHistory(req.user.id)
+    if (payload.length > 0) {
+        res.render('purchases.ejs', {username : req.user.username, purchases: payload})
+        return
+    }
+}
+
 const renderRandomNumbers = async (req, res) => {
     const { cant } = req.query
     const computation = fork('./utils/computation.js')
@@ -100,4 +109,15 @@ const renderServerInfo = async (req, res) => {
 }
 
 
-module.exports = { renderHome, renderProducts, renderCart, renderMessages, renderProfile, renderAdminPanel, renderFakeProducts, renderServerInfo, renderRandomNumbers}
+module.exports = { 
+    renderHome, 
+    renderCart, 
+    renderProducts,
+    renderPurchases,
+    renderMessages, 
+    renderProfile, 
+    renderAdminPanel, 
+    renderFakeProducts, 
+    renderServerInfo, 
+    renderRandomNumbers
+}

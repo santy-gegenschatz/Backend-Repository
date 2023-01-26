@@ -1,5 +1,5 @@
 const yargs = require('yargs/yargs')(process.argv.slice(2))
-const { renderHome, renderProducts, renderCart, renderMessages, renderProfile, renderAdminPanel, renderFakeProducts, renderServerInfo, renderRandomNumbers} = require('../controllers/defaultController')
+const { renderHome, renderProducts, renderCart, renderMessages, renderProfile, renderAdminPanel, renderFakeProducts, renderServerInfo, renderRandomNumbers, renderPurchases} = require('../controllers/defaultController')
 const { logRouteInfo } = require('../loggers/logger')
 const { Router } = require('express')
 const compression = require('compression')
@@ -17,7 +17,7 @@ defaultRouter.get('/products', logRouteInfo, checkAuthentication, renderProducts
 defaultRouter.get('/cart', logRouteInfo, checkAuthentication, renderCart)
 
 // Show the purchases screen
-defaultRouter.get('/purchases', logRouteInfo, checkAuthentication, renderCart)
+defaultRouter.get('/purchases', logRouteInfo, checkAuthentication, renderPurchases)
 
 // Show the messages screen
 defaultRouter.get('/messages', logRouteInfo, checkAuthentication, renderMessages)

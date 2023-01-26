@@ -28,6 +28,7 @@
     "knex": "^2.3.0",
     "log4js": "^6.7.1",
     "mongoose": "^6.7.1",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemailer": "^6.9.0",
     "normalizr": "^3.6.2",
