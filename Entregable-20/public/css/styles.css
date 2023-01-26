@@ -171,13 +171,11 @@ td {
 
 #cart-div {
     flex-grow: 1;
-    background: lightgreen;
+    background: rgb(246, 246, 246);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    border-radius: 25px;
-    margin: 10px;
     padding: 10px;
 }
 
@@ -244,11 +242,10 @@ td {
 #home-div {
     flex-grow: 1;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     background-color: black;
-    padding-top: 5px;
 }
 
 #insert-product-div {
@@ -293,12 +290,11 @@ td {
 
 #products-table-div {
     flex-grow: 1;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: lightgreen;
-    border-radius: 25px;
-    margin: 10px;
+    background-color: rgb(246, 246, 246);
     padding-top: 10px;
 }
 

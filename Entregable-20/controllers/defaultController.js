@@ -5,8 +5,8 @@ const { getServerInfo } = require('../utils/serverInfo.js')
 const productsDao = require('../daos/products/index')
 const usersDao = require('../daos/users/index')
 
-const renderAccount = async (req, res) => {
-    res.render('account.ejs', {username: req.user.username, user : req.user})
+const renderProfile = async (req, res) => {
+    res.render('profile.ejs', {username: req.user.username, user : req.user})
 }
 
 const renderAdminPanel = async (req, res) => {
@@ -100,4 +100,4 @@ const renderServerInfo = async (req, res) => {
 }
 
 
-module.exports = { renderHome, renderProducts, renderCart, renderMessages, renderAccount, renderAdminPanel, renderFakeProducts, renderServerInfo, renderRandomNumbers}
+module.exports = { renderHome, renderProducts, renderCart, renderMessages, renderProfile, renderAdminPanel, renderFakeProducts, renderServerInfo, renderRandomNumbers}

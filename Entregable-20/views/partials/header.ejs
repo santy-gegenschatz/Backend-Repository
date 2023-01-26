@@ -16,10 +16,12 @@
         </div>
     </div>
     <div id = 'buttons-menu' class = 'row-centered-div black-background'>
-        <button class = "btn btn-primary"> <a href="/"> Products </a> </button>
-        <button class = "btn btn-primary"> <a href="/cart"> Carts </a> </button>
-        <button class = "btn btn-primary"> <a href="/messages"> Messages </a> </button>
-        <button class = "btn btn-primary"> <a href="/account"> Account </a> </button>
-        <button class = "btn btn-primary"> <a href="/admin"> Admin Panel </a> </button>
+        <button class = "btn btn-primary" onclick = "goToHome()"> Products </button>
+        <button class = "btn btn-primary" onclick = "goToCart()">  Cart </button>
+        <button class = "btn btn-primary" onclick = "goToPurchases()"> Purchases </button>
+        <button class = "btn btn-primary" onclick = "goToMessages()"> Messages </button>
+        <button class = "btn btn-primary" onclick = "goToProfile()"> Profile </button>
+        <button class = "btn btn-primary" onclick = "goToAdmin()"> Admin Panel </button>
     </div>
+    <script src = "../../js/header.js"></script>
 </header>
