@@ -87,9 +87,18 @@ const renderProfile = async (req, res) => {
 }
 
 const renderPurchases = async (req, res) => {
-    const { payload } = await usersDao.getPurchaseHistory(req.user.id)
+    const { code, payload } = await usersDao.getPurchaseHistory(req.user.id)
+    if (code !== 200) {
+        res.redirect('/auth/error?message=Error+obtaining+purchase+history')
+        return
+    }
+    logDebug('--- Purchase History Obtained in Default Controller ---');
+    logDebug(payload);
     if (payload.length > 0) {
-        res.render('purchases.ejs', {username : req.user.username, purchases: payload})
+        res.render('purchases.ejs', {username : req.user.username, purchases: payload, noRender : false})
+        return
+    } else {
+        res.render('purchases.ejs', {username : req.user.username, purchases: [], noRender : true})
         return
     }
 }

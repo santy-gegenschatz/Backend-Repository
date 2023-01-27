@@ -134,16 +134,13 @@ class usersMongoDbDao {
         try {
             const user = await this.getUserById(id)
             const purchaseHistory = user.purchaseHistory
-            
-            if (purchaseHistory.length === 0) {
-                return this.throwError('Purchase history is empty')
-            }
-
+            logDebug(purchaseHistory)
             const purchaseHistoryObjects = []
             for (let i = 0; i < purchaseHistory.length; i++) {
                 const cart = await cartsDao.getCart(purchaseHistory[i])
-                purchaseHistoryObjects.push(cart)
+                purchaseHistoryObjects.push(cart.payload)
             }
+            logDebug(purchaseHistoryObjects)
             return this.throwSuccess('Purchase history retrieved', purchaseHistoryObjects)
         } catch (err) {
             logError(err)

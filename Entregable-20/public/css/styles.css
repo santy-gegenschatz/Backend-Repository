@@ -64,15 +64,19 @@ td {
 
 .cart-item {
     border-radius: 25px;
-    width: 300px;
-    background: rgb(91,90,107);
-    background: linear-gradient(90deg, rgba(91,90,107,1) 0%, rgba(68,68,110,1) 35%, rgba(104,196,214,1) 100%);
+    background: rgb(152, 242, 62);
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     margin: 10px;
-    padding: 10px;
+    padding: 20px;
+}
+
+.cart-item-image {
+    height: 150px;
+    width: 150px;
+    margin-right: 15px;
 }
 
 .column-centered-div {
@@ -139,9 +143,20 @@ td {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    background: linear-gradient(90deg, #64b74b 0%, #56c982 100%);
     border-radius: 25px;
     margin: 5px;
+}
+
+.purchase-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: linear-gradient(90deg, #64b74b 0%, #56c982 100%);
+    border-radius: 25px;
+    margin: 5px;
+    padding: 10px;
 }
 
 .row-centered-div {

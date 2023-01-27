@@ -24,11 +24,12 @@
                 <% } else { %>
                     <% cartProducts.forEach((product) => { %>
                         <div class = 'cart-item'>
-                            <img src = "<%= product.thumbnail %>" alt = "<%= product.name %>">
-                            <p> <%= product.name %> </p>
-                            <p> <%= product.price %> </p>
-                            <p> <%= product.quantity %> </p>
-                            <p> <%= product.total %> </p>
+                            <img class = 'cart-item-image' src = "<%= product.thumbnail %>" alt = "<%= product.name %>">
+                            <div>
+                                <h5> <%= product.name %> </h5>
+                                <p> Price: <%= product.price %> </p>
+                                <p> Quantity: <%= product.quantity %> </p>
+                            </div>
                         </div>
                         <% }) %>
                         <div>

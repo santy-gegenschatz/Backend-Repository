@@ -23,6 +23,17 @@
                 </div>
             <% } else { %>
                 <div>
+                    <% for (let i = 0; i < purchases.length; i++) { %>
+                    <div class = 'purchase-div'>
+                        <h6> <%= purchases[i].creationDate %> </h6>
+                        <% let total = 0; %>
+                        <% for (let j = 0; j < purchases[i].items.length; j++) { %>
+                            <p> <%= purchases[i].items[j].name %>, <%= purchases[i].items[j].quantity %> x <%= purchases[i].items[j].price %> USD</p>
+                            <% total += purchases[i].items[j].quantity * purchases[i].items[j].price %>
+                        <% } %>
+                        <h5> Total: <%= total %> USD </h5>
+                    </div> 
+                    <% } %>
                 </div>
             <% } %>
         </div>
