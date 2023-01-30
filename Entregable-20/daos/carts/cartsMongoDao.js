@@ -113,6 +113,8 @@ class CartsMongoDao {
 
     async getCart(id) {
         const response = await this.container.getById(carts, id)
+        logDebug('--- Response ---')
+        logDebug(response)
         if (this.isNotError(response) && response !== null) {
             return this.throwSuccess('Cart obtained', response)
         } else {

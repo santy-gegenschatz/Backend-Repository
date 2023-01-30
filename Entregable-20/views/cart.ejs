@@ -10,7 +10,7 @@
 </head>
 <body id = 'wrapper'>
     <%- include('partials/header.ejs') %>
-    <div id = 'cart-div'>
+    <div class = 'content-div'>
         <h4> Your Cart </h4>
         <div id = 'cart-items-div'>
             <!-- Here it is that the cart items are rendered -->
@@ -22,18 +22,20 @@
                     <button class = "btn btn-success" onclick = "goToHome()"> Go to Store </button>
                 </div>
                 <% } else { %>
-                    <% cartProducts.forEach((product) => { %>
-                        <div class = 'cart-item'>
-                            <img class = 'cart-item-image' src = "<%= product.thumbnail %>" alt = "<%= product.name %>">
-                            <div>
-                                <h5> <%= product.name %> </h5>
-                                <p> Price: <%= product.price %> </p>
-                                <p> Quantity: <%= product.quantity %> </p>
+                    <div class = 'column-centered-div'>
+                        <% cartProducts.forEach((product) => { %>
+                            <div class = 'cart-item'>
+                                <img class = 'cart-item-image' src = "<%= product.thumbnail %>" alt = "<%= product.name %>">
+                                <div>
+                                    <h5> <%= product.name %> </h5>
+                                    <p> Price: <%= product.price %> </p>
+                                    <p> Quantity: <%= product.quantity %> </p>
+                                </div>
                             </div>
-                        </div>
-                        <% }) %>
-                        <div>
-                            <p> Total: <%= total %> </p>
+                            <% }) %>
+                    </div>
+                        <div class = "column-centered-div" id = "total-div">
+                            <h4> Total: <%= total %> </h4>
                             <button class = 'btn btn-primary' onclick = "return checkoutCart()"> Proceed to checkout </button>
                         </div>
                         <% } %>
