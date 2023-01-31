@@ -14,7 +14,7 @@
         <h4 style = 'text-align: center;'> Message Center </h4>
         <div id = 'messages-div'>
             <div id ='message-details-div'>
-                <h5 id = 'compression-title'> Compression Rate </h5>
+                <h5 id = 'compression-title'> Send </h5>
                 <form onsubmit = 'return addMessage(this)' id = 'messages-form'>
                     <input type="text" name = 'name' id = 'name' placeholder = 'Enter your name'>
                     <input type="text" name = 'surname' id = 'surname' placeholder = 'Enter your surname'>
@@ -36,7 +36,8 @@
 
     </div>
     <%- include ('partials/footer.ejs') %>
-    <script defer src = 'https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js'></script>
-    <script defer src="/js/main.js"></script>
+    <script src = 'https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js'></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/messages.js"></script>
 </body>
 </html>

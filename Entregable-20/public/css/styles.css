@@ -139,6 +139,14 @@ td {
     justify-content: flex-end;
 }
 
+.message-div {
+    min-width: 300px;
+    background: linear-gradient(90deg, #f3f3f3 0%, #e8e8e8 100%);
+    border-radius: 25px;
+    margin: 5px;
+    padding: 10px;
+}
+
 .purchase-div {
     display: flex;
     flex-direction: column;
@@ -202,11 +210,24 @@ td {
 
 #chat-div {
     flex-grow: 1;
-    max-width: 300px;
-    background-color: red;
-    margin: 10px;
+    max-width: 600px;
+    max-height: 600px;
+    background: linear-gradient(90deg, #64b74b 0%, #56c982 100%);
     border-radius: 25px;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: scroll;
+}
+
+#chat-messages-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 #compression-title {
@@ -295,7 +316,12 @@ td {
 }
 
 #message-details-div {
-
+    width: 400px;
+    max-width: 400px;
+    min-width: 300px;
+    background: linear-gradient(90deg, #7fbbe5 0%, #73b8e3 100%);
+    border-radius: 25px;
+    margin: 5px;
 }
 
 #message-input-div {
@@ -304,7 +330,7 @@ td {
 
 #messages-div {
     flex-grow: 1;
-    width: 70%;
+    width: 80%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -315,9 +341,6 @@ td {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background: linear-gradient(90deg, #64b74b 0%, #56c982 100%);
-    border-radius: 25px;
-    margin: 5px;
 }
 
 #products-table-div {

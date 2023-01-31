@@ -2,6 +2,7 @@ const Container = require('../../containers/mongoContainer')
 const { messagesModel } = require('../../models/mongoDbSchemas/messagesNestedData')
 const { normalizeMessages, denormalizeMessages } = require('../../utils/normalize') 
 const { isNotError } = require('../../utils/errors')
+const { logDebug } = require('../../loggers/logger')
 
 class MessagesMongoDao {
     constructor() {
@@ -36,7 +37,7 @@ class MessagesMongoDao {
             // Update the DB with the new object
             const updateResponse = await this.container.updateFieldById(messagesModel, response._id, objectToStore)
             // If there are no errors, 
-                // Send a true response
+            // Send a true response
             return true
         } else {
             console.log('Reponse is null');
@@ -50,6 +51,8 @@ class MessagesMongoDao {
             }
             // Store the object
             const saveResponse = await this.container.add(messagesModel, objectToStore)
+            logDebug('--- message save Response ---')
+            logDebug(saveResponse)
             // Return true
             return true
 
