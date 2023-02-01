@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha ./testing/index.test.js",
+    "test": "mocha ./testing/mocha.test.js",
+    "testChai": "mocha ./testing/chai.test.js",
     "start": "node app.js"
   },
   "keywords": [],
@@ -43,6 +44,8 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "mocha": "^10.2.0"
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
   }
 }

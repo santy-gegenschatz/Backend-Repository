@@ -17,21 +17,41 @@
             </div>
         </div>
     </div>
-    <div class = 'general-card column-centered-div'>
-        <input type = "text" name = 'username' placeholder = "Select your username" id = 'usernameField'>
-        <input type = "password" name = 'password1' placeholder = "Enter your password" id = 'passwordField1'>
-        <input type = "password" name = 'password2' placeholder = "Confirm your password" id = 'passwordField2'>
-        <input type = "text" name = 'firstName' placeholder = 'Enter your first name' id = 'firstNameField'>
-        <input type = "text" name = 'address' placeholder = 'Enter your address' id = 'addressField'>
-        <input type = "number" name = 'age' placeholder = 'Enter your age' id = 'ageField'>
-        <input type = "tel" name = 'phone' placeholder = 'Enter your phone number' id = 'phoneField'>
-        <input type="file" id = "fileField">
+    <div class = 'general-card row-centered-div'>
+        <div id = "signup-person-details-div">
+            <h3> Please fill in the following fields to create your account </h3>
+            <div class = 'row-centered-div'>
+                <label for="fileField" id = "image-input-label">
+                    <p> Select your profile picture </p>
+                    <input type="file" id = "fileField" accept="image/png, image/jpg, image/gif, image/jpeg"> 
+                </label>
+                <div class = 'column-centered-div'>
+                    <input type = "text" name = 'firstName' placeholder = 'Enter your first name' id = 'firstNameField'>
+                    <input type = "text" name = 'address' placeholder = 'Enter your address' id = 'addressField'>
+                    <input type = "number" name = 'age' placeholder = 'Enter your age' id = 'ageField'>
+                    <input type = "tel" name = 'phone' placeholder = 'Enter your phone number' id = 'phoneField'>
+                </div>
+            </div>
 
-        <input type="submit" class = 'btn btn-primary' onclick = "return verifyFields()">
-        
-        <form action="/auth/login" method="get">
-            <input type="submit" class = 'btn btn-info' value = 'Go to Login'>
-        </form>
+        </div>
+
+        <div>
+            <div>
+                <input type = "text" name = 'username' placeholder = "Select your username" id = 'usernameField'>
+            </div>
+
+            <div>
+                <input type = "password" name = 'password1' placeholder = "Enter your password" id = 'passwordField1'>
+                <input type = "password" name = 'password2' placeholder = "Confirm your password" id = 'passwordField2'>
+            </div>
+
+            <input type="submit" class = 'btn btn-primary' onclick = "return verifyFields()">
+            
+            <form action="/auth/login" method="get">
+                <input type="submit" class = 'btn btn-info' value = 'Go to Login'>
+            </form>
+        </div>
+
     </div>
 </body>
 <script src="../../js/signup.js"></script>

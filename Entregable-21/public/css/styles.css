@@ -240,6 +240,10 @@ td {
     width: 50;
 }
 
+#fileField {
+    display: none;
+}
+
 #footer {
     margin-top: auto;
     background-color: black;
@@ -289,6 +293,20 @@ td {
     justify-content: flex-start;
     align-items: center;
     background-color: black;
+}
+
+#image-input-label {
+    cursor: pointer;
+    border-radius: 50px;
+    width: 200px;
+    height: 200px;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
 }
 
 #insert-product-div {
@@ -360,6 +378,13 @@ td {
     background-color: black;
     margin: 20px;
     padding: 10px;
+}
+
+#signup-person-details-div {
+    border-radius: 25px;
+    background-color: lightslategray;
+    padding: 10px;
+    margin: 10px;
 }
 
 #total-div {
