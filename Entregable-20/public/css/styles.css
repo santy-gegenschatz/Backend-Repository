@@ -174,16 +174,16 @@ td {
 }
 
 /* Id's */
-#account-div {
-    flex-grow: 1;
-    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+#account-info-div {
+    min-width: 300px;
+    background-color: lightblue;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    border-radius: 25px;
-    margin: 10px;
-    padding: 10px;
 }
 
 #buttons-menu {

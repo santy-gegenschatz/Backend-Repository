@@ -10,12 +10,16 @@
 </head>
 <body id = 'wrapper'>
     <%-include ('partials/header.ejs') %>
-    <div id = 'account-div'>
+    <div class = 'content-div'>
         <h4> Your Account </h4>
         <div id = 'account-info-div'>
-            <p> Username: <%- user.username %> </p>
-            <p> Name: <%- user.firstName %> </p>
-            <p> Address: <%- user.address %> </p>
+            <img src = <%= user.profileImage%> alt="image_not_found">
+            <p> <strong> Username </strong> </p>
+            <p> <%- user.username %> </p>
+            <p> <strong> Name </strong> </p>
+            <p> <%- user.firstName %> </p>
+            <p> <strong> Address </strong> </p>
+            <p> <%- user.address %> </p>
         </div>
     </div>
     <%- include ('partials/footer.ejs') %>

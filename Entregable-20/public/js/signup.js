@@ -40,6 +40,7 @@ const sendData = async (password) => {
     const address = document.getElementById('addressField').value
     const phoneNumber = document.getElementById('phoneField').value
     const age = document.getElementById('ageField').value
+    const file = document.getElementById('fileField').files[0]
     const response = await fetch('/auth/signup', {
         method: 'POST',
         headers: {
