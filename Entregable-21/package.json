@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "node ./testing/benchmark.js",
+    "test": "mocha ./testing/index.test.js",
     "start": "node app.js"
   },
   "keywords": [],
@@ -41,5 +41,8 @@
     "socket.io": "^4.5.2",
     "twilio": "^3.84.1",
     "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0"
   }
 }
