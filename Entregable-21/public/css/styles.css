@@ -306,7 +306,8 @@ td {
     height: 200px;
     background-color: lightgray;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     margin: 10px;
     padding: 10px;
@@ -363,6 +364,11 @@ td {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+}
+
+#preview {
+    height: 100px;
+    width: 100px;
 }
 
 #products-table-div {

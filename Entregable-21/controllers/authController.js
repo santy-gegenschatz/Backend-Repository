@@ -2,6 +2,8 @@ const passport = require('passport')
 const adminEmail = process.env.ADMIN_EMAIL
 const { sendEmail } = require('../utils/comms/nodemailer')
 const { logDebug } = require('../loggers/logger')
+const { upload } = require('../utils/uploading/multer')
+
 
 
 const loginUser = async (req, res, next) => {
@@ -32,7 +34,16 @@ const signUpUser = async (req, res, next) => {
             // Send an email indicating that a new user has been created
             sendEmail(adminEmail, 'New user created', `A new user has been created. Username: ${user.username}. Address: ${user.address}. Phone number: ${user.phoneNumber}. Age: ${user.age}`)
             // Send a twilio whatsapp message indicating that a new user has been created
-            
+
+            // Download the image and save it to the server
+            upload.single('file')(req, res, (err) => {
+                if (err) {
+                    console.log('Error: ', err);
+                } else {
+                    console.log('File uploaded successfully');
+                }
+            })
+
             req.login(user, () => {
                 res.send({url: '/'})
             })

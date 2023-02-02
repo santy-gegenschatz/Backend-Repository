@@ -1,6 +1,7 @@
 const { goToHome, renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen} = require('../controllers/authController')
-const { logRouteInfo } = require('../loggers/logger')
+const { logRouteInfo, logDebug } = require('../loggers/logger')
 const { Router } = require('express')
+const { upload } = require('../utils/uploading/multer')
 
 const authRouter = Router()
 
@@ -21,5 +22,10 @@ authRouter.post('/login', logRouteInfo, loginUser, goToHome)
 authRouter.post('/signup', logRouteInfo, signUpUser)
 
 authRouter.post('/logout', logRouteInfo, logoutUser)
+
+authRouter.post('/upload', upload.single('file'), (req, res) => {
+    logDebug(req.file)
+    res.send('Done')
+})
 
 module.exports = { authRouter }

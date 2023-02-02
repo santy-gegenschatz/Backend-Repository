@@ -25,7 +25,8 @@
                     <div class = 'input-image-div'>
                         <label for="fileField" id = "image-input-label">
                             <p> Select your profile picture </p>
-                            <input type="file" id = "fileField" accept="image/png, image/jpg, image/gif, image/jpeg"> 
+                            <input type="file" id = "fileField" accept="image/png, image/jpg, image/gif, image/jpeg" name = 'profile-image'> 
+                            <img id = 'preview'>
                         </label>
                     </div>
                     <div class = 'column-centered-div'>
@@ -58,4 +59,16 @@
     </div>
 </body>
 <script src="../../js/signup.js"></script>
+<script>
+    const inputFile = document.getElementById("fileField");
+    const preview = document.getElementById("preview");
+  
+    inputFile.addEventListener("change", function () {
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        preview.src = reader.result;
+      });
+      reader.readAsDataURL(inputFile.files[0]);
+    });
+  </script>
 </html>

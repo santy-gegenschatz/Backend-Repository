@@ -41,19 +41,18 @@ const sendData = async (password) => {
     const phoneNumber = document.getElementById('phoneField').value
     const age = document.getElementById('ageField').value
     const file = document.getElementById('fileField').files[0]
+    const formData = new FormData()
+    formData.append('username', username)
+    formData.append('password', password)
+    formData.append('firstName', firstName)
+    formData.append('address', address)
+    formData.append('phoneNumber', phoneNumber)
+    formData.append('age', age)
+    formData.append('file', file)
+
     const response = await fetch('/auth/signup', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username,
-            password,
-            firstName,
-            address,
-            phoneNumber,
-            age
-        })
+        body: formData
     })
 
     console.log('Response: ', response);
