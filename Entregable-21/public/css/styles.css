@@ -139,6 +139,10 @@ td {
     justify-content: flex-end;
 }
 
+.long-input {
+    width: 80%;
+}
+
 .message-div {
     min-width: 300px;
     background: linear-gradient(90deg, #f3f3f3 0%, #e8e8e8 100%);
