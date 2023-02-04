@@ -105,10 +105,10 @@ class usersMongoDbDao {
             logDebug('------- User -------')
             logDebug(user)
             // Simple check to see if there is a current cart
-            if (typeof user.currentCart === 'undefined' || typeof user.currentCart === 'string') {
+            logDebug(typeof user.currentCart)
+            if (typeof user.currentCart === 'string') {
                 // Prevent that the type of string clause is not a false positive
                 if (user.currentCart.length === 0) {
-                    // Create a new cart
                     const newCart = await cartsDao.createCart()
                     logDebug('------- New Cart -------')
                     logDebug(newCart)
@@ -121,9 +121,20 @@ class usersMongoDbDao {
                 } else {
                     return user.currentCart
                 }
+            } else if (typeof user.currentCart === 'undefined') {
+                const newCart = await cartsDao.createCart()
+                logDebug('------- New Cart -------')
+                logDebug(newCart)
+                // Update the user with the new cart
+                await this.updateUser(user.id, {currentCart: newCart.payload._id})
+                const updatedUser = await this.getUserById(id)
+                logDebug('------- Updated User -------')
+                logDebug(updatedUser)
+                return updatedUser.currentCart 
             } else {
                 return user.currentCart
             }
+            
         } catch (err) {
             logError(err)
             return this.throwError(err)

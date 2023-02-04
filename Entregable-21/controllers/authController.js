@@ -30,22 +30,11 @@ const goToHome = async (req, res) => {
 const signUpUser = async (req, res, next) => {
     passport.authenticate('signup', (err, user, info) => {
         if (!err) {
-            logDebug('User created')
             // Send an email indicating that a new user has been created
             sendEmail(adminEmail, 'New user created', `A new user has been created. Username: ${user.username}. Address: ${user.address}. Phone number: ${user.phoneNumber}. Age: ${user.age}`)
             // Send a twilio whatsapp message indicating that a new user has been created
-
-            // Download the image and save it to the server
-            upload.single('file')(req, res, (err) => {
-                if (err) {
-                    console.log('Error: ', err);
-                } else {
-                    console.log('File uploaded successfully');
-                }
-            })
-
             req.login(user, () => {
-                res.send({url: '/'})
+                res.send({url: '/', userId: user._id})
             })
         } else {
             console.log('Error: ', err);
@@ -93,7 +82,7 @@ const renderLoginScreen = async (req, res) => {
 }
 
 const renderLogoutScreen = async (req, res) => {
-    res.status(200).render('logout.ejs', {username : req.query.username})
+    res.status(200).render('logout.ejs', {greetingUsername : req.query.username})
 }
 
 const renderSignUpScreen = async (req, res) => {
@@ -104,5 +93,17 @@ const renderUnauthorizedScreen = async (req, res) => {
     res.render('unauthorized.ejs')
 }
 
+const uploadProfilePicture = async (req, res) => {
+    upload.single('file')(req, res, (err) => {
+        if (err) {
+            console.log('Error: ', err);
+        } else {
+            res.json('File uploaded successfully');
+            logDebug('-----File uploaded successfully----');
+        }
+    })
+}
 
-module.exports = { goToHome, renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen}
+
+
+module.exports = { goToHome, renderLoginScreen, renderLogoutScreen, uploadProfilePicture, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen}

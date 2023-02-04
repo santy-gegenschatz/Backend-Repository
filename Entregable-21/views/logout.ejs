@@ -8,20 +8,23 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <title> Logout</title>
 </head>
-<body>
-    <div class = "column-centered-div">
-        <div class = 'header'>
-            <div class = "column-centered-div">
-                <h1 class = 'white'> The Summer Store 🌻</h1>
+<body id = 'wrapper'>
+    <%-include ('partials/header.ejs') %>
+    <div class = 'content-div'>
+        <div class = "general-card">
+            <div class = 'column-centered-div'>
+                <h2 class = "white"> You have been logged out</h2>
+                <h4 class = 'white'> Goodbye, <%= greetingUsername%> </h4>
+                <button class = 'btn btn-primary' onclick = "goToLogin()"> Go To Login </button>
+                
             </div>
         </div>
     </div>
-    <div class = "general-card">
-        <div class = 'column-centered-div'>
-            <h2 class = "white"> You have been Logged out</h2>
-            <h4 class = 'white'> Goodbye, <%= username%> </h4>
-            <a href="/auth/login"> Return to login </a>
-        </div>
-    </div>
+    <%- include ('partials/footer.ejs') %>
 </body>
+<script>
+    function goToLogin(){
+        window.location.href = '/auth/login';
+    }
+</script>
 </html>

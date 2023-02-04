@@ -8,23 +8,21 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <title>Login to the Ecommerce </title>
 </head>
-<body>
-    <div class = "column-centered-div">
-        <div class = 'header'>
-            <div class = "column-centered-div">
-                <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
-                <h2 class = 'white'> This is the Login Screen </h2>
+<body id = 'wrapper'>
+        <%- include ('partials/header.ejs') %>
+        <div class = 'content-div'>
+            <div class = 'column-centered-div expand'>
+                <div class = 'general-card column-centered-div'>
+                    <form action="/auth/login" method="post" class = "column-centered-div">
+                        <input type="text" name = 'username' id = 'usernameInput' placeholder = "Username">
+                        <input type="password" name="password" id = "passwordInput" placeholder = "Password">
+                        <input type="submit" class = 'btn btn-primary'>
+                    </form>
+                    <button class = 'btn btn-info' onclick = "return goToSignup()"> Go to signup </button>
+                </div>
             </div>
         </div>
-        <div class = 'general-card column-centered-div'>
-            <form action="/auth/login" method="post" class = "column-centered-div">
-                <input type="text" name = 'username' id = 'usernameInput' placeholder = "Username">
-                <input type="password" name="password" id = "passwordInput" placeholder = "Password">
-                <input type="submit" class = 'btn btn-primary'>
-            </form>
-            <button class = 'btn btn-info' onclick = "return goToSignup()"> Go to signup </button>
-        </div>
-    </div>
+        <%- include ('partials/footer.ejs') %>
 </body>
     <script src="../../js/login.js"></script>
 </html>

@@ -5,12 +5,12 @@ const storage = multer.diskStorage({
         cb(null, 'public/uploads')
     }, 
     filename: function (req, file, cb) {
-        console.log(req.body);
-        cb(null, req.body.user + '.png');
+        console.log('------------------');
+        console.log(req.user);
+        cb(null, req.user.id + '.png');
     }
 })
 
 const upload = multer({storage: storage})
 
-logDebug(' Creating upload middleware...')
 module.exports = { upload }

@@ -8,22 +8,23 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <title> Oops... That's an error </title>
 </head>
-<body>
-    <div class = "column-centered-div">
-        <div class = 'header'>
-            <div class = "column-centered-div">
-                <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
-                <h2 class = 'white'> This is the Error Screen </h2>
+<body id = 'wrapper'>
+    <div class = 'content-div'>
+        <div class = "column-centered-div">
+            <div class = 'header'>
+                <div class = "column-centered-div">
+                    <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
+                    <h2 class = 'white'> This is the Error Screen </h2>
+                </div>
+            </div>
+    
+            <div class = "error-card column-centered-div">
+                <h3> It seems you have an error, in particular:</h3>
+                <h3> <%= error %> </h3>
+                <img src="https://media3.giphy.com/media/haZOqHKz9tTfW/giphy.webp?cid=ecf05e47g8bv50p54ywvh9tvibajvpomb6iqmfkpik531b6b&rid=giphy.webp&ct=g" class = 'error-image' alt="">
+                <button class = "btn btn-info" onclick= "return goToSignup()"> Go to Sign Up </button>
             </div>
         </div>
-
-        <div class = "error-card column-centered-div">
-            <h3> It seems you have an error, in particular:</h3>
-            <h3> <%= error %> </h3>
-            <img src="https://media1.giphy.com/media/l46Czzp0KEHSO7OdG/200w.webp?cid=ecf05e47y4lzq6p0nmdbz7sr26efy4azw16s6aw3ld5svbl2&rid=200w.webp&ct=g" class = 'error-image' alt="">
-            <button class = "btn btn-info" onclick= "return goToSignup()"> Go to Sign Up </button>
-        </div>
-
     </div>
 </body>
     <script src="../../js/error.js"></script>

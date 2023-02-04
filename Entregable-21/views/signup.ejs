@@ -9,54 +9,50 @@
     <title> Signup </title>
 </head>
 <body>
-    <div class = "column-centered-div">
-        <div class = 'header'>
-            <div class = "column-centered-div">
-                <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
-                <h2 class = 'white'> This is the Signup Screen </h2>
-            </div>
-        </div>
-    </div>
-    <div class = 'general-card column-centered-div'>
-        <div id = "signup-person-details-div">
-            <h3> Please fill in the following fields to create your account </h3>
-            <div class = 'column-centered-div'>
-                <div class = 'row-centered-div'>
-                    <div class = 'input-image-div'>
-                        <label for="fileField" id = "image-input-label">
-                            <p> Select your profile picture </p>
-                            <input type="file" id = "fileField" accept="image/png, image/jpg, image/gif, image/jpeg" name = 'profile-image'> 
-                            <img id = 'preview'>
-                        </label>
-                    </div>
-                    <div class = 'column-centered-div'>
-                        <div class = 'row-centered-div'>
-                            <input type = "text" name = 'firstName' placeholder = 'Enter your first name' id = 'firstNameField'>
-                            <input type = "text" name = 'address' placeholder = 'Enter your address' id = 'addressField'>
+    <%- include ('partials/header.ejs')%>
+    <div class = 'content-div'>
+        <div class = 'general-card column-centered-div'>
+            <div id = "signup-person-details-div">
+                <h3> Please fill in the following fields to create your account </h3>
+                <div class = 'column-centered-div'>
+                    <div class = 'row-centered-div'>
+                        <div class = 'input-image-div'>
+                            <label for="fileField" id = "image-input-label">
+                                <p> Select your profile picture </p>
+                                <input type="file" id = "fileField" accept="image/png, image/jpg, image/gif, image/jpeg" name = 'profile-image'> 
+                                <img id = 'preview'>
+                            </label>
                         </div>
-                        <div class = "row-centered-div">
-                            <input type = "number" name = 'age' placeholder = 'Enter your age' id = 'ageField'>
-                            <input type = "tel" name = 'phone' placeholder = 'Enter your phone number' id = 'phoneField'>
+                        <div class = 'column-centered-div'>
+                            <div class = 'row-centered-div'>
+                                <input type = "text" name = 'firstName' placeholder = 'Enter your first name' id = 'firstNameField'>
+                                <input type = "text" name = 'address' placeholder = 'Enter your address' id = 'addressField'>
+                            </div>
+                            <div class = "row-centered-div">
+                                <input type = "number" name = 'age' placeholder = 'Enter your age' id = 'ageField'>
+                                <input type = "tel" name = 'phone' placeholder = 'Enter your phone number' id = 'phoneField'>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class = "column-centered-div long-input">
-                    <input type = "text" name = 'username' placeholder = "Select your username" id = 'usernameField' class = 'long-input'>
-                    <input type = "password" name = 'password1' placeholder = "Enter your password" id = 'passwordField1' class = 'long-input'>
-                    <input type = "password" name = 'password2' placeholder = "Confirm your password" id = 'passwordField2' class = 'long-input'>
-                </div>
-
-                <div class = "row-centered-div">
-                    <form action="/auth/login" method="get">
-                        <input type="submit" class = 'btn btn-info' value = 'Go to Login'>
-                    </form>
-
-                    <input type="submit" class = 'btn btn-primary' onclick = "return verifyFields()">
+    
+                    <div class = "column-centered-div long-input">
+                        <input type = "text" name = 'username' placeholder = "Select your username" id = 'usernameField' class = 'long-input'>
+                        <input type = "password" name = 'password1' placeholder = "Enter your password" id = 'passwordField1' class = 'long-input'>
+                        <input type = "password" name = 'password2' placeholder = "Confirm your password" id = 'passwordField2' class = 'long-input'>
+                    </div>
+    
+                    <div class = "row-centered-div">
+                        <form action="/auth/login" method="get">
+                            <input type="submit" class = 'btn btn-info' value = 'Go to Login'>
+                        </form>
+    
+                        <input type="submit" class = 'btn btn-primary' onclick = "return verifyFields()">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <%- include ('partials/footer.ejs')%>
 </body>
 <script src="../../js/signup.js"></script>
 <script>

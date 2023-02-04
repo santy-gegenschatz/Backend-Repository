@@ -4,6 +4,7 @@ const usersRouter = Router()
 
 // ROUTER URL'S
 // Get user info
+
 usersRouter.post('/addToCart', addProductToCart)
 
 usersRouter.post('/completePurchase', completePurchase)

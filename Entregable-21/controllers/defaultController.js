@@ -83,7 +83,8 @@ const renderProducts = async (req, res) => {
 }
 
 const renderProfile = async (req, res) => {
-    res.render('profile.ejs', {username: req.user.username, user : req.user})
+    const profileImage = '../../uploads/' + req.user.id + '.png'
+    res.render('profile.ejs', {username: req.user.username, user : req.user, image: profileImage})
 }
 
 const renderPurchases = async (req, res) => {

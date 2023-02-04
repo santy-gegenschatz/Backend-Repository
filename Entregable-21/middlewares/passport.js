@@ -3,7 +3,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bCrypt = require('bcrypt')
 const { serializeUser } = require('passport')
-const { logInfo } = require('../loggers/logger')
+const { logInfo, logDebug } = require('../loggers/logger')
 
 const createHash = (password) => {
     return bCrypt.hashSync(
@@ -45,7 +45,6 @@ const initPassport = () => {
         if (!usernameAvailable) {
             return done('usernametaken', false)
         }
-
         // Create a new User
         const newUser = {
             username,
@@ -58,14 +57,11 @@ const initPassport = () => {
 
         // Add the user to the mongodbDatabase
         const addedUser = await usersDao.add(newUser)
-        console.log('The added user is: ', addedUser, 'end');
         return done(null, addedUser)
     }))
 
     passport.serializeUser((user, done) => {
-        console.log('Serializing');
         done(null, user._id)
-        console.log('Serialized');
     })
 
     passport.deserializeUser( async (id, done) => {

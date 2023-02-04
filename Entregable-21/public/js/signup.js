@@ -5,7 +5,13 @@ const verifyFields = () => {
         alert('You must be 18 or older to use this service')
         return;
     }
-
+    const image = document.getElementById('fileField').files[0]
+    
+    if (!image) {
+        alert('Please upload an image')
+        return;
+    }
+    
     // if (phoneNumber.length < 10) {
     //     alert('Phone number must be at least 10 digits long ')
     //     return;
@@ -41,22 +47,38 @@ const sendData = async (password) => {
     const phoneNumber = document.getElementById('phoneField').value
     const age = document.getElementById('ageField').value
     const file = document.getElementById('fileField').files[0]
-    const formData = new FormData()
-    formData.append('username', username)
-    formData.append('password', password)
-    formData.append('firstName', firstName)
-    formData.append('address', address)
-    formData.append('phoneNumber', phoneNumber)
-    formData.append('age', age)
-    formData.append('file', file)
-
+    
     const response = await fetch('/auth/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username,
+            password,
+            firstName,
+            address,
+            phoneNumber,
+            age
+        })
+    })
+    
+    console.log('Response: ', response);
+    const data = await response.json()
+    console.log('Data: ', data);
+    
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('userId', data.userId)
+    console.log('FormData:', formData)
+    console.log('Hello');
+
+    const imageUploadResponse = await fetch('/auth/upload', {
         method: 'POST',
         body: formData
     })
 
-    console.log('Response: ', response);
-    const data = await response.json()
-    console.log('Data: ', data);
+    console.log('Image Upload Response: ', imageUploadResponse);
+
     window.location.href = data.url
 }

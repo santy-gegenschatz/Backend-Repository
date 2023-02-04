@@ -110,6 +110,10 @@ td {
     height: 300px;
 }
 
+.expand {
+    flex-grow: 0.75;
+}
+
 .form-table-div {
     display: flex;
     justify-content: center;
@@ -160,6 +164,10 @@ td {
     border-radius: 25px;
     margin: 5px;
     padding: 10px;
+}
+
+.red-background {
+    background-color: red;
 }
 
 .row-centered-div {
