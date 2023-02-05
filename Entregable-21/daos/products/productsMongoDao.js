@@ -12,27 +12,36 @@ class ProductsMongoDao {
 
     async addProduct(product) {
         try {
-            // First, check if the product exists
-            // That implies checking the id is valid
-            console.log(typeof product.id);
-            if (!mongoose.Types.ObjectId.isValid(product.id) || typeof product.id === 'number') {
-                return {error : false}
-            }
-            const response = await this.container.getById(products, product.id)
-            if (this.isNotError(response)) {
-                if (response) {
-                    // Update Stock
-                    console.log('Updating field');
-                    const object = { stock :  Number(product.stock) + Number(response.stock)}
-                    const response2 = await this.container.updateFieldById(products, product.id, object)
-                    return this.throwSuccess('Item already in the database. Stock augmented', response2)
-                } else {
-                    // Create the product
-                    const response = await this.container.add(products, product)
-                    return this.throwSuccess('New item added to the database', response)
-                }
+            // First of all, check if the id is coming or not in the product object
+            if (typeof product.id === 'undefined') {
+                // If it is not coming, we need to create a new product
+                // Create the product
+                const response = await this.container.add(products, product)
+                return this.throwSuccess('New item added to the database', response)
             } else {
-                return this.throwError('Could not add product to the DB.')    
+                // If it is coming, we need to check if it is valid or not
+                if (!mongoose.Types.ObjectId.isValid(product.id) || typeof product.id === 'number') {
+                    // If it is not valid, we need to return an error message
+                    return {error : 'The id you submitted is invalid'}
+                } else {
+                    // If it is coming and it is valid, we need to check if it is already in the DB or not
+                    const response = await this.container.getById(products, product.id)
+                    if (this.isNotError(response)) {
+                        if (response) {
+                            // Update Stock
+                            console.log('Updating field');
+                            const object = { stock :  Number(product.stock) + Number(response.stock)}
+                            const response2 = await this.container.updateFieldById(products, product.id, object)
+                            return this.throwSuccess('Item already in the database. Stock augmented', response2)
+                        } else {
+                            // Create the product
+                            const response = await this.container.add(products, product)
+                            return this.throwSuccess('New item added to the database', response)
+                        }
+                    } else {
+                        return this.throwError('Could not add product to the DB.')    
+                    }
+                }
             }
         } catch (err) {
             return this.throwError('Could not add product to the DB.')

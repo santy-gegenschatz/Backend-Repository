@@ -207,7 +207,7 @@ td {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 400px;
+    height: 500px;
 }
 
 #buttons-menu {
@@ -342,7 +342,7 @@ td {
     margin: 20px;
     padding: 10px;
     border-radius: 25px;
-    height: 400px;
+    height: 500px;
 }
 
 #logout-button {
