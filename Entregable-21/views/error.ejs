@@ -9,15 +9,9 @@
     <title> Oops... That's an error </title>
 </head>
 <body id = 'wrapper'>
+    <%- include ('partials/header.ejs')%>
     <div class = 'content-div'>
         <div class = "column-centered-div">
-            <div class = 'header'>
-                <div class = "column-centered-div">
-                    <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
-                    <h2 class = 'white'> This is the Error Screen </h2>
-                </div>
-            </div>
-    
             <div class = "error-card column-centered-div">
                 <h3> It seems you have an error, in particular:</h3>
                 <h3> <%= error %> </h3>
@@ -26,6 +20,7 @@
             </div>
         </div>
     </div>
+    <%- include ('partials/footer.ejs')%>
 </body>
     <script src="../../js/error.js"></script>
 </html>

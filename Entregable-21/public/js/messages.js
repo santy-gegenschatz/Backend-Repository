@@ -22,10 +22,6 @@ socket.on('messages', (data) => {
     }
 })
 
-socket.on('products', (data) => {
-    renderProduct(data)
-})
-
 // Define specific functions
 const renderCompression = (compression) => {
     console.log(compression);
@@ -56,16 +52,6 @@ const renderMessages = (data) => {
     chatDiv.innerHTML = messagesArray.join(' ')
 
     
-}
-
-const renderProduct = (prod) => {
-    const table = document.getElementById('table')
-    const tableHtml = table.innerHTML
-    console.log(tableHtml);
-    const newHtml = `<tr> <td> ${prod.title} </td> <td> ${prod.price} </td> <td> <img src = '${prod.thumbnail}'> </td> </tr> </tbody>`
-    const replaced = tableHtml.replace('</tbody>', newHtml)
-    console.log(replaced);
-    table.innerHTML = replaced
 }
 
 const addMessage = (m) => {

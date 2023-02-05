@@ -1,23 +1,33 @@
 const { getProducts, getProduct, addProduct, updateProduct, deleteProduct } = require('../controllers/productController')
-const { logRouteInfo } = require('../loggers/logger')
+const { logRouteInfo, logDebug } = require('../loggers/logger')
 const { Router } = require('express')
+const { checkAuthentication } = require('../middlewares/passportAuth')
 const productsRouter = Router()
 
 // ROUTER URL'S
 // Get all products
-productsRouter.get('/', logRouteInfo, getProducts)
+productsRouter.get('/', logRouteInfo, checkAuthentication, getProducts)
 
 // Get a products by id
-productsRouter.get('/:id', logRouteInfo, getProduct)
+productsRouter.get('/:id', logRouteInfo, checkAuthentication, getProduct)
 
 // Add a product to the array
-productsRouter.post('/', logRouteInfo, addProduct)
+productsRouter.post('/', logRouteInfo, checkAuthentication, addProduct)
 
 // Update a product
-productsRouter.put('/:id', logRouteInfo, updateProduct)
+productsRouter.put('/:id', logRouteInfo, checkAuthentication, updateProduct)
 
 // Delete a product
-productsRouter.delete('/:id', logRouteInfo, deleteProduct)
+productsRouter.delete('/:id', logRouteInfo, checkAuthentication, deleteProduct)
+
+// Test route for security
+productsRouter.post('/test', checkAuthentication, (req, res) => {
+    logDebug(req.body)
+    logDebug(req.isAuthenticated())
+    logDebug(req.cookies)
+    res.json('This is a test route')
+})
+
 
 
 

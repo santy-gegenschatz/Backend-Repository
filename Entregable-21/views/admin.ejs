@@ -10,15 +10,29 @@
 </head>
 <body id = 'wrapper'>
     <%- include ('partials/header.ejs') %>
-    <div id = 'insert-product-div'>
-        <h4> Form </h4>
-        <form onsubmit = 'return addProduct(this)' class = "column-centered-div">
-            <input type="text" placeholder = "Name" name = 'title' id = 'title'>
-            <input type="text" placeholder = "Price" name = 'price' id = 'price'>
-            <input type="text" placeholder = "Url" name = 'thumbnail' id = 'thumbnail'>
-            <input type="submit" class = 'btn btn-info' placeholder = "Send">
-        </form>
+    <div class = 'content-div'>
+        <h4> Admin Panel </h4>
+        <div class = 'row-centered-div'>
+            <div id = 'insert-product-div'>
+                <h5> Add new products to the store </h5>
+                <div class = "column-centered-div">
+                    <input type="text" placeholder = "Name" name = 'title' id = 'title'>
+                    <input type="text" placeholder = "Price" name = 'price' id = 'price'>
+                    <input type="text" placeholder = "Thumbnail url" name = 'thumbnail' id = 'thumbnail'>
+                    <input type="submit" class = 'btn btn-info' placeholder = "Send" onclick = 'addProduct()'>
+                </div>
+            </div>
+    
+            <div id = 'admin-functions-div'>
+                <h5> Other Administrative functions </h5>
+                <button class = 'btn btn-info'> Check Docs </button>
+                <button class = 'btn btn-info'> Enable multithread </button>
+                <button class = 'btn btn-info'> Check Api </button>
+                <button class = 'btn btn-info'> Check GraphQl Api </button>
+            </div>
+        </div>
     </div>
     <%- include ('partials/footer.ejs') %>
 </body>
+<script src = '/js/admin.js'></script>
 </html>

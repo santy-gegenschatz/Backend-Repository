@@ -20,12 +20,6 @@ const startSockets = (ioServer) => {
                 ioServer.sockets.emit('messages', await messagesDao.getMessages())
             }
         })
-    
-        // Operation when a product is added
-        client.on('add-product', (product) => {
-            products.push(product)
-            ioServer.sockets.emit('products', product)
-        })
     })
 }
 

@@ -8,21 +8,16 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <title> Unauthorized </title>
 </head>
-<body>
-    <div class = "column-centered-div">
-        <div class = 'header'>
-            <div class = "column-centered-div">
-                <h1 class = 'white'> The Summer Store 🌻</h1>
-                <h2 class = 'white'> Oops... </h2>
-            </div>
+<body id = 'wrapper'>
+    <%- include ('partials/header.ejs')%>
+    <div class = 'content-div'>
+        <div class = "general-card" style = 'flex-direction: column;'>
+            <h1 id = 'unauthorized-jumbofont'> Access Denied </h1>
+            <form action="/auth/login" method="get" class = "column-centered-div">
+                <button class = "btn btn-primary"> Try logging in </button>
+            </form>
         </div>
     </div>
-
-    <div class = "general-card" style = 'flex-direction: column;'>
-        <h1 id = 'unauthorized-jumbofont'> Access Denied </h1>
-        <form action="/auth/login" method="get" class = "column-centered-div">
-            <button class = "btn btn-primary"> Try logging in </button>
-        </form>
-    </div>
+    <%- include ('partials/footer.ejs')%>
 </body>
 </html>
