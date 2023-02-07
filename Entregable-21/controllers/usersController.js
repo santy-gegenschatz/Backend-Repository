@@ -1,11 +1,11 @@
 const { logDebug } = require("../loggers/logger")
-const usersDao = require("../daos/users/index")
+const usersApi = require("../api/usersApi")
 
 const addProductToCart = async (req, res) => {
     try {
         const { user } = req
         const { productId } = req.body
-        const response = await usersDao.addProductToCart(user.id, productId)
+        const response = await usersApi.addProductToCart(user.id, productId)
         logDebug('--- Controller Response ---')
         logDebug(response)
         return res.json(response)
@@ -18,7 +18,7 @@ const addProductToCart = async (req, res) => {
 const completePurchase = async (req, res) => {
     try {
         const { user } = req
-        const response = await usersDao.completePurchase(user.id)
+        const response = await usersApi.completePurchase(user.id)
         logDebug('--- Controller Response ---')
         logDebug(response)
         return res.json(response)

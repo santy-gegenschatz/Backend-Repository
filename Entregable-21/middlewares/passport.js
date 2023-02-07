@@ -1,4 +1,4 @@
-const usersDao = require('../daos/users/index')
+const usersApi = require('../api/usersApi')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bCrypt = require('bcrypt')
@@ -14,21 +14,20 @@ const createHash = (password) => {
 }
 
 const isValidPassword = (user, password) => {
-    console.log(password, user.password);
     return bCrypt.compareSync(password, user.password)
 }
 
 const initPassport = () => {
     passport.use('login', new LocalStrategy( async (username, password, done) => {
         // First, check if user exists
-        const userExists = await usersDao.checkUserExists(username)
+        const userExists = await usersApi.checkUserExists(username)
         logInfo(userExists);
         if (!userExists) {
             return done('userdoesnotexist', false)
         }
         
         // User does exist, retreive it from MongoDB
-        const user = await usersDao.getUser(username)
+        const user = await usersApi.getUser(username)
         logInfo('User returned: ', user);
         if (!isValidPassword(user, password)) {
             return done('wrongpassword', false)
@@ -41,7 +40,7 @@ const initPassport = () => {
     passport.use('signup', new LocalStrategy({passReqToCallback: true}, 
         async (req, username, password, done) => {
         // First check if the username is available
-        const usernameAvailable = await usersDao.checkUserNameAvailable(username)
+        const usernameAvailable = await usersApi.checkUserNameAvailable(username)
         if (!usernameAvailable) {
             return done('usernametaken', false)
         }
@@ -56,7 +55,7 @@ const initPassport = () => {
         }
 
         // Add the user to the mongodbDatabase
-        const addedUser = await usersDao.add(newUser)
+        const addedUser = await usersApi.add(newUser)
         return done(null, addedUser)
     }))
 
@@ -66,7 +65,7 @@ const initPassport = () => {
 
     passport.deserializeUser( async (id, done) => {
         console.log('Deserializing');
-        const user = await usersDao.getUserById(id) 
+        const user = await usersApi.getUserById(id) 
         done(null, user)
     })
 
