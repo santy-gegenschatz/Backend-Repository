@@ -1,4 +1,5 @@
 const productsDao = require('../daos/products/index')
+const { logDebug } = require('../loggers/logger')
 
 class ProductsApi {
     constructor() {
@@ -11,7 +12,7 @@ class ProductsApi {
             if (typeof product.id === 'undefined') {
                 // If it is not coming, we need to create a new product
                 // Create the product
-                const response = await this.productsDao.add(products, product)
+                const response = await this.productsDao.add(product)
                 return this.throwSuccess('New item added to the database', response)
             } else {
                 // If it is coming, we need to check if it is valid or not
@@ -117,7 +118,8 @@ class ProductsApi {
     async updateProduct(id, newObject) {
         const response = await this.productsDao.update(id, newObject)
         if (response) {
-            return this.throwSuccess('Here is how the product looks now: ', await this.getProduct(id))
+            const updatedProduct = await this.getProduct(id)
+            return this.throwSuccess('Here is how the product looks now: ', updatedProduct.payload)
         }
 
         return this.throwError('The id did not match any object')
