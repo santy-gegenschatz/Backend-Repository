@@ -54,3 +54,7 @@ const addProduct = async () => {
     const data = await response.json()
     console.log(data)
 }
+
+const goToGraphql = () => {
+    window.location.href = '/api/graphql'
+}
