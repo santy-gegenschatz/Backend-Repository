@@ -16,6 +16,7 @@ const { productsRouter } = require('../routers/productsRouter')
 const { cartRouter } = require('../routers/cartRouter')
 const { authRouter } = require('../routers/authRouter')
 const { usersRouter } = require('../routers/usersRouter')
+const { graphqlRouter } = require('../graphql/graphql');
 
 // Sockets 
 const { startSockets } = require('../sockets/sockets')
@@ -29,7 +30,7 @@ const { advancedOptions } = require('../config/mongo/mongoDbConfig') // To conne
 
 // Login - Logout
 const passport = require('passport')
-const { initPassport } = require('../middlewares/passport') 
+const { initPassport } = require('../middlewares/passport'); 
 
 class Server {
     constructor() {
@@ -69,6 +70,7 @@ class Server {
       this.app.use('/api/products', productsRouter)
       this.app.use('/api/cart', cartRouter)
       this.app.use('/api/users', usersRouter)
+      this.app.use('/api/graphql', graphqlRouter)
     }
 
     templatingEngines() {

@@ -2,8 +2,8 @@ const { fork } = require('child_process')
 const { logInfo, logDebug } = require('../loggers/logger')
 const { generateFakeProducts } = require('../utils/fakeProductGenerator')
 const { getServerInfo } = require('../utils/serverInfo.js')
-const productsDao = require('../daos/products/index')
-const usersDao = require('../daos/users/index')
+const productsApi = require('../api/productsApi')
+const usersApi = require('../api/usersApi')
 
 
 const renderAdminPanel = async (req, res) => {
@@ -12,7 +12,7 @@ const renderAdminPanel = async (req, res) => {
 
 const renderCart = async (req, res) => {
     const { id:userId } = req.user
-    const cart = await usersDao.getCurrentCartForUser(userId)
+    const cart = await usersApi.getCurrentCartForUser(userId)
     logDebug('--- Cart Obtained in Default Controller ---');
     logDebug(cart);
     if (cart.code !== 200) {
@@ -44,8 +44,7 @@ const renderFakeProducts = async (req, res) => {
 }
 
 const renderHome = async (req, res) => {
-    const { payload } = await productsDao.getAllProducts()
-    logInfo(payload)
+    const { payload } = await productsApi.getAllProducts()
     const products = payload.map( (p) => {
         return {
             title: p._doc.name,
@@ -54,32 +53,15 @@ const renderHome = async (req, res) => {
             id: p._id
         }
     })
-    logDebug(products);
     res.render('home.ejs', {products: products, noRender : payload.length===0, username : req.user.username})
 }
 
 const renderMessages = async (req, res) => {
     try {
-        logInfo(req.user)
         res.render('messages.ejs', {username : req.user.username})
     } catch (err) {
         res.redirect('/')
     }
-}
-
-const renderProducts = async (req, res) => {
-    const { payload } = await productsDao.getAllProducts()
-    logDebug(payload)
-    const products = payload.map( (p) => {
-        return {
-            title: p._doc.name,
-            price: p.price,
-            thumbnail: p._doc.thumbnail
-        }
-    })
-    logDebug(products);
-    
-    res.render('products.ejs', {products: products, noRender : products.length===0})
 }
 
 const renderProfile = async (req, res) => {
@@ -88,7 +70,7 @@ const renderProfile = async (req, res) => {
 }
 
 const renderPurchases = async (req, res) => {
-    const { code, payload } = await usersDao.getPurchaseHistory(req.user.id)
+    const { code, payload } = await usersApi.getPurchaseHistory(req.user.id)
     if (code !== 200) {
         res.redirect('/auth/error?message=Error+obtaining+purchase+history')
         return
@@ -122,7 +104,6 @@ const renderServerInfo = async (req, res) => {
 module.exports = { 
     renderHome, 
     renderCart, 
-    renderProducts,
     renderPurchases,
     renderMessages, 
     renderProfile, 
