@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <title> Signup </title>
+</head>
+<body id = 'wrapper'>
+    <%- include ('partials/header.ejs')%>
+    <div class = 'content-div'>
+        <div class = 'general-card column-centered-div'>
+            <div id = "signup-person-details-div">
+                <h3> Please fill in the following fields to create your account </h3>
+                <div class = 'column-centered-div'>
+                    <div class = 'row-centered-div'>
+                        <div class = 'input-image-div'>
+                            <label for="fileField" id = "image-input-label">
+                                <p> Select your profile picture </p>
+                                <input type="file" id = "fileField" accept="image/png, image/jpg, image/gif, image/jpeg" name = 'profile-image'> 
+                                <img id = 'preview'>
+                            </label>
+                        </div>
+                        <div class = 'column-centered-div'>
+                            <div class = 'row-centered-div'>
+                                <input type = "text" name = 'firstName' placeholder = 'Enter your first name' id = 'firstNameField'>
+                                <input type = "text" name = 'address' placeholder = 'Enter your address' id = 'addressField'>
+                            </div>
+                            <div class = "row-centered-div">
+                                <input type = "number" name = 'age' placeholder = 'Enter your age' id = 'ageField'>
+                                <input type = "tel" name = 'phone' placeholder = 'Enter your phone number' id = 'phoneField'>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class = "column-centered-div long-input">
+                        <input type = "text" name = 'username' placeholder = "Select your username" id = 'usernameField' class = 'long-input'>
+                        <input type = "password" name = 'password1' placeholder = "Enter your password" id = 'passwordField1' class = 'long-input'>
+                        <input type = "password" name = 'password2' placeholder = "Confirm your password" id = 'passwordField2' class = 'long-input'>
+                    </div>
+    
+                    <div class = "row-centered-div">
+                        <form action="/auth/login" method="get">
+                            <input type="submit" class = 'btn btn-info' value = 'Go to Login'>
+                        </form>
+    
+                        <input type="submit" class = 'btn btn-primary' onclick = "return verifyFields()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ('partials/footer.ejs')%>
+</body>
+<script src="../../js/signup.js"></script>
+<script>
+    const inputFile = document.getElementById("fileField");
+    const preview = document.getElementById("preview");
+  
+    inputFile.addEventListener("change", function () {
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        preview.src = reader.result;
+      });
+      reader.readAsDataURL(inputFile.files[0]);
+    });
+  </script>
+</html>
