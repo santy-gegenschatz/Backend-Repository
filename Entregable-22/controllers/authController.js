@@ -33,6 +33,7 @@ const signUpUser = async (req, res, next) => {
             // Send an email indicating that a new user has been created
             sendEmail(adminEmail, 'New user created', `A new user has been created. Username: ${user.username}. Address: ${user.address}. Phone number: ${user.phoneNumber}. Age: ${user.age}`)
             // Send a twilio whatsapp message indicating that a new user has been created
+            
             req.login(user, () => {
                 res.send({url: '/', userId: user._id})
             })
