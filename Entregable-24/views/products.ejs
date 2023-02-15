@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title> Handlebars version </title>
+</head>
+<body>
+    <h3> This is a table with all of the products</h3>
+    <% if (noRender) {%>
+    <h3> Sorry... There are no products to browse. </h3>
+    <% } else { %>
+    <div id = 'main-div'>
+        <table> 
+            <tr>
+                <th> Name </th>
+                <th> Price </th>
+                <th> Visual </th>
+            </tr>
+            <% products.forEach( prod => { %>
+                <tr>
+                    <td> <%= prod.title%> </td>
+                    <td> <%= prod.price%> </td>
+                    <td> <img src = <%= prod.thumbnail%> alt="image_not_found"> </td>
+                </tr>
+             <% }) %>
+        </table>
+    </div>
+    <br>
+    <div id = 'main-div'>
+        <button class = "btn btn-info"> <a href="/"> Go to Form </a></button>
+    </div>
+    <% } %>
+</body>
+</html>

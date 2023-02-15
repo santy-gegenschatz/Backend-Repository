@@ -1,0 +1,437 @@
+/* This file updates the styles, somehow rudimentary, for the layouts */
+h1 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+input {
+    margin: 12px;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+}
+
+input[type = 'text']::placeholder {
+    text-align: center;
+}
+
+button {
+    margin: 20px;
+}
+
+a {
+    color: white;
+}
+
+img {
+    height: 70px;
+    width: 70px;
+}
+
+table {
+    min-width: 700px;
+    flex-grow: 1;
+    background-color: black;
+    margin: 20px;
+    border-radius: 25px;
+}
+
+th {
+    text-align: center;
+    background-color: blue;
+    color: white;
+}
+
+tr {
+    text-align: center;
+}
+
+td {
+    color: white;
+}
+
+/* Classes */
+.black-background {
+    background-color: black;
+}
+
+.blue {
+    color: blue;
+}
+
+.cart-item {
+    border-radius: 25px;
+    background: rgb(152, 242, 62);
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px;
+    padding: 20px;
+}
+
+.cart-item-image {
+    height: 150px;
+    width: 150px;
+    margin-right: 15px;
+}
+
+.column-centered-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-div {
+    flex-grow: 1;
+    background-color: rgb(246, 246, 246);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+.error-card {
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    margin: 20px;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.error-image {
+    width: 300px;
+    height: 300px;
+}
+
+.expand {
+    flex-grow: 0.75;
+}
+
+.form-table-div {
+    display: flex;
+    justify-content: center;
+}
+
+.general-card {
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.green {
+    color: green
+}
+
+.header {
+    background-color: black;
+    width: 100%;
+}
+
+
+.logout-button-div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.long-input {
+    width: 80%;
+}
+
+.message-div {
+    min-width: 300px;
+    background: linear-gradient(90deg, #f3f3f3 0%, #e8e8e8 100%);
+    border-radius: 25px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.purchase-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: linear-gradient(90deg, #64b74b 0%, #56c982 100%);
+    border-radius: 25px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.red-background {
+    background-color: red;
+}
+
+.row-centered-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.white {
+    color: white;
+}
+
+.yellow {
+    color: yellow;
+}
+
+/* Id's */
+#account-info-div {
+    min-width: 300px;
+    background-color: lightblue;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#admin-functions-div {
+    background-color: lightgreen;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 500px;
+}
+
+#buttons-menu {
+    background-color: black;
+    border-style: solid;
+    border-color: white;
+    border-width: 0px 0px 5px 0px;
+}
+
+#cart-div {
+    flex-grow: 1;
+    background: rgb(246, 246, 246);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+#cart-items-div {
+    flex-grow: 1;
+    width: 90%;
+}
+
+#chat-div {
+    flex-grow: 1;
+    max-width: 600px;
+    max-height: 600px;
+    background: linear-gradient(90deg, #64b74b 0%, #56c982 100%);
+    border-radius: 25px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: scroll;
+}
+
+#chat-messages-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+#compression-title {
+    text-align: center;
+    margin: 7px;
+}
+
+#fake-product-image {
+    height: 50;
+    width: 50;
+}
+
+#fileField {
+    display: none;
+}
+
+#footer {
+    margin-top: auto;
+    background-color: black;
+    border-style: solid;
+    border-color: white;
+    border-width: 5px 0px 0px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#header {
+    background-color: black;
+    border-style: solid;
+    border-color: white;
+    border-width: 0px 0px 5px 0px;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    grid-template-rows: 100%;
+    grid-template-areas: '. middle right';
+}
+
+#header-div__middle {
+    grid-area: middle;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#header-div__right {
+    grid-area: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-right: 10px;
+}
+
+#home-div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: black;
+}
+
+#image-input-label {
+    cursor: pointer;
+    border-radius: 50px;
+    width: 200px;
+    height: 200px;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+#insert-product-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgreen;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 25px;
+    height: 500px;
+}
+
+#logout-button {
+    padding: 5px;
+    margin: 5px;
+}
+
+#main-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: beige;
+}
+
+#message-details-div {
+    width: 400px;
+    max-width: 400px;
+    min-width: 300px;
+    background: linear-gradient(90deg, #7fbbe5 0%, #73b8e3 100%);
+    border-radius: 25px;
+    margin: 5px;
+}
+
+#message-input-div {
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+}
+
+#messages-div {
+    flex-grow: 1;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#messages-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#preview {
+    height: 100px;
+    width: 100px;
+}
+
+#products-table-div {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(246, 246, 246);
+    padding-top: 10px;
+}
+
+#secondary-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    margin: 20px;
+    padding: 10px;
+}
+
+#signup-person-details-div {
+    border-radius: 25px;
+    background-color: lightslategray;
+    padding: 10px;
+    margin: 10px;
+}
+
+#total-div {
+    background-color: lightblue;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+#unauthorized-jumbofont {
+    font-size: 100px;
+    color: white;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: black;
+}
