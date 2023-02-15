@@ -20,23 +20,14 @@ const addProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const { id } = req.params
-    const {name, description, price, stock, thumbnail, credential} = req.body
-    const newObject = {name, description, price, stock, thumbnail}
-    if (validateCredentials(credential).validated) {
-        return res.json(await productsApi.updateProduct(id, newObject))
-    } else {
-        return res.json(validateCredentials(credential))
-    }
+    const { name, description, price, stock, thumbnail } = req.body
+    const newObject = { name, description, price, stock, thumbnail }
+    return res.json(await productsApi.updateProduct(id, newObject))
 }
 
 const deleteProduct = async (req, res) => {
     const { id } = req.params
-    const { credential } = req.body
-    if (validateCredentials(credential).validated) {
-        return res.json(await productsApi.deleteProduct(id))
-    } else {
-        return res.json(validateCredentials(credential))
-    }
+    return res.json(await productsApi.deleteProduct(id))
 }
 
 

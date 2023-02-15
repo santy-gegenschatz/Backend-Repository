@@ -20,15 +20,4 @@ productsRouter.put('/:id', logRouteInfo, checkAuthentication, updateProduct)
 // Delete a product
 productsRouter.delete('/:id', logRouteInfo, checkAuthentication, deleteProduct)
 
-// Test route for security
-productsRouter.post('/test', checkAuthentication, (req, res) => {
-    // logDebug(req.body)
-    // logDebug(req.isAuthenticated())
-    // logDebug(req.cookies)
-    // res.json('This is a test route')
-})
-
-
-
-
 exports.productsRouter = productsRouter
