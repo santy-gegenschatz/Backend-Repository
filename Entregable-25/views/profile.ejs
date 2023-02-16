@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title> Your profile details </title>
+</head>
+<body id = 'wrapper'>
+    <%-include ('partials/header.ejs') %>
+    <div class = 'content-div'>
+        <h4> Your Account </h4>
+        <div id = 'account-info-div'>
+            <img src = <%= image%> alt="image_not_found">
+            <p> <strong> Username </strong> </p>
+            <p> <%- user.username %> </p>
+            <p> <strong> Name </strong> </p>
+            <p> <%- user.firstName %> </p>
+            <p> <strong> Address </strong> </p>
+            <p> <%- user.address %> </p>
+        </div>
+    </div>
+    <%- include ('partials/footer.ejs') %>
+</body>
+</html>

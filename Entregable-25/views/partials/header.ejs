@@ -1,0 +1,33 @@
+<header>
+    <div id = 'header'>
+        <div id = 'header-div__middle'>
+            <h1 class = 'white'> 🌻 The Summer Store 🌻</h1>
+        </div>
+        <div id = 'header-div__right'>
+            <% if (typeof username !== 'undefined') { %>
+                <div class = 'logout-button-div'>
+                    <form action="/auth/logout" method="post">
+                        <button class = 'btn btn-info' id = 'logout-button' name = 'logoutButton'> Log out </button>
+                    </form>
+                </div>
+            <% } %>
+
+            <div class = 'logout-button-div'>
+                <% if (typeof username !== 'undefined') { %> 
+                    <h4 class = 'white'> Welcome, <%= username %> </h4>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <% if (typeof username !== 'undefined') { %>
+        <div id = 'buttons-menu' class = 'row-centered-div black-background'>
+            <button class = "btn btn-primary" onclick = "goToHome()"> Products </button>
+            <button class = "btn btn-primary" onclick = "goToCart()">  Cart </button>
+            <button class = "btn btn-primary" onclick = "goToPurchases()"> Purchases </button>
+            <button class = "btn btn-primary" onclick = "goToMessages()"> Messages </button>
+            <button class = "btn btn-primary" onclick = "goToProfile()"> Profile </button>
+            <button class = "btn btn-primary" onclick = "goToAdminPanel()"> Admin Panel </button>
+        </div>
+    <% }  %>
+    <script src = "../../js/header.js"></script>
+</header>
