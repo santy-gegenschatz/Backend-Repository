@@ -12,12 +12,8 @@ if(process.env.ENVIRONMENT_TYPE === 'development') {
         level: 'info'
     })
 }
-try {
-    // const loggerWarn = pino({level: 'warn'}, './logs/warn.log')
-    // const loggerError = pino('./logs/error.log')
-} catch (err) {
-    console.log(err)
-}
+    const loggerWarn = pino({level: 'warn'}, './logs/warn.log')
+    const loggerError = pino('./logs/error.log')
 
 const logRouteInfo = (req, res, next) => {
     const { method, url } = req

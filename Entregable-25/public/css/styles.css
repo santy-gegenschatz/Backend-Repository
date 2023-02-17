@@ -137,6 +137,10 @@ td {
     width: 100%;
 }
 
+.hoverable:hover {
+    cursor: pointer;
+}
+
 
 .logout-button-div {
     display: flex;
@@ -358,6 +362,10 @@ td {
     background-color: beige;
 }
 
+#main-header:hover {
+    cursor: pointer;
+}
+
 #message-details-div {
     width: 400px;
     max-width: 400px;
@@ -399,6 +407,19 @@ td {
     align-items: center;
     background-color: rgb(246, 246, 246);
     padding-top: 10px;
+}
+
+#purchases-items-div {
+    overflow: scroll;
+    max-height: 500px;
+}
+
+#right-align-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-right: 10px;
 }
 
 #secondary-div {

@@ -1,0 +1,59 @@
+paths:
+  /api/cart:
+    post:
+      summary: Create a new cart
+      description: Creates a new shopping cart.
+      tags:
+        - Carts
+
+  api/cart/:cartId:
+    get:
+      summary: Get a cart by ID
+      description: Returns a shopping cart by ID.
+      tags:
+        - Carts
+
+    delete:
+      summary: Delete a cart by ID
+      description: Deletes a shopping cart by ID.
+      parameters:
+        - in: path
+          name: cartId
+          description: ID of the cart to delete.
+          required: true
+          type: integer
+      tags:
+        - Carts
+  api/cart/:cartId/:productId:
+    post:
+      summary: Add a product to a cart
+      description: Adds a product to a shopping cart.
+      parameters:
+        - in: path
+          name: cartId
+          description: ID of the cart to add the product to.
+          required: true
+          type: integer
+        - in: path
+          name: productId
+          description: ID of the product to add to the cart.
+          required: true
+          type: integer
+      tags:
+        - Carts
+    delete:
+      summary: Remove a product from a cart
+      description: Removes a product from a shopping cart.
+      parameters:
+        - in: path
+          name: cartId
+          description: ID of the cart to remove the product from.
+          required: true
+          type: integer
+        - in: path
+          name: productId
+          description: ID of the product to remove from the cart.
+          required: true
+          type: integer
+      tags:
+        - Carts

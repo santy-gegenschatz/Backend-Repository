@@ -22,3 +22,7 @@ const goToAdminPanel = () => {
     window.location.href = '/admin';
 }
 
+const goToDocs = () => {
+    window.location.href = '/api/docs';
+}
+

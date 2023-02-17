@@ -1,4 +1,4 @@
-const goToHome = () => {
+const goToHomeScreen = () => {
     window.location.href = '/';
 }
 
@@ -12,4 +12,17 @@ const checkoutCart = async () => {
     });
     const data = await response.json();
     alert(data.message, data.code)
+    goToPurchases();
+}
+
+const deleteItem = async (cartId, productId) => {
+    const response = await fetch(`/api/cart/${cartId}/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const data = await response.json();
+    alert(data.message, data.code)
+    goToCart();
 }

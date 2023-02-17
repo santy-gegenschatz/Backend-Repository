@@ -1,0 +1,23 @@
+paths:
+  /api/products:
+    get:
+      summary: Get all products
+      tags:
+        - Products
+    post:
+      summary: Create a product
+      tags:
+        - Products
+  /api/products/:productId:
+    get:
+      summary: Get a product by id
+      tags:
+        - Products
+    put:
+      summary: Update a product by id
+      tags:
+        - Products
+    delete:
+      summary: Delete a product by id
+      tags:
+        - Products

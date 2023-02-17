@@ -33,7 +33,7 @@ const renderCart = async (req, res) => {
     logDebug(total);
     logDebug(products);
     try {
-        res.render('cart.ejs', {username : req.user.username, cartProducts: products, noRender : products.length===0, total})
+        res.render('cart.ejs', {cartId: cart.id, username : req.user.username, cartProducts: products, noRender : products.length===0, total})
     } catch(err) {
         logInfo(err)
     }

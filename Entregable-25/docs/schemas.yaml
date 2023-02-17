@@ -1,0 +1,88 @@
+components:
+ schemas:
+  Product:
+     type: object
+     required:
+       - id
+       - name
+       - price
+       - thumbnail
+     properties:
+       id:
+         type: string
+         description: The auto-generated id of the book.
+       name:
+         type: string
+         description: The title of the product.
+       price:
+         type: number
+         description: The price of the product.
+       thumbnail:
+         type: string
+         description: The URL of the product thumbnail.
+     example:
+        id: 4ughd73658fnsk85dh58sk
+        title: desktop computer
+        price: 123.78
+        thumbnail: http://photo.url.png
+  Cart:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the cart.
+        items:
+          type: array
+          description: List of items in the cart.
+          items:
+            type: object
+            properties:
+              product_id:
+                type: integer
+                description: Unique identifier for the product.
+              quantity:
+                type: integer
+                description: Number of items in the cart.
+        creationDate:
+          type: string
+          description: Date the cart was created.
+      required:
+        - id
+        - items
+        - creationDate
+  User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the user.
+        email:
+          type: string
+          description: Email of the user.
+        address:
+          type: string
+          description: Address of the user.
+        firstName:
+          type: string
+          description: First name of the user.
+        age:
+          type: integer
+          description: Age of the user.
+        phoneNumber:
+          type: string
+          description: Phone number of the user.
+        currentCart:
+          type: string
+          description: ID of the current cart of the user.
+        purchaseHistory:
+          type: array
+          description: List of carts that the user has purchased.
+          items:
+            type: string
+      required:
+        - id
+        - name
+        - email
+        - address
+        - phoneNumber
+        - age 

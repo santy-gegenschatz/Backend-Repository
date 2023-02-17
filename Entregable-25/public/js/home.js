@@ -11,4 +11,5 @@ const addToCart = async (id) => {
     const data = await response.json()
     console.log(data);
     alert(data.payload.message)
+    goToCart()
 }

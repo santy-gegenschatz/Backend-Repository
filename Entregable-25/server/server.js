@@ -32,6 +32,9 @@ const { advancedOptions } = require('../config/mongo/mongoDbConfig') // To conne
 const passport = require('passport')
 const { initPassport } = require('../middlewares/passport'); 
 
+// Swagger Docs
+const { specs, swaggerUi } = require('../docs/swaggerDocs')
+
 class Server {
     constructor() {
         this.PORT = yargs.argv.port || 8080
@@ -62,6 +65,8 @@ class Server {
       initPassport()
       this.app.use(passport.initialize())
       this.app.use(passport.session())
+      this.app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs))
+
     }
 
     routes() {

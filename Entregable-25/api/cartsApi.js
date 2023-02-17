@@ -69,7 +69,7 @@ class CartsApi {
 
     async createCart() {
         const newCart = {creationDate: new Date().toLocaleString(), items: []}
-        const createReponse = await this.cartsDao.add(carts, newCart)
+        const createReponse = await this.cartsDao.add(newCart)
         if (this.isNotError(createReponse)) {
             return this.throwSuccess('Cart succesfully created', createReponse)
         } else {
@@ -78,7 +78,7 @@ class CartsApi {
     }
 
     async deleteCart(id) {
-        const deleteResponse = await this.cartsDao.delete(carts, id)
+        const deleteResponse = await this.cartsDao.delete(id)
         if (this.isNotError(deleteResponse)) {
             return this.throwSuccess('Cart deleted')
         } else {
