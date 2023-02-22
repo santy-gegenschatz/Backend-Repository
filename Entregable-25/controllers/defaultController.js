@@ -13,8 +13,7 @@ const renderAdminPanel = async (req, res) => {
 const renderCart = async (req, res) => {
     const { id:userId } = req.user
     const cart = await usersApi.getCurrentCartForUser(userId)
-    logDebug('--- Cart Obtained in Default Controller ---');
-    logDebug(cart);
+
     if (cart.code !== 200) {
         res.redirect('/auth/error?message=Error+obtaining+cart')
         return
@@ -24,6 +23,7 @@ const renderCart = async (req, res) => {
         res.render('cart.ejs', {username : req.user.username, cartProducts: [], noRender : true, total: 0})
         return
     }
+
     const products = cart.payload.items
     let total = 0
     cart.payload.items.forEach( (p) => {
@@ -31,9 +31,8 @@ const renderCart = async (req, res) => {
     })
     logDebug('--- Total Obtained in Default Controller ---');
     logDebug(total);
-    logDebug(products);
     try {
-        res.render('cart.ejs', {cartId: cart.id, username : req.user.username, cartProducts: products, noRender : products.length===0, total})
+        res.render('cart.ejs', {cartId: cart.payload.id, username : req.user.username, cartProducts: products, noRender : products.length===0, total})
     } catch(err) {
         logInfo(err)
     }
@@ -75,8 +74,6 @@ const renderPurchases = async (req, res) => {
         res.redirect('/auth/error?message=Error+obtaining+purchase+history')
         return
     }
-    logDebug('--- Purchase History Obtained in Default Controller ---');
-    logDebug(payload);
     if (payload.length > 0) {
         res.render('purchases.ejs', {username : req.user.username, purchases: payload, noRender : false})
         return

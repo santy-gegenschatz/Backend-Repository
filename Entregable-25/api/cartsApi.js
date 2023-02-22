@@ -1,6 +1,6 @@
 const productsApi = require('../api/productsApi')
-const cartsDao = require('../daos/carts/index')
-const { logDebug } = require('../loggers/logger')
+const cartsDao = require('../factory/cartsFactory')
+const { logDebug, logError } = require('../loggers/logger')
 
 class CartsApi {
     constructor() {
@@ -12,12 +12,7 @@ class CartsApi {
         // Then, make sure the cart exists, the product exists and the product has stock
         let cartResponse = await this.getCart(idCart)
         const productResponse = await productsApi.getProduct(idProduct)
-        logDebug('--- Product Response ---')
-        console.log(productResponse);
-        logDebug('--- Cart Response ---')
-        console.log(cartResponse);
         if (cartResponse.code === 200) {
-            logDebug('Entered')
             if (productResponse.code === 200) {
                     // Check the product has stock
                     const stockResponse = await productsApi.productHasStock(idProduct) // We already know the product exists, so the response needs no error handling
@@ -26,7 +21,6 @@ class CartsApi {
                         const currentCartItems = cartResponse.payload.items
                         // Check if the products already exists in the cart
                         const productInArray = currentCartItems.find( (prod) => {
-                            console.log('Prod: ', prod, idProduct);
                             return prod.id?.toString() === idProduct
                         })
                         let newCartItems;
@@ -39,10 +33,8 @@ class CartsApi {
                         } else {
                             // If it does not exist, add a new object to the array
                             const currentProduct = {...productResponse.payload}
-                            console.log(currentProduct)
                             const {stock, ...rest} = currentProduct
                             product = {...rest, quantity: 1}
-                            console.log('product: ', product);
                             newCartItems = [...currentCartItems, product]
                         }
                         // Update the items array via an API call to the cartsDao
@@ -87,33 +79,39 @@ class CartsApi {
     }
 
     async deleteCartItem(idCart, idProduct) {
-        const cartResponse = await this.getCart(idCart)
-        const productResponse = await productsApi.getProduct(idProduct)
-        if (cartResponse.code === 200 && productResponse.code === 200) {
-            // Means the cart exists and the product exists
-            // Now, 
-            // 1) delete the product from the cart items array
-            const product = productResponse.payload
-            const cartItems = cartResponse.payload.items
-            const productIndex = cartItems.findIndex( (prod) => prod._id.toString() === idProduct)
-            // 1.1) Verify the cart effectively has that product
-            if (productIndex !== -1) {
-                cartItems.splice(productIndex, 1)
-                // 2) Then update the cart items field
-                const updateReponse = await this.cartsDao.update(carts, idCart, {items: cartItems})
-                return this.throwSuccess('Product deleted')
+        try {
+            const cartResponse = await this.getCart(idCart)
+            const productResponse = await productsApi.getProduct(idProduct)
+            if (cartResponse.code === 200 && productResponse.code === 200) {
+                // Means the cart exists and the product exists
+                // Now, 
+                // 1) delete the product from the cart items array
+                logDebug('--- Cart Response ---')
+                logDebug(cartResponse.payload.items)
+                logDebug('--- Product Response ---')
+                logDebug(productResponse)
+                const cartItems = cartResponse.payload.items
+                const productIndex = cartItems.findIndex( (prod) => prod.id.toString() === idProduct)
+                // 1.1) Verify the cart effectively has that product
+                if (productIndex !== -1) {
+                    cartItems.splice(productIndex, 1)
+                    // 2) Then update the cart items field
+                    await this.cartsDao.update(idCart, {items: cartItems})
+                    return this.throwSuccess('Product deleted')
+                } else {
+                    return this.throwError('The cart does not contain that product')
+                }   
             } else {
-                return this.throwError('The cart does not contain that product')
-            }   
-        } else {
-            return this.throwError('Error deleting item. Please check the provided product and cart id`s.')
+                return this.throwError('Error deleting item. Please check the provided product and cart id`s.')
+            }
+        } catch(err) {
+            logError(err)
+            return this.throwError('There was an error deleting the product from the cart')
         }
     }
 
     async getCart(id) {
         const response = await this.cartsDao.get(id)
-        logDebug('--- Response ---')
-        logDebug(response)
         if (this.isNotError(response) && response !== null) {
             return this.throwSuccess('Cart obtained', response)
         } else {

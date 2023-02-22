@@ -1,4 +1,4 @@
-const messagesDao = require('../daos/messages/messagesMongoDao')
+const messagesDao = require('../factory/messagesFactory')
 const { normalizeMessages, denormalizeMessages } = require('../utils/normalize')
 const { logDebug } = require('../loggers/logger')
 

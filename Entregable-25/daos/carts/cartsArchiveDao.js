@@ -1,6 +1,6 @@
 const Container = require('../../containers/archiveContainer')
 const Cart = require('../../models/cart')
-const productsDao = require('../products/index')
+const productsDao = require('../../factory/productsFactory')
 
 class CartsArchiveDao {
     constructor() {

@@ -1,5 +1,5 @@
 const Container = require('../../containers/sqlContainer')
-const productsDao = require('../products/index')
+const productsDao = require('../../factory/productsFactory')
 
 class Carts {
     constructor() {

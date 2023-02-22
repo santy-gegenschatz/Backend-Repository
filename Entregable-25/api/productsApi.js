@@ -1,4 +1,4 @@
-const productsDao = require('../daos/products/index')
+const productsDao = require('../factory/productsFactory')
 const { logDebug } = require('../loggers/logger')
 
 class ProductsApi {

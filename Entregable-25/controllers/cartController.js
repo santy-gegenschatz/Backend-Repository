@@ -1,4 +1,5 @@
 const cartsApi = require('../api/cartsApi')
+const { logDebug } = require('../loggers/logger')
 
 const getCart = async (req, res) => {
     const { id } = req.params
@@ -16,11 +17,13 @@ const addItemToCart = async (req, res) => {
 
 const deleteCartItem = async (req, res) => {
     const { id, id_prod} = req.params
+    logDebug('--- Delete Cart Item ---')
     res.json(await cartsApi.deleteCartItem(id, id_prod))
 }
 
 const deleteCart = async (req, res) => {
     const { id } = req.params
+    logDebug('--- Delete Cart ---')
     res.json(await cartsApi.deleteCart(id))
 }
 

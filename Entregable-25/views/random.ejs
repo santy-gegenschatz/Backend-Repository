@@ -9,16 +9,11 @@
     <title> Server Information </title>
 </head>
 <body>
-    <div class = 'header'>
-        <div class = "column-centered-div">
-            <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
-            <h2 class = 'white'> This is the Random Numbers Screen </h2>
-        </div>
-    </div>
-
+    <%- include ('./partials/header.ejs') %>
     <div class = "column-centered-div">
         <h3> Numbers </h3>
         <pre> <%= object %> </pre>
     </div>
+    <%- include ('./partials/footer.ejs') %>
 </body>
 </html>

@@ -1,5 +1,4 @@
 const { getCart, createCart, addItemToCart, deleteCartItem, deleteCart } = require('../controllers/cartController')
-const { logRouteInfo } = require('../loggers/logger')
 const { Router } = require('express')
 const cartRouter = Router()
 
@@ -14,7 +13,7 @@ cartRouter.post('/', createCart)
 cartRouter.post('/:id/:id_prod', addItemToCart)
 
 // Delete a product from a cart
-cartRouter.delete('/:id/:id_prod', deleteCartItem)
+cartRouter.delete('/deleteItem/:id/:id_prod', deleteCartItem)
 
 // Delete a cart
 cartRouter.delete('/:id', deleteCart)

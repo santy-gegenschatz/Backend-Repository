@@ -8,15 +8,9 @@
     <link rel="stylesheet" href="../../css/styles.css">
     <title> Server Information </title>
 </head>
-<body>
-    <div class = 'header'>
-        <div class = "column-centered-div">
-            <h1 class = 'white'> Welcome to the Summer Store 🌻</h1>
-            <h2 class = 'white'> This is the Info Screen </h2>
-        </div>
-    </div>
-
-    <div class = "column-centered-div">
+<body id = "wrapper">
+    <%- include ('./partials/header.ejs') %>
+    <div class = "content-div column-centered-div">
         <h3> Server info </h3>
         <p> <strong> Os System: </strong> <%= os %> </p>
         <p> <strong> Node version: </strong> <%= nodeVersion %> </p>
@@ -26,5 +20,6 @@
         <p> <strong> Command line arguments: </strong> <%= entryArguments %> </p>
         <p> <strong> Number of CPU's: </strong> <%=  numCPUs %> </p>
     </div>
+    <%- include ('./partials/footer.ejs') %>
 </body>
 </html>

@@ -1,7 +1,7 @@
 const passport = require('passport')
 const adminEmail = process.env.ADMIN_EMAIL
 const { sendEmail } = require('../utils/comms/nodemailer')
-const { logDebug } = require('../loggers/logger')
+const { logError } = require('../loggers/logger')
 const { upload } = require('../utils/uploading/multer')
 
 
@@ -9,13 +9,11 @@ const { upload } = require('../utils/uploading/multer')
 const loginUser = async (req, res, next) => {
     passport.authenticate('login', (err, user, info) => {
         if (!err) {
-            console.log('User: ', user);
-            console.log('Info: ', info);
             req.login(user, () => {
                 return next();
             })
         } else {
-            console.log('Error: ', err);
+            logError(err)
             res.redirect(`/auth/error/?error=${err}`)
         }
       })
@@ -23,7 +21,6 @@ const loginUser = async (req, res, next) => {
 }
 
 const goToHome = async (req, res) => {
-    console.log(req.user);
     res.redirect('/')
 }
 
@@ -73,8 +70,6 @@ const renderErrorScreen = async (req, res) => {
             errorMessage = 'Unknown error'
             break;
     }
-
-    console.log('After the switch, the error message is: ', errorMessage);
     res.render('error.ejs', {error: errorMessage})
 }
 
@@ -97,10 +92,9 @@ const renderUnauthorizedScreen = async (req, res) => {
 const uploadProfilePicture = async (req, res) => {
     upload.single('file')(req, res, (err) => {
         if (err) {
-            console.log('Error: ', err);
+            logError(err)
         } else {
             res.json('File uploaded successfully');
-            logDebug('-----File uploaded successfully----');
         }
     })
 }

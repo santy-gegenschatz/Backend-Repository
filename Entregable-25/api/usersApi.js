@@ -1,4 +1,4 @@
-const usersDao = require('../daos/users/usersMongoDao')
+const usersDao = require('../factory/usersFactory')
 const cartsApi = require('./cartsApi')
 
 const { logInfo, logError, logDebug } = require('../loggers/logger')
@@ -105,8 +105,6 @@ class usersMongoDao {
     async getCurrentCartIdForUser(id) {
         try {
             const user = await this.usersDao.get(id)
-            logDebug('------- User -------')
-            logDebug(user)
             // Simple check to see if there is a current cart
             logDebug(typeof user.currentCart)
             if (typeof user.currentCart === 'string') {

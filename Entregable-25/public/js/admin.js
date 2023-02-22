@@ -62,3 +62,11 @@ const goToGraphql = () => {
 const goToApi = () => {
     window.location.href = '/api/products/'
 }
+
+const goToMulti = () => {
+    window.location.href = '/api/randoms/'
+}
+
+const goToData = () => {
+    window.location.href = '/info-compressed'
+}

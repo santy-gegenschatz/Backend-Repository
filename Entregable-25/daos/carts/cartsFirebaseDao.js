@@ -1,5 +1,5 @@
 const Container = require('../../containers/firebaseContainer')
-const productsDao = require('../products/index')
+const productsDao = require('../../factory/productsFactory')
 const Cart = require('../../models/cart')
 
 class Carts {
