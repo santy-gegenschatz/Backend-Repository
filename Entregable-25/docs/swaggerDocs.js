@@ -14,11 +14,11 @@ const options = {
         }
     },
     // The below direction is relative to the cwd (current working directory) of the project
+    // This is important to understand as it can be the cause of a lot of confusion
     apis: ['./docs/*.yaml'],
 }
 
 const specs = swaggerJsDoc(options);
-console.log(process.cwd())
 
 
 module.exports = { specs, swaggerUi}

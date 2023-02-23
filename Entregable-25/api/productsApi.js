@@ -100,7 +100,6 @@ class ProductsApi {
 
     async productHasStock(id) {
         const { stock } = await this.productsDao.get(id)
-        console.log('Stock: ', stock);
         if (stock > 0) {
             return true
         }

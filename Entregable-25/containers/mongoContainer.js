@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { localRoute, serverRoute, advancedOptions} = require('../config/mongo/mongoDbConfig')
-const { logError, logInfo } = require('../loggers/logger')
+const { logError, logInfo, logDebug } = require('../loggers/logger')
 
 class MongoDbContainer {
     constructor(collectionName, isLocal) {
@@ -18,7 +18,7 @@ class MongoDbContainer {
         const route = this.isLocal ? localRoute : serverRoute
         mongoose.connect(route, advancedOptions)
         const connectionMessageString = `Connected to MongoDB. Via: ${this.isLocal ? 'Local' : 'Server'}. Collection: ${this.collectionName}`
-        console.log(connectionMessageString);
+        logDebug(connectionMessageString);
     }
 
     async add(modelName, sth) {
@@ -42,7 +42,6 @@ class MongoDbContainer {
     }
 
     async getAll(model) {
-        console.log('Container - Finding All');
         try {
             const response = await model.find()
             return response
@@ -63,8 +62,7 @@ class MongoDbContainer {
             }
             return null
         } catch (err) {
-            console.log(err);
-            // logError(err)
+            logError(err)
             return new Error(err)
         }
     }
@@ -82,12 +80,10 @@ class MongoDbContainer {
     async getByUsername(model, username) {
         logInfo('Getting by username')
         const user = await model.findOne( {username : username} )
-        console.log('Container: Found by username: ', user);
         return user
     }
 
     async updateFieldById(model, id, object) {
-        console.log('Container - Updating by Id');
         try {
             const response = await model.updateOne({_id: id}, {$set: object}, {new: true})
             return response

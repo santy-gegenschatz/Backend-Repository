@@ -1,4 +1,5 @@
 const { createTransport } = require('nodemailer') 
+const { logDebug } = require('../../loggers/logger')
 
 const SENDER_MAIL = process.env.SENDER_MAIL
 const SENDER_PASSWORD = process.env.SENDER_PASSWORD
@@ -19,7 +20,7 @@ const sendEmail = async (to, subject, text) => {
         subject,
         text
     })
-    console.log('Message sent: %s', info.messageId);
+    logDebug('Message sent: %s', info.messageId);
 }
 
 module.exports = { sendEmail }

@@ -12,7 +12,6 @@ const socket = io()
 // Define actions for each case
 socket.on('messages', (data) => {
     try {
-        console.log(data);
         console.log('rendering compression');
         renderCompression(data.compression)
         console.log('compresion rendering ok');

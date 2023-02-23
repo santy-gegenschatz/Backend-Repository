@@ -1,4 +1,5 @@
 const admin = require('firebase-admin')
+const { logDebug } = require('../loggers/logger')
 
 class FirebaseContainer {
     constructor() {
@@ -15,7 +16,7 @@ class FirebaseContainer {
                 credential: admin.credential.cert(this.serviceAccount),
                 databaseURL: this.databaseURL
             })
-            console.log('Successfully connected to the firebase');
+            logDebug('Successfully connected to the firebase');
         }
     }
 
@@ -34,11 +35,9 @@ class FirebaseContainer {
             const query = this.db.collection(collectionName)
             const querySnapshot = await query.get()
             let docs = querySnapshot.docs;
-            console.log(docs);
             const response = docs.map ((doc) => {
                 
             })
-            console.log(response);
             return response
         } catch (err) {
             console.log(err);

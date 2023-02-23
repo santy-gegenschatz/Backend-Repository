@@ -28,11 +28,11 @@ const initPassport = () => {
         
         // User does exist, retreive it from MongoDB
         const user = await usersApi.getUser(username)
-        logInfo('User returned: ', user);
+        logDebug('User returned: ', user);
         if (!isValidPassword(user, password)) {
             return done('wrongpassword', false)
         }
-        logInfo('All valid');
+        logDebug('All valid');
         // If the user exists && the password is valid
         return done(null, user) // This will get passed to the serialize user method defined below
     }))
@@ -56,10 +56,12 @@ const initPassport = () => {
 
         // Add the user to the mongodbDatabase
         const addedUser = await usersApi.add(newUser)
+        logDebug(addedUser)
         return done(null, addedUser)
     }))
 
     passport.serializeUser((user, done) => {
+        logDebug('Serializing');
         done(null, user._id)
     })
 

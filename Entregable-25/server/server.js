@@ -33,7 +33,8 @@ const passport = require('passport')
 const { initPassport } = require('../middlewares/passport'); 
 
 // Swagger Docs
-const { specs, swaggerUi } = require('../docs/swaggerDocs')
+const { specs, swaggerUi } = require('../docs/swaggerDocs');
+const { logError, logInfo } = require('../loggers/logger');
 
 class Server {
     constructor() {
@@ -85,7 +86,7 @@ class Server {
 
     listen() {
       this.httpServer.listen(this.PORT, (error) => {
-          error ? console.log(error) : console.log(`Server running on port ${this.PORT}`);
+          error ? logError(err) : logInfo(`Server running on port ${this.PORT}`);
       })
     }
     

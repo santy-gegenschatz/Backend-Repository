@@ -86,7 +86,7 @@ const renderPurchases = async (req, res) => {
 const renderRandomNumbers = async (req, res) => {
     const { cant } = req.query
     const computation = fork('./utils/computation.js')
-    console.log('Beginning Computation');
+    logInfo('Beginning computation')
     computation.send(cant || 1)
     computation.on('message', (obj) => {
         res.render('random.ejs', {object: obj})

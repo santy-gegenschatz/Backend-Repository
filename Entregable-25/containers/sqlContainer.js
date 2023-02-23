@@ -1,4 +1,5 @@
-const knex = require('knex')
+const knex = require('knex');
+const { logDebug } = require('../loggers/logger');
 const configObject = JSON.parse(process.env.SQL_CONFIG)
 class sqlContainer {
     constructor() {
@@ -8,7 +9,7 @@ class sqlContainer {
 
     connectToDb() {
         this.knex = knex(configObject)
-        console.log('Connected to SQL DB. Collections depend on parameters');
+        logDebug('Connected to SQL DB. Collections depend on parameters');
     }
 
     async create(tablename, sth) {
@@ -16,7 +17,7 @@ class sqlContainer {
             const response = await this.knex(tablename).insert(sth)
             return response[0]
         } catch (err) {
-            console.log(err);
+            logDebug(err);
             return new Error(err)
         }
     }
@@ -44,7 +45,7 @@ class sqlContainer {
             const response = await this.knex.from(tablename).select('*')
             return response
         } catch (err) {
-            console.log(err)
+            logDebug(err)
             return new Error(err)
         }
     }
@@ -54,7 +55,7 @@ class sqlContainer {
             const response = await this.knex.from(tablename).select('*').where('id', '=', id)
             return response.length !== 0 ? response : new Error('Not found by id')
         } catch (err) {
-            console.log(err)
+            logDebug(err)
             return new Error(err)
         }
     }
@@ -64,7 +65,7 @@ class sqlContainer {
             const response = await this.knex.from(tablename).select('*').where(key, '=', value)
             return response.length !== 0 ? response : new Error('Cart not found')
         } catch(err) {
-            console.log(err);
+            logDebug(err);
             return new Error(err)
         }
     }
@@ -74,7 +75,7 @@ class sqlContainer {
             const response = await this.knex.from(tablename).select('*').where(firstFieldName, '=', firstFieldId).andWhere(secondFieldName, '=', secondFieldId)
             return response.length !== 0 ? response : new Error('Err')
         } catch(err) {
-            console.log(err);
+            logDebug(err);
             return new Error(err)
         }
     }
@@ -93,7 +94,7 @@ class sqlContainer {
             const response = this.knex(tablename).where(firstFieldName, '=', firstFieldId).andWhere(secondFieldName, '=', secondFieldId).update(newObject)
             return response
         } catch(err) {
-            console.log(err);
+            logDebug(err);
             return new Error(err)
         }
         

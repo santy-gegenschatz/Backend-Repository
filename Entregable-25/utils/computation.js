@@ -1,3 +1,5 @@
+const { logDebug } = require("../loggers/logger");
+
 const calculateRandomNumbers = (limit) => {
     let checkedLimit = limit
     if (limit < 10000) {
@@ -22,9 +24,9 @@ const calculateRandomNumbers = (limit) => {
 }
 
 process.on('message', (cant) => {
-    console.log('Cant: ', cant);
+    logDebug('Cant: ', cant);
     const response = calculateRandomNumbers(cant)
-    console.log('Sending back');
+    logDebug('Sending back');
     setTimeout(() => {
         process.send(JSON.stringify(response, null, 2))
     }, 2000)

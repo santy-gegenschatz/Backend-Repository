@@ -39,7 +39,7 @@ class Carts {
                         newProduct = {...rest, quantity: 1}
                         newCartItems = [...currentCartItems, newProduct]
                     }
-                    console.log('New cart Items: ', newCartItems);
+                    logDebug('New cart Items: ', newCartItems);
                 // post the changes to the carts db
                 const updateCartResponse = await this.container.updateById(this.collectionName, idCart, {items: newCartItems})
                 // decrease the stock of the product in the products db

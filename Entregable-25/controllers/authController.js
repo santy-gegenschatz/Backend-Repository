@@ -1,7 +1,7 @@
 const passport = require('passport')
 const adminEmail = process.env.ADMIN_EMAIL
 const { sendEmail } = require('../utils/comms/nodemailer')
-const { logError } = require('../loggers/logger')
+const { logError, logDebug } = require('../loggers/logger')
 const { upload } = require('../utils/uploading/multer')
 
 
@@ -28,11 +28,15 @@ const signUpUser = async (req, res, next) => {
     passport.authenticate('signup', (err, user, info) => {
         if (!err) {
             // Send an email indicating that a new user has been created
-            sendEmail(adminEmail, 'New user created', `A new user has been created. Username: ${user.username}. Address: ${user.address}. Phone number: ${user.phoneNumber}. Age: ${user.age}`)
+            // sendEmail(adminEmail, 'New user created', `A new user has been created. Username: ${user.username}. Address: ${user.address}. Phone number: ${user.phoneNumber}. Age: ${user.age}`)
             // Send a twilio whatsapp message indicating that a new user has been created
-            
-            req.login(user, () => {
-                res.send({url: '/', userId: user._id})
+            req.login(user.payload, (err) => {
+                if (err) {
+                    logError(err)
+                    res.redirect(`/auth/error/?error=${err}`)
+                } else {
+                    res.send({url : '/'})
+                }
             })
         } else {
             console.log('Error: ', err);
@@ -86,10 +90,12 @@ const renderSignUpScreen = async (req, res) => {
 }
 
 const renderUnauthorizedScreen = async (req, res) => {
+    logDebug(req.user)
     res.render('unauthorized.ejs')
 }
 
 const uploadProfilePicture = async (req, res) => {
+    console.log(req.user);
     upload.single('file')(req, res, (err) => {
         if (err) {
             logError(err)

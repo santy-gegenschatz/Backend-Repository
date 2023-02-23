@@ -1,3 +1,4 @@
+const { logDebug, logError } = require('../loggers/logger')
 const fs = require('fs')
 class ArchiveContainer {
     constructor(filename) {
@@ -8,10 +9,9 @@ class ArchiveContainer {
     }
 
     logConnectionMessage() {
-        console.log(`Connected to Text Archive DB. Collection: ${this.filename}`)
+        logDebug(`Connected to Text Archive DB. Collection: ${this.filename}`)
     }
-    // Use the following line to figure out where in your system your script is being executed
-    // console.log(process.cwd());
+
     async read() {
         const p = new Promise( (resolve, reject) => {
             this.fs.readFile(this.path, (error, content) => {
@@ -19,7 +19,7 @@ class ArchiveContainer {
                     const parsedContent = JSON.parse(content)
                     resolve(parsedContent)
                 } catch (e) {
-                    console.log(e);
+                    logError(e);
                 }                
             })
         })

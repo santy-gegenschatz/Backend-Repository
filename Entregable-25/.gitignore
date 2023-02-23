@@ -3,3 +3,4 @@ node_modules
 logs/error.log
 logs/warn.log
 public/uploads
+Private/uploads

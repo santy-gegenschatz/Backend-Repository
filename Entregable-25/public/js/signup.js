@@ -70,11 +70,7 @@ const sendData = async (password) => {
     const formData = new FormData()
     formData.append('file', file)
     formData.append('userId', data.userId)
-    console.log('FormData:', formData)
-    console.log('Hello');
-// servidor2
-// parsear lo que vino del 2
-// mostrar
+
     const imageUploadResponse = await fetch('/auth/upload', {
         method: 'POST',
         body: formData

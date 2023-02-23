@@ -1,3 +1,4 @@
+require('dotenv').config()
 const pino = require('pino')
 let logger;
 if(process.env.ENVIRONMENT_TYPE === 'development') {
