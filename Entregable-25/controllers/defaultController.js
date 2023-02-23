@@ -64,7 +64,9 @@ const renderMessages = async (req, res) => {
 }
 
 const renderProfile = async (req, res) => {
-    const profileImage = '../../uploads/' + req.user.id + '.png'
+    logDebug('--- Render Profile ---')
+    logDebug(process.cwd())
+    const profileImage = '../private/uploads/' + req.user.id + '.png'
     res.render('profile.ejs', {username: req.user.username, user : req.user, image: profileImage})
 }
 

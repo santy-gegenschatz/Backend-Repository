@@ -92,8 +92,6 @@ class usersMongoDao {
     async getCurrentCartForUser (id) {
         try {
             const cartId = await this.getCurrentCartIdForUser(id)
-            logDebug('------ Retrieved Cart Id ---------')
-            logDebug(cartId)
             const cart = await cartsApi.getCart(cartId)
             return cart
         } catch (err) {
@@ -106,7 +104,6 @@ class usersMongoDao {
         try {
             const user = await this.usersDao.get(id)
             // Simple check to see if there is a current cart
-            logDebug(typeof user.currentCart)
             if (typeof user.currentCart === 'string') {
                 // Prevent that the type of string clause is not a false positive
                 if (user.currentCart.length === 0) {
@@ -146,13 +143,11 @@ class usersMongoDao {
         try {
             const user = await this.getUserById(id)
             const purchaseHistory = user.purchaseHistory
-            logDebug(purchaseHistory)
             const purchaseHistoryObjects = []
             for (let i = 0; i < purchaseHistory.length; i++) {
                 const cart = await cartsApi.getCart(purchaseHistory[i])
                 purchaseHistoryObjects.push(cart.payload)
             }
-            logDebug(purchaseHistoryObjects)
             return this.throwSuccess('Purchase history retrieved', purchaseHistoryObjects)
         } catch (err) {
             logError(err)
@@ -161,12 +156,10 @@ class usersMongoDao {
     }
 
     async getUser(username) {
-        logDebug('User Dao: getting specific user', username);
         return await this.usersDao.getByUsername(username)
     }
 
     async getUserById(id) {
-        logDebug('User Dao: getting specific user by id', id);
         return await this.usersDao.get(id)
     }
 

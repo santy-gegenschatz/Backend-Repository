@@ -21,20 +21,22 @@ const initPassport = () => {
     passport.use('login', new LocalStrategy( async (username, password, done) => {
         // First, check if user exists
         const userExists = await usersApi.checkUserExists(username)
-        logInfo(userExists);
         if (!userExists) {
             return done('userdoesnotexist', false)
         }
         
-        // User does exist, retreive it from MongoDB
+        // If the user does exist, retreive it from MongoDB
         const user = await usersApi.getUser(username)
-        logDebug('User returned: ', user);
+        logDebug(`User returned:`);
+        logDebug(user.username);
+        // Check the password is Correct
         if (!isValidPassword(user, password)) {
             return done('wrongpassword', false)
         }
-        logDebug('All valid');
-        // If the user exists && the password is valid
-        return done(null, user) // This will get passed to the serialize user method defined below
+        logInfo(`Logged in user: ${user.username}`);
+        // If the user exist && the password is valid
+        // This will get passed to the serialize user method defined below
+        return done(null, user) 
     }))
 
     passport.use('signup', new LocalStrategy({passReqToCallback: true}, 
@@ -55,7 +57,7 @@ const initPassport = () => {
         }
 
         // Add the user to the mongodbDatabase
-        const addedUser = await usersApi.add(newUser)
+        const {payload: addedUser} = await usersApi.add(newUser)
         logDebug(addedUser)
         return done(null, addedUser)
     }))
@@ -66,8 +68,8 @@ const initPassport = () => {
     })
 
     passport.deserializeUser( async (id, done) => {
-        console.log('Deserializing');
-        const user = await usersApi.getUserById(id) 
+        logDebug('Deserializing');
+        const user = await usersApi.getUserById(id)
         done(null, user)
     })
 

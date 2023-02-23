@@ -1,4 +1,5 @@
 const { goToHome, uploadProfilePicture, renderLoginScreen, renderLogoutScreen, renderSignUpScreen, loginUser, signUpUser, logoutUser, renderUnauthorizedScreen, renderErrorScreen} = require('../controllers/authController')
+const { checkAuthentication } = require('../middlewares/passportAuth')
 const { logRouteInfo, logDebug } = require('../loggers/logger')
 const { Router } = require('express')
 const { upload } = require('../utils/uploading/multer')
@@ -21,7 +22,7 @@ authRouter.post('/login', logRouteInfo, loginUser, goToHome)
 
 authRouter.post('/signup', logRouteInfo, signUpUser)
 
-authRouter.post('/upload', logRouteInfo, uploadProfilePicture)
+authRouter.post('/upload', logRouteInfo, checkAuthentication, uploadProfilePicture)
 
 authRouter.post('/logout', logRouteInfo, logoutUser)
 

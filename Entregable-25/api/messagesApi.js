@@ -1,6 +1,6 @@
 const messagesDao = require('../factory/messagesFactory')
 const { normalizeMessages, denormalizeMessages } = require('../utils/normalize')
-const { logDebug } = require('../loggers/logger')
+const { logDebug, logInfo } = require('../loggers/logger')
 
 class MessagesApi {
     constructor() {
@@ -45,8 +45,8 @@ class MessagesApi {
             }
             // Store the object
             const saveResponse = await this.messagesDao.add(objectToStore)
-            logDebug('--- message save Response ---')
-            logDebug(saveResponse)
+            logInfo('--- message save Response ---')
+            logInfo(saveResponse)
             // Return true
             return true
 
