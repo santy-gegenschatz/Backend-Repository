@@ -29,8 +29,6 @@ const renderCart = async (req, res) => {
     cart.payload.items.forEach( (p) => {
         total += p.price * p.quantity
     })
-    logDebug('--- Total Obtained in Default Controller ---');
-    logDebug(total);
     try {
         res.render('cart.ejs', {cartId: cart.payload.id, username : req.user.username, cartProducts: products, noRender : products.length===0, total})
     } catch(err) {
@@ -64,9 +62,7 @@ const renderMessages = async (req, res) => {
 }
 
 const renderProfile = async (req, res) => {
-    logDebug('--- Render Profile ---')
-    logDebug(process.cwd())
-    const profileImage = '../private/uploads/' + req.user.id + '.png'
+    const profileImage = './uploads/' + req.user.id + '.png'
     res.render('profile.ejs', {username: req.user.username, user : req.user, image: profileImage})
 }
 
