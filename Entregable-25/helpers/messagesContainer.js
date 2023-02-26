@@ -1,6 +1,7 @@
 const fs = require('fs')
 const util = require('util')
 const normalizr = require('normalizr')
+const { logError } = require('../loggers/logger')
 const { schema, normalize, denormalize } = normalizr
 
 class MessagesContainer {
@@ -13,10 +14,8 @@ class MessagesContainer {
     
     async add(message) {
         const p = new Promise ( async (resolve, reject) => {
-            console.log('Saving');
             this.messages.push(message)
             const response = await this.save(this.messages)
-            console.log('Response: ', response);
             resolve('End - Saving')
         })
         return p
@@ -45,12 +44,6 @@ class MessagesContainer {
         const normalizedData = normalize({id: 1, messages: this.messages}, messageArray)
         const a = JSON.stringify(this.messages).length;
         const b = JSON.stringify(normalizedData).length;
-        // console.log('--- Data ---');
-        // console.log(this.messages);
-        // console.log('--- Normalized ---');
-        // console.log(normalizedData);
-        // console.log('--- Denormalized Data---');
-        // console.log(denormalize(normalizedData, messageArray))
         return {normalizedData, compression: b/a}
     }
 
@@ -61,7 +54,7 @@ class MessagesContainer {
                     const parsedContent = JSON.parse(content)
                     resolve(parsedContent)
                 } catch (e) {
-                    console.log(e);
+                    logError(e);
                 }                
             })
         })

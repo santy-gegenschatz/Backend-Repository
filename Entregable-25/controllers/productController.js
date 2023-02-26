@@ -1,9 +1,7 @@
 const productsApi = require('../api/productsApi.js')
-const { validateFullFields, validateCredentials } = require('../utils/validation/validation')
-const { logDebug } = require('../loggers/logger')
 
 const getProducts = async (req, res) => {
-       return res.status(200).json(await productsApi.getAllProducts())
+    return res.status(200).json(await productsApi.getAllProducts())
 }
 
 const getProduct = async (req, res) => {
@@ -14,7 +12,6 @@ const getProduct = async (req, res) => {
 const addProduct = async (req, res) => {
     const {id, name, description, price, stock, thumbnail} = req.body
     const product = {id, name, description, price, stock, thumbnail}
-    logDebug(product)
     return res.json(await productsApi.addProduct(product)) 
 }
 

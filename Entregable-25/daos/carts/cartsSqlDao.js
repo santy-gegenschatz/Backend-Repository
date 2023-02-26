@@ -82,7 +82,6 @@ class Carts {
     }
 
     async createCart() {
-        console.log('Creating');
         const newCart = {creationDate: new Date()}
         const response = await this.container.create(this.tablename, newCart)
         if(this.isNotError(response)) {

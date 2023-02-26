@@ -86,10 +86,6 @@ class CartsApi {
                 // Means the cart exists and the product exists
                 // Now, 
                 // 1) delete the product from the cart items array
-                logDebug('--- Cart Response ---')
-                logDebug(cartResponse.payload.items)
-                logDebug('--- Product Response ---')
-                logDebug(productResponse)
                 const cartItems = cartResponse.payload.items
                 const productIndex = cartItems.findIndex( (prod) => prod.id.toString() === idProduct)
                 // 1.1) Verify the cart effectively has that product

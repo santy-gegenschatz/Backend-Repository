@@ -1,4 +1,5 @@
 const Container = require('../../containers/firebaseContainer') 
+const { logError } = require('../../loggers/logger')
 
 class ProductsFirebaseDao {
     constructor() {
@@ -28,7 +29,7 @@ class ProductsFirebaseDao {
             const response = await this.container.getAll(this.collectionName)
             return response
         } catch (err) {
-            console.log(err);
+            logError(err)
             return new Error(err)
         }
     }

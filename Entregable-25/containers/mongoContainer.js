@@ -78,7 +78,6 @@ class MongoDbContainer {
     }
 
     async getByUsername(model, username) {
-        logInfo('Getting by username')
         const user = await model.findOne( {username : username} )
         return user
     }

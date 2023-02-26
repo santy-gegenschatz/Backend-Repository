@@ -27,8 +27,6 @@ const initPassport = () => {
         
         // If the user does exist, retreive it from MongoDB
         const user = await usersApi.getUser(username)
-        logDebug(`User returned:`);
-        logDebug(user.username);
         // Check the password is Correct
         if (!isValidPassword(user, password)) {
             return done('wrongpassword', false)

@@ -1,5 +1,6 @@
 const Product = require('../../models/product')
 const Container = require('../../containers/archiveContainer') 
+const { logDebug } = require('../../loggers/logger')
 
 class ProductsArchiveDao {
     constructor() {
@@ -90,7 +91,7 @@ class ProductsArchiveDao {
 
     async initialRead() {
         await this.readItems()
-        console.log('Successfully connected to the archives');
+        logDebug('Successfully connected to the archives');
     }
 
     async updateProduct(id, attributes) {

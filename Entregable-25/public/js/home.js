@@ -9,7 +9,6 @@ const addToCart = async (id) => {
         body: JSON.stringify({productId: id})
     })
     const data = await response.json()
-    console.log(data);
     alert(data.payload.message)
     goToCart()
 }

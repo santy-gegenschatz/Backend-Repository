@@ -1,6 +1,6 @@
 const Container = require('../../containers/mongoContainer')
 const { carts } = require('../../models/mongoDbSchemas/carts')
-const { logDebug } = require('../../loggers/logger')
+const { logDebug, logError } = require('../../loggers/logger')
 
 class CartsMongoDao {
     constructor() {
@@ -12,7 +12,7 @@ class CartsMongoDao {
             const response = await this.container.add(carts, cart)
             return response
         } catch (err) {
-            logDebug(err)
+            logError(err)
             return err
         }
     }
@@ -22,7 +22,7 @@ class CartsMongoDao {
             const response = await this.container.delete(carts, id)
             return response
         } catch (err) {
-            logDebug(err)
+            logError(err)
             return err
         }
     }
@@ -32,7 +32,7 @@ class CartsMongoDao {
             const response = await this.container.getAll(carts)
             return response
         } catch (err) {
-            logDebug(err)
+            logError(err)
             return err
         }
     }
@@ -42,7 +42,7 @@ class CartsMongoDao {
             const response = await this.container.getById(carts, id)
             return response
         } catch (err) {
-            logDebug(err)
+            logError(err)
             return err
         }
     }
@@ -52,7 +52,7 @@ class CartsMongoDao {
             const response = await this.container.updateFieldById(carts, id, newObject)
             return response
         } catch (err) {
-            logDebug(err)
+            logError(err)
             return err
         }
     }

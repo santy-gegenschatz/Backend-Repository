@@ -1,5 +1,5 @@
 const admin = require('firebase-admin')
-const { logDebug } = require('../loggers/logger')
+const { logDebug, logError } = require('../loggers/logger')
 
 class FirebaseContainer {
     constructor() {
@@ -25,7 +25,7 @@ class FirebaseContainer {
             const response = await this.db.collection(collectionName).add(sth)
             return response
         } catch(err) {
-            console.log(err);
+            logError(err);
             return new Error(err)
         }
     }
@@ -40,7 +40,7 @@ class FirebaseContainer {
             })
             return response
         } catch (err) {
-            console.log(err);
+            logError(err);
             return new Error(err)
         }
     }
@@ -60,7 +60,7 @@ class FirebaseContainer {
                 return new Error('Something went wrong')
             }
         } catch(err) {
-            console.log(err);
+            logError(err);
             return new Error(err)
         }
     }
@@ -73,7 +73,7 @@ class FirebaseContainer {
             const response = await doc.update(updateObject)
             return response
         } catch(err) {
-            console.log(err);
+            logError(err);
             return new Error(err)
         }
     }
@@ -83,10 +83,9 @@ class FirebaseContainer {
             const query = this.db.collection(collectionName)
             const doc = query.doc(id)
             const response = await doc.delete()
-            console.log('Response: ', response);
             return response
         } catch(err) {
-            console.log(err);
+            logError(err);
             return new Error(err)
         }
     }

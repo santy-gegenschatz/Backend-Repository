@@ -23,7 +23,6 @@ class Carts {
                 // add it to the cart items array
                     // get the current cart items array
                     const currentCartItems = cartResponse.items
-                    console.log('Current cart items: ', currentCartItems);
                     // create an updated array with the pertinent changes
                     let newCartItems;
                     let newProduct;

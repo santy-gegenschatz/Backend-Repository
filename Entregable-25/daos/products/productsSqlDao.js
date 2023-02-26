@@ -9,7 +9,6 @@ class Products {
     async addProduct(product) {
         // Check if the id corresponds to a product of the database
         const response = await this.container.getById(this.tablename, product.id)
-        console.log(response);
         if (!this.isError(response)) {
             const {id, ...rest} = product
             return this.updateProduct(id, rest)

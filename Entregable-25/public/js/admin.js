@@ -49,10 +49,9 @@ const addProduct = async () => {
         body: JSON.stringify(product)
     })
 
-    console.log(response);
-
     const data = await response.json()
-    console.log(data)
+    alert(data.message)
+    goToHome()
 }
 
 const goToGraphql = () => {

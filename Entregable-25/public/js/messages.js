@@ -12,9 +12,7 @@ const socket = io()
 // Define actions for each case
 socket.on('messages', (data) => {
     try {
-        console.log('rendering compression');
         renderCompression(data.compression)
-        console.log('compresion rendering ok');
         renderMessages(data.normalizedData)
     } catch(err) {
         console.log(err);
@@ -23,17 +21,13 @@ socket.on('messages', (data) => {
 
 // Define specific functions
 const renderCompression = (compression) => {
-    console.log(compression);
     const h5 = document.getElementById('h5')
-    console.log(h5);
     h5.innerText = `Compression: ${(compression*100).toString().slice(0, 4)}%`
 }
 
 const renderMessages = (data) => {
     const denormalizedData = normalizr.denormalize(data, messageArray, data.entities)
     const messagesObject = denormalizedData.entities.messages;
-    console.log(messagesObject);
-    console.log(Object.entries(messagesObject));
     const messagesArray = Object.entries(messagesObject).map ( (key) => {
         const m = key[1]
         return (`
@@ -72,7 +66,6 @@ const addMessage = (m) => {
         text,
         date: new Date()
     }
-    console.log(message);
     socket.emit('new-message', message)
     return false
 }

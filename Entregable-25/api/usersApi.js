@@ -1,7 +1,7 @@
 const usersDao = require('../factory/usersFactory')
 const cartsApi = require('./cartsApi')
 
-const { logInfo, logError, logDebug } = require('../loggers/logger')
+const { logError } = require('../loggers/logger')
 
 class usersMongoDao {
     constructor() {
@@ -23,8 +23,6 @@ class usersMongoDao {
     async addProductToCart(id, productId) {
         try {
             const cartId = await this.getCurrentCartIdForUser(id)
-            logDebug('------ Retrieved Cart Id ---------')
-            logDebug(cartId)
             const updatedCart = await cartsApi.addItemToCart(cartId, productId)
             if (updatedCart.code !== 200) {
                 return this.throwError(updatedCart)
@@ -70,13 +68,9 @@ class usersMongoDao {
             const purchaseHistory = user.purchaseHistory
             purchaseHistory.push(cartId)
             // Update the user's purchase history
-            const updatedUser = await this.updateUser(id, {purchaseHistory})
-            logDebug('------- Updated User -------')
-            logDebug(updatedUser)
+            await this.updateUser(id, {purchaseHistory})
             // Set CurrentCart to undefined
-            const updatedUser2 = await this.updateUser(id, {currentCart: ''})
-            logDebug('------- Updated User 2-------')
-            logDebug(updatedUser2)
+            await this.updateUser(id, {currentCart: ''})
             // Return success
             return this.throwSuccess('Purchase completed')
         } catch (err) {
@@ -108,26 +102,18 @@ class usersMongoDao {
                 // Prevent that the type of string clause is not a false positive
                 if (user.currentCart.length === 0) {
                     const newCart = await cartsApi.createCart()
-                    logDebug('------- New Cart -------')
-                    logDebug(newCart)
                     // Update the user with the new cart
                     await this.updateUser(user.id, {currentCart: newCart.payload._id})
                     const updatedUser = await this.getUserById(id)
-                    logDebug('------- Updated User -------')
-                    logDebug(updatedUser)
                     return updatedUser.currentCart
                 } else {
                     return user.currentCart
                 }
             } else if (typeof user.currentCart === 'undefined') {
                 const newCart = await cartsApi.createCart()
-                logDebug('------- New Cart -------')
-                logDebug(newCart)
                 // Update the user with the new cart
                 await this.updateUser(user.id, {currentCart: newCart.payload._id})
                 const updatedUser = await this.getUserById(id)
-                logDebug('------- Updated User -------')
-                logDebug(updatedUser)
                 return updatedUser.currentCart 
             } else {
                 return user.currentCart

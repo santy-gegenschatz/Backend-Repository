@@ -1,12 +1,9 @@
 const productsApi = require('../api/productsApi');
 
 const addProduct = async (args) => {
-    console.log('addProduct', args);
     const {id, name, description, price, stock, thumbnail} = args
     const product = {id, name, description, price, stock, thumbnail}
-    console.log(product);
     const response = await productsApi.addProduct(product);
-    console.log(response);
     if (response.code === 200) {
         return response.payload;
     } else {
@@ -17,7 +14,6 @@ const addProduct = async (args) => {
 const deleteProduct = async (args) => {
     const { id } = args;
     const response = await productsApi.deleteProduct(id);
-    console.log(response);
     if (response.code === 200) {
         return response
     } else {

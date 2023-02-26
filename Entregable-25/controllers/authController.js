@@ -25,7 +25,6 @@ const loginUser = async (req, res, next) => {
 
 const logoutUser = async (req, res) => {
     const stringUsername = req.user.username
-    console.log(req.user);
     req.session.destroy( (err) => {
         if (err) {
             return res.json(err)
@@ -67,16 +66,18 @@ const renderSignUpScreen = async (req, res) => {
 }
 
 const renderUnauthorizedScreen = async (req, res) => {
-    logDebug(req.user)
     res.render('unauthorized.ejs')
 }
 
 const signUpUser = async (req, res, next) => {
     passport.authenticate('signup', (err, user, info) => {
         if (!err) {
-            // Send an email indicating that a new user has been created
-            // sendEmail(adminEmail, 'New user created', `A new user has been created. Username: ${user.username}. Address: ${user.address}. Phone number: ${user.phoneNumber}. Age: ${user.age}`)
-            // Send a twilio whatsapp message indicating that a new user has been created
+            try {
+                // Send an email indicating that a new user has been created
+                // sendEmail(adminEmail, 'New user created', `A new user has been created. Username: ${user.username}. Address: ${user.address}. Phone number: ${user.phoneNumber}. Age: ${user.age}`)
+            } catch (err) {
+                logError(err)
+            }
             req.login(user, (err) => {
                 if (err) {
                     logError(err)
@@ -86,7 +87,7 @@ const signUpUser = async (req, res, next) => {
                 }
             })
         } else {
-            console.log('Error: ', err);
+            logError(err)
             res.send({url : `/auth/error/?error=${err}`})
         }
       })

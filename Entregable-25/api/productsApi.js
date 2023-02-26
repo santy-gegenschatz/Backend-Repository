@@ -25,7 +25,6 @@ class ProductsApi {
                     if (this.isNotError(response)) {
                         if (response) {
                             // Update Stock
-                            logDebug('Updating field');
                             const object = { stock :  Number(product.stock) + Number(response.stock)}
                             const response2 = await this.container.updateFieldById(products, product.id, object)
                             return this.throwSuccess('Item already in the database. Stock augmented', response2)
